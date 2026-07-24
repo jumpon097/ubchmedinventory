@@ -13,3 +13,7 @@
 
 ## หมายเหตุ
 Google Sites บางหน้าอาจไม่อนุญาตแสดงใน iframe จึงมีปุ่มเปิดเต็มหน้าเป็น fallback ทุกจุด ส่วนเอกสาร Google Drive ใช้โหมด preview และต้องตั้งสิทธิ์ให้ผู้ใช้เป้าหมายเปิดได้
+
+
+## v8: ตารางเวรผ่าน Google Apps Script
+หน้า `oncall.html` ฝัง Web App ตารางเวรจาก Google Apps Script และมีปุ่มเปิดเต็มหน้าเป็นทางสำรอง
