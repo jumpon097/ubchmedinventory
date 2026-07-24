@@ -17,3 +17,9 @@ Google Sites บางหน้าอาจไม่อนุญาตแสด�
 
 ## v8: ตารางเวรผ่าน Google Apps Script
 หน้า `oncall.html` ฝัง Web App ตารางเวรจาก Google Apps Script และมีปุ่มเปิดเต็มหน้าเป็นทางสำรอง
+
+
+## v9 Mixing page fix
+- ลบ iframe ของ Google Sites ออกจาก `mixing.html`
+- แทนด้วยส่วนสรุปและปุ่มเปิดหน้าเดิมในแท็บใหม่
+- หน้า On Call ยังคงใช้ Google Apps Script iframe ตามเวอร์ชัน v8
