@@ -1,0 +1,1536 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cancer Pharmacology & Pharmacotherapy MCQs</title>
+    <!-- Google Fonts (Sarabun & Prompt) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    
+    <script>
+        function initTailwind() {
+            if (typeof tailwind !== 'undefined') {
+                tailwind.config = {
+                    theme: {
+                        extend: {
+                            fontFamily: {
+                                sans: ['Sarabun', 'Prompt', 'sans-serif'],
+                                title: ['Prompt', 'sans-serif'],
+                            },
+                            colors: {
+                                medical: {
+                                    50: '#f0f9ff',
+                                    100: '#e0f2fe',
+                                    600: '#0284c7',
+                                    700: '#0369a1',
+                                    800: '#075985',
+                                    900: '#0c4a6e',
+                                },
+                                teal: {
+                                    50: '#f0fdfa',
+                                    600: '#0d9488',
+                                    700: '#0f766e',
+                                }
+                            }
+                        }
+                    }
+                };
+            }
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com" onload="initTailwind()"></script>
+    <script>initTailwind();</script>
+    
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col font-sans text-slate-800 antialiased selection:bg-medical-100">
+
+    <!-- Top Navigation Bar -->
+    <nav class="bg-gradient-to-r from-medical-900 to-medical-800 text-white shadow-lg shrink-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo / Title -->
+                <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('quiz')">
+                    <div class="bg-white/10 p-2 rounded-lg backdrop-blur-sm">
+                        <svg class="w-6 h-6 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <span class="font-title font-bold text-lg leading-tight block tracking-wide">เภสัชวิทยาโรคมะเร็ง</span>
+                        <span class="text-xs text-cyan-200 block">Cancer Pharmacology & Pharmacotherapy MCQs</span>
+                    </div>
+                </div>
+
+                <!-- Nav Links -->
+                <div class="flex space-x-2">
+                    <button onclick="switchTab('quiz')" id="tab-btn-quiz" class="nav-tab-btn px-3 py-2 rounded-lg text-sm font-medium transition duration-200 flex items-center gap-1.5 bg-white/10 text-white">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        ทำแบบทดสอบ
+                    </button>
+                    <button onclick="switchTab('admin')" id="tab-btn-admin" class="nav-tab-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition duration-200 flex items-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        ระบบหลังบ้าน / นำเข้าแบบทดสอบ
+                        <span id="admin-badge" class="hidden ml-1 w-2.5 h-2.5 bg-emerald-400 rounded-full"></span>
+                    </button>
+                    <button onclick="switchTab('guide')" id="tab-btn-guide" class="nav-tab-btn px-3 py-2 rounded-lg text-sm font-medium text-slate-300 hover:text-white hover:bg-white/5 transition duration-200 flex items-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        คู่มือ
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="flex-grow overflow-y-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            
+            <!-- TAB 1: QUIZ MAIN VIEW -->
+            <div id="tab-quiz" class="tab-content block">
+                <!-- Welcome & Category Selector -->
+                <div id="quiz-setup-view" class="space-y-6">
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+                        <div class="max-w-3xl">
+                            <span class="bg-cyan-50 text-cyan-700 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">ระบบสอบประเมินกลุ่มงาน</span>
+                            <h1 class="text-2xl sm:text-3xl font-title font-bold text-slate-900 mt-3">ระบบทบทวนและทำแบบทดสอบทางเภสัชวิทยา</h1>
+                            <p class="text-slate-600 mt-2 text-sm sm:text-base">
+                                คลังแบบประเมินความรู้เภสัชวิทยาคลินิกและการบำบัดมะเร็ง (Cancer Pharmacology MCQs) สกัดข้อมูลแปลไทยสมบูรณ์จากเอกสารคู่มือหลักสูตรอย่างเป็นทางการ สามารถเลือกทำข้อสอบเพื่อเก็บคะแนนและทบทวนเฉลยได้ทันที
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Setup Controls -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <!-- Left Panel: Topics selection -->
+                        <div class="lg:col-span-2 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                            <div>
+                                <h2 class="text-lg font-title font-semibold text-slate-900 flex items-center gap-2 mb-4">
+                                    <svg class="w-5 h-5 text-medical-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h7" />
+                                    </svg>
+                                    เลือกหมวดหมู่หัวข้อทดสอบ
+                                </h2>
+                                <div id="category-list" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <!-- Populated by JavaScript -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Panel: Configurations -->
+                        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col justify-between">
+                            <div class="space-y-5">
+                                <h2 class="text-lg font-title font-semibold text-slate-900 flex items-center gap-2">
+                                    <svg class="w-5 h-5 text-medical-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                                    </svg>
+                                    ตั้งค่าการทำโจทย์
+                                </h2>
+                                
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-2">โหมดการประเมิน</label>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <button onclick="setQuizMode('practice')" id="mode-btn-practice" class="py-2.5 px-3 rounded-xl border-2 border-medical-600 bg-medical-50 text-medical-900 text-sm font-medium transition duration-200 text-center">
+                                            <span class="block font-semibold">โหมดฝึกฝน</span>
+                                            <span class="text-xs text-medical-700">เฉลย/อธิบายทีละข้อ</span>
+                                        </button>
+                                        <button onclick="setQuizMode('exam')" id="mode-btn-exam" class="py-2.5 px-3 rounded-xl border-2 border-slate-200 bg-white text-slate-600 text-sm font-medium transition duration-200 text-center hover:border-slate-300">
+                                            <span class="block font-semibold">โหมดสอบจริง</span>
+                                            <span class="text-xs text-slate-500">เฉลยผลวิเคราะห์ท้ายสุด</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-semibold text-slate-700 mb-2">จำนวนข้อสอบที่ต้องการ</label>
+                                    <select id="quiz-limit-select" class="w-full rounded-xl border-slate-200 bg-slate-50 border p-2.5 text-sm focus:border-medical-600 focus:bg-white focus:outline-none transition">
+                                        <option value="5">5 ข้อ (ประเมินแบบสั้น)</option>
+                                        <option value="10">10 ข้อ (ปานกลาง)</option>
+                                        <option value="20" selected>20 ข้อ (เข้มข้น)</option>
+                                        <option value="all">ทั้งหมดที่มีในระบบ</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button onclick="startQuiz()" class="w-full mt-6 bg-gradient-to-r from-medical-600 to-medical-700 hover:from-medical-700 hover:to-medical-800 text-white font-title font-bold py-3.5 px-4 rounded-xl shadow-md shadow-medical-600/10 transition duration-200 flex items-center justify-center gap-2">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                เริ่มทำแบบทดสอบ
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Quiz View (Hidden initially) -->
+                <div id="quiz-active-view" class="hidden space-y-6">
+                    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                        <div class="flex items-center gap-3">
+                            <span id="quiz-badge" class="bg-teal-50 text-teal-700 border border-teal-200 text-xs font-semibold px-3 py-1.5 rounded-full">
+                                โหมดฝึกฝน
+                            </span>
+                            <span id="quiz-progress-text" class="text-slate-600 text-sm font-semibold">
+                                ข้อที่ 1 จาก 20
+                            </span>
+                        </div>
+                        <!-- Timer / Exit -->
+                        <div class="flex items-center gap-3 self-end sm:self-auto">
+                            <div class="bg-slate-100 text-slate-700 font-mono text-sm font-bold px-3 py-1.5 rounded-lg flex items-center gap-1.5 border border-slate-200">
+                                <svg class="w-4 h-4 text-slate-500 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <span id="quiz-timer">00:00</span>
+                            </div>
+                            <button onclick="terminateQuizPrompt()" class="bg-rose-50 text-rose-600 hover:bg-rose-100 text-xs font-bold px-3 py-1.5 rounded-lg border border-rose-200 transition">
+                                ออกจากการประเมิน
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Progress Bar -->
+                    <div class="w-full bg-slate-200 rounded-full h-2.5 overflow-hidden shadow-inner">
+                        <div id="quiz-progress-bar" class="bg-gradient-to-r from-medical-600 to-teal-600 h-2.5 rounded-full transition-all duration-300" style="width: 5%"></div>
+                    </div>
+
+                    <!-- Question & Options Block -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+                        <!-- Main Question Card -->
+                        <div class="lg:col-span-2 space-y-4">
+                            <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+                                <h3 id="question-text" class="text-lg sm:text-xl font-title font-bold text-slate-900 leading-relaxed">
+                                    คำถามอยู่ตรงนี้...
+                                </h3>
+                                
+                                <div id="options-container" class="mt-6 space-y-3">
+                                    <!-- Populated by JavaScript -->
+                                </div>
+                            </div>
+
+                            <!-- Explanation Accordion (Visible in practice mode after answering) -->
+                            <div id="practice-explanation-card" class="hidden bg-teal-50 border border-teal-200 rounded-2xl p-6 transition duration-300">
+                                <div class="flex items-start gap-3">
+                                    <div class="bg-teal-600 text-white p-1.5 rounded-lg shrink-0">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-title font-bold text-teal-900">อธิบายแนวทางการแพทย์ประกอบ (Rationale)</h4>
+                                        <p id="practice-explanation-text" class="text-sm text-teal-800 mt-2 leading-relaxed">
+                                            คำอธิบายแนวทางคำตอบที่วิเคราะห์ทางการแพทย์...
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sidebar Navigation/Status -->
+                        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm space-y-4">
+                            <h4 class="font-title font-semibold text-slate-900 text-sm border-b pb-2">แผนผังคำตอบ</h4>
+                            <div id="question-grid" class="grid grid-cols-5 gap-2">
+                                <!-- Populated dynamically -->
+                            </div>
+                            
+                            <div class="pt-4 border-t flex flex-col gap-2">
+                                <button id="next-btn" onclick="nextQuestion()" class="w-full bg-medical-700 hover:bg-medical-800 text-white font-title font-bold py-3 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-1">
+                                    ข้อถัดไป
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                    </svg>
+                                </button>
+                                <button id="submit-quiz-early" onclick="finishQuizPrompt()" class="w-full hidden bg-emerald-600 hover:bg-emerald-700 text-white font-title font-bold py-3 px-4 rounded-xl transition duration-200 flex items-center justify-center gap-1">
+                                    ส่งกระดาษคำตอบ
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Quiz Results / Score View (Hidden initially) -->
+                <div id="quiz-results-view" class="hidden space-y-8 animate-fade-in">
+                    <div class="bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
+                        <div class="bg-gradient-to-r from-medical-900 to-medical-800 text-white p-8 text-center relative overflow-hidden">
+                            <!-- Background accent circles -->
+                            <div class="absolute -top-12 -right-12 w-48 h-48 bg-white/5 rounded-full"></div>
+                            <div class="absolute -bottom-12 -left-12 w-48 h-48 bg-white/5 rounded-full"></div>
+
+                            <span class="bg-white/10 text-cyan-200 text-xs font-semibold px-4 py-1.5 rounded-full backdrop-blur-sm">ประเมินผลเสร็จสมบูรณ์</span>
+                            <h2 class="text-3xl font-title font-bold mt-4">สรุปคะแนนผู้ทำแบบประเมิน</h2>
+                            
+                            <!-- Large Circular Score Display -->
+                            <div class="mt-6 inline-flex flex-col items-center justify-center bg-white/10 border-4 border-white/20 w-36 h-36 rounded-full backdrop-blur-md">
+                                <span id="results-score-text" class="text-4xl font-title font-black text-white">15/20</span>
+                                <span id="results-percentage" class="text-xs text-cyan-200 font-medium">75%</span>
+                            </div>
+
+                            <div class="mt-6 max-w-md mx-auto">
+                                <h3 id="results-grade-title" class="text-xl font-title font-bold text-teal-300">ผลการประเมิน</h3>
+                                <p id="results-grade-desc" class="text-sm text-slate-300 mt-1">รายละเอียด...</p>
+                            </div>
+                        </div>
+
+                        <!-- Info Grid -->
+                        <div class="grid grid-cols-2 sm:grid-cols-4 border-b border-slate-100 text-center">
+                            <div class="p-4 border-r border-slate-100">
+                                <span class="block text-xs text-slate-500 uppercase font-bold tracking-wider">ตอบถูกต้อง</span>
+                                <span id="results-stat-correct" class="text-lg font-bold text-emerald-600">15 ข้อ</span>
+                            </div>
+                            <div class="p-4 sm:border-r border-slate-100">
+                                <span class="block text-xs text-slate-500 uppercase font-bold tracking-wider">ตอบผิด</span>
+                                <span id="results-stat-wrong" class="text-lg font-bold text-rose-600">5 ข้อ</span>
+                            </div>
+                            <div class="p-4 border-r border-slate-100">
+                                <span class="block text-xs text-slate-500 uppercase font-bold tracking-wider">เวลาที่ใช้รวม</span>
+                                <span id="results-stat-time" class="text-lg font-bold text-slate-700">03:45 นาที</span>
+                            </div>
+                            <div class="p-4">
+                                <span class="block text-xs text-slate-500 uppercase font-bold tracking-wider">สรุปผ่านเกณฑ์</span>
+                                <span id="results-stat-percentile" class="text-lg font-bold text-medical-600">75%</span>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="p-6 bg-slate-50 flex flex-col sm:flex-row justify-center gap-3">
+                            <button onclick="retryActiveQuiz()" class="bg-medical-700 hover:bg-medical-800 text-white font-title font-bold px-6 py-3 rounded-xl transition duration-200 shadow-md shadow-medical-700/10">
+                                ทำแบบทดสอบชุดนี้ใหม่อีกครั้ง
+                            </button>
+                            <button onclick="backToQuizSetup()" class="bg-white border border-slate-200 text-slate-700 hover:bg-slate-50 font-title font-bold px-6 py-3 rounded-xl transition duration-200">
+                                กลับหน้าเมนูหลัก
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Question Review Section -->
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-title font-bold text-slate-900">วิเคราะห์คำตอบและเฉลยอย่างละเอียดแบบตัวต่อตัว</h3>
+                        <div id="results-review-container" class="space-y-4">
+                            <!-- Populated with quiz answers details by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB 2: BACK-OFFICE / ADMIN PANEL (Protected with Login) -->
+            <div id="tab-admin" class="tab-content hidden space-y-8">
+                
+                <!-- LOGIN SCREEN (Shown if not logged in) -->
+                <div id="admin-login-card" class="max-w-md mx-auto bg-white border border-slate-200 rounded-2xl shadow-xl overflow-hidden mt-8">
+                    <div class="bg-gradient-to-r from-medical-900 to-medical-800 p-6 text-white text-center">
+                        <div class="inline-flex bg-white/10 p-3 rounded-full mb-3">
+                            <svg class="w-8 h-8 text-cyan-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                            </svg>
+                        </div>
+                        <h2 class="text-xl font-title font-bold">ล็อกอินระบบผู้ดูแลระดับกลุ่มงาน</h2>
+                        <p class="text-xs text-cyan-200/80 mt-1">กรุณาระบุบัญชีผู้ใช้เพื่อความปลอดภัยของเฉลยและการนำเข้าแบบประเมิน</p>
+                    </div>
+                    <div class="p-6 space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">ชื่อผู้ใช้งาน (Username)</label>
+                            <input type="text" id="admin-username-input" placeholder="ระบุชื่อผู้ใช้งาน" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm focus:border-medical-600 focus:bg-white focus:outline-none transition">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-slate-700 mb-1.5">รหัสผ่าน (Password)</label>
+                            <input type="password" id="admin-password-input" placeholder="ระบุรหัสผ่าน" class="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-2.5 text-sm focus:border-medical-600 focus:bg-white focus:outline-none transition">
+                        </div>
+                        <button onclick="attemptAdminLogin()" class="w-full bg-medical-700 hover:bg-medical-800 text-white font-title font-bold py-3 px-4 rounded-xl transition duration-200 shadow-md">
+                            เข้าสู่ระบบหลังบ้าน
+                        </button>
+                    </div>
+                </div>
+
+                <!-- MAIN ADMIN INTERFACE (Hidden initially until logged in) -->
+                <div id="admin-main-interface" class="hidden space-y-8">
+                    <!-- Admin Header & Intro -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <div class="flex items-center gap-2">
+                                <h1 class="text-2xl font-title font-bold text-slate-900">แผงควบคุมหลังบ้านวิชาการกลุ่มงาน</h1>
+                                <span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-0.5 rounded-full">สิทธิ์ผู้ดูแลระบบ</span>
+                            </div>
+                            <p class="text-slate-500 text-sm mt-1">นำเข้าไฟล์ข้อสอบ จัดการแก้ไข ปรับปรุงคลังคำถาม และดาวน์โหลดโครงสร้างแม่แบบ JSON ไปใช้งานนอกสถานที่</p>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button onclick="adminLogout()" class="bg-rose-50 border border-rose-200 text-rose-600 hover:bg-rose-100 text-xs font-bold px-3 py-2 rounded-lg flex items-center gap-1.5 transition">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                </svg>
+                                ออกจากระบบหลังบ้าน
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Flexible Template & Import Area -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6">
+                            <div>
+                                <h3 class="text-lg font-title font-semibold text-slate-900">1. นำเข้าแบบทดสอบวิชาอื่นด้วยไฟล์ภายนอก</h3>
+                                <p class="text-xs text-slate-500 mt-1">อัปโหลดไฟล์ JSON ที่รันมาจาก ChatGPT/Claude/Gemini นอกระบบเพื่อสร้างคลังข้อสอบเรื่องอื่นๆ ได้อย่างอิสระ</p>
+                            </div>
+                            
+                            <!-- Custom File Upload area -->
+                            <div onclick="triggerImportInput()" class="border-2 border-dashed border-slate-200 hover:border-medical-600 bg-slate-50 hover:bg-medical-50/20 rounded-2xl p-8 text-center cursor-pointer transition flex flex-col items-center justify-center min-h-[160px]">
+                                <svg class="w-12 h-12 text-slate-400 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l4-4m0 0l4 4m-4-4v12" />
+                                </svg>
+                                <span class="text-medical-700 font-semibold text-sm mt-2">คลิกเพื่ออัปโหลดนำเข้าคลังแบบทดสอบ (.json)</span>
+                                <p class="text-[11px] text-slate-400 mt-1">ไฟล์ข้อสอบของคุณจะต้องเป็นไปตามโครงสร้างมาตรฐานที่เราเตรียมไว้ให้</p>
+                                <input type="file" id="import-json-file" accept=".json" onchange="importJSON(event)" class="hidden">
+                            </div>
+                        </div>
+
+                        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-lg font-title font-semibold text-slate-900">2. ดาวน์โหลดเทมเพลตมาตรฐาน (JSON Template)</h3>
+                                <p class="text-xs text-slate-500 mt-1">นำโครงสร้างข้อสอบ JSON ดิบนี้ไปป้อนให้ AI (ChatGPT, Gemini, Claude) เพื่อให้ช่วยแต่งโจทย์ บรรจุตัวเลือก และแปลวิเคราะห์ความรู้กลับมาในรูปแบบภาษาไทยทางการแพทย์อย่างสวยงาม</p>
+                            </div>
+                            
+                            <div class="p-4 bg-slate-50 border rounded-xl space-y-2">
+                                <p class="text-[11px] text-slate-600 font-semibold flex items-center gap-1.5">
+                                    💡 <strong>วิธีใช้งานร่วมกับ AI ข้างนอกอย่างคุ้มค่า:</strong>
+                                </p>
+                                <ol class="list-decimal list-inside text-[11px] text-slate-500 space-y-1">
+                                    <li>กดปุ่มดาวน์โหลดเทมเพลตมาตรฐานด้านล่าง</li>
+                                    <li>เปิดไฟล์และก๊อปปี้เนื้อหาในข้อสอบส่งให้ ChatGPT ภายนอก</li>
+                                    <li>สั่ง AI ว่า "โปรดแปลงบทเรียนหรือแต่งโจทย์วิชาใหม่ให้เป็นโครงสร้าง JSON นี้เท่านั้น ห้ามพิมพ์คำอธิบายอื่นนอกวงเล็บปีกกา"</li>
+                                    <li>นำไฟล์ JSON ที่ AI สรุปผลลัพธ์มาป้อนอัปโหลดด้านซ้าย</li>
+                                </ol>
+                            </div>
+
+                            <div class="flex gap-2">
+                                <button onclick="exportJSON()" class="flex-grow bg-medical-700 hover:bg-medical-800 text-white font-title font-bold py-3 rounded-xl text-xs transition flex items-center justify-center gap-1.5">
+                                    📥 ดาวน์โหลดไฟล์ฐานข้อมูลปัจจุบันทั้งหมด
+                                </button>
+                                <button onclick="downloadBlankTemplate()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-3 rounded-xl text-xs border border-slate-200 transition">
+                                    ดาวน์โหลดเทมเพลตเปล่า
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Database Question List & Manual Creator -->
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-6">
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between border-b pb-4 gap-4">
+                            <div>
+                                <h3 class="text-lg font-title font-semibold text-slate-900">รายชื่อข้อสอบทั้งหมดที่มีในหน่วยความจำ</h3>
+                                <p class="text-xs text-slate-500 mt-0.5">แสดงคำถาม ตัวเลือก เฉลยข้อที่ถูกต้อง และวิชาหัวข้อย่อยที่มีการบันทึกไว้ในบราวเซอร์อุปกรณ์นี้</p>
+                            </div>
+                            <div class="flex gap-2">
+                                <button onclick="toggleManualForm()" class="bg-medical-700 hover:bg-medical-800 text-white font-title font-bold px-4 py-2 rounded-xl text-xs flex items-center gap-1.5 transition">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                                    </svg>
+                                    เขียนข้อสอบเพิ่มด้วยตนเอง
+                                </button>
+                                <button onclick="restoreDefaultQuestionsPrompt()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs border border-slate-200 transition">
+                                    รีเซ็ตค่าเริ่มต้น (สกัดจากรูปครบ 48 ข้อ)
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Manual Add Form (Hidden initially) -->
+                        <div id="manual-form-container" class="hidden bg-slate-50 border rounded-2xl p-6 space-y-4 animate-fade-in">
+                            <h4 class="font-title font-bold text-slate-900 text-sm">สร้างแบบทดสอบชุดใหม่</h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">กลุ่มบทเรียน / หมวดหมู่</label>
+                                    <select id="manual-category" class="w-full rounded-xl border-slate-200 bg-white border p-2 text-sm focus:outline-none">
+                                        <!-- Populated dynamically -->
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">ตั้งคำถามโจทย์</label>
+                                    <input type="text" id="manual-question" placeholder="เช่น การแพ้รุนแรงเฉียบพลันหลังให้ CAR-T เกิดจากสารใด..." class="w-full rounded-xl border-slate-200 bg-white border p-2 text-sm focus:outline-none focus:ring-1 focus:ring-medical-600">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">ตัวเลือก ก (ดัชนี 0)</label>
+                                    <input type="text" id="manual-opt0" placeholder="ตัวเลือกแรก" class="w-full rounded-xl border-slate-200 bg-white border p-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">ตัวเลือก ข (ดัชนี 1)</label>
+                                    <input type="text" id="manual-opt1" placeholder="ตัวเลือกสอง" class="w-full rounded-xl border-slate-200 bg-white border p-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">ตัวเลือก ค (ดัชนี 2)</label>
+                                    <input type="text" id="manual-opt2" placeholder="ตัวเลือกสาม" class="w-full rounded-xl border-slate-200 bg-white border p-2 text-sm">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">ตัวเลือก ง (ดัชนี 3)</label>
+                                    <input type="text" id="manual-opt3" placeholder="ตัวเลือกสี่" class="w-full rounded-xl border-slate-200 bg-white border p-2 text-sm">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">เฉลยข้อที่ถูกต้อง</label>
+                                    <select id="manual-correct" class="w-full rounded-xl border-slate-200 bg-white border p-2 text-sm">
+                                        <option value="0">ตัวเลือก ก (ข้อแรก)</option>
+                                        <option value="1">ตัวเลือก ข (ข้อสอง)</option>
+                                        <option value="2">ตัวเลือก ค (ข้อสาม)</option>
+                                        <option value="3">ตัวเลือก ง (ข้อสี่)</option>
+                                    </select>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">คำอธิบายกลไกเชิงวิชาการ</label>
+                                    <input type="text" id="manual-explanation" placeholder="ระบุเหตุผล ข้อดี ข้อเด่น และพิษวิทยาประกอบการเฉลย..." class="w-full rounded-xl border-slate-200 bg-white border p-2 text-sm">
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end gap-2 pt-2">
+                                <button onclick="saveManualQuestion()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-title font-bold px-4 py-2 rounded-xl text-xs transition">
+                                    บันทึกคำถามลงระบบหน่วยความจำ
+                                </button>
+                                <button onclick="toggleManualForm()" class="bg-white border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold px-4 py-2 rounded-xl text-xs transition">
+                                    ยกเลิก
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- DB Display Filter -->
+                        <div class="flex items-center gap-3">
+                            <span class="text-xs font-semibold text-slate-700 shrink-0">กรองตามหัวข้อวิชา:</span>
+                            <select id="db-category-filter" onchange="renderQuestionDbTable()" class="rounded-xl border-slate-200 bg-slate-50 border px-3 py-1.5 text-xs focus:bg-white focus:outline-none transition">
+                                <!-- Options added dynamically -->
+                            </select>
+                        </div>
+
+                        <!-- DB List Container -->
+                        <div class="overflow-x-auto border border-slate-100 rounded-2xl">
+                            <table class="min-w-full divide-y divide-slate-100 text-left">
+                                <thead class="bg-slate-50">
+                                    <tr>
+                                        <th class="px-6 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider">โจทย์แบบทดสอบ</th>
+                                        <th class="px-6 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider">หมวดหมู่หัวข้อ</th>
+                                        <th class="px-6 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider">จำนวนตัวเลือก</th>
+                                        <th class="px-6 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider">เฉลย</th>
+                                        <th class="px-6 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider text-right">การจัดการ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="db-questions-tbody" class="bg-white divide-y divide-slate-100 text-xs">
+                                    <!-- Populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- TAB 3: USER GUIDE & EDUCATION -->
+            <div id="tab-guide" class="tab-content hidden space-y-6">
+                <div class="bg-white border border-slate-200 rounded-2xl p-6 sm:p-8 shadow-sm">
+                    <h2 class="text-2xl font-title font-bold text-slate-900">คู่มือผู้ใช้และการขยายระบบสำหรับกลุ่มงาน</h2>
+                    <p class="text-slate-600 mt-2 text-sm sm:text-base leading-relaxed">
+                        แอปพลิเคชันเวอร์ชันนี้ได้รับการออกแบบให้ประหยัดพลังงาน ไร้ความกังวลเรื่องโควตา API หรืออัตราการตอบสนองที่ล่าช้าของ AI ด้วยระบบออฟไลน์ที่เสถียรที่สุด 100%
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+                        <h3 class="text-lg font-title font-bold text-medical-800">ขั้นตอนการนำไปใช้แต่งข้อสอบวิชาอื่นๆ ด้วยตนเอง</h3>
+                        <ol class="list-decimal list-inside text-slate-600 text-xs sm:text-sm space-y-3 leading-relaxed">
+                            <li><strong>ดาวน์โหลดโครงสร้าง:</strong> ไปที่แท็บ 'ระบบหลังบ้าน' แล้วก๊อปปี้เทมเพลตมาตรฐาน JSON ของเรา</li>
+                            <li><strong>ส่งงานต่อให้ AI:</strong> นำเทมเพลต JSON นี้ไปพิมพ์ใน ChatGPT โดยระบุความต้องการของคุณ เช่น <em>"ช่วยตั้งคำถามเรื่อง เภสัชวิทยาโรคหัวใจ จำนวน 10 ข้อ ในโครงสร้าง JSON รูปแบบนี้เท่านั้น บรรจุคำอธิบายการแพทย์เป็นภาษาไทยให้ครบถ้วน"</em></li>
+                            <li><strong>อัปโหลดแบบทดสอบ:</strong> นำข้อมูล JSON ดิบที่ ChatGPT สรุปคำตอบกลับมาเซฟเป็นไฟล์แล้วกดนำเข้าในบราวเซอร์ คลังข้อมูลแบบประเมินจะอัปเดตแปรสภาพโดยอัตโนมัติ</li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+                        <h3 class="text-lg font-title font-bold text-teal-700">คำศัพท์คีย์เวิร์ดทางวิชาการที่สกัดจากรูปภาพ</h3>
+                        <div class="space-y-3 text-xs text-slate-600 leading-relaxed">
+                            <p>🧬 <strong>Fractional Cell Kill & Log-Kill:</strong> อัตราส่วนการทำลายเซลล์มะเร็งด้วยยาเคมีบำบัดในสัดส่วนที่เป็นเปอร์เซ็นต์คงที่ในแต่ละรอบของการรักษา</p>
+                            <p>🛡️ <strong>Checkpoint Inhibitors (CTLA-4, PD-1):</strong> กลุ่มยาลดระบบหักห้ามกระตุ้น T-cell ทำให้ภูมิคุ้มกันร่างกายกลับมาตื่นตัวจู่โจมทำลายก้อนมะเร็ง</p>
+                            <p>🩸 <strong>Myelosuppression:</strong> ความเป็นพิษที่มีขอบเขตจำกัดทางขนาดของยาเคมีบำบัด (Dose-limiting toxicity) โดยส่งผลต่อการกดการผลิตเม็ดเลือดแดง-ขาวและเกล็ดเลือดในไขกระดูก</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Global Modal Alert (No native alert fallback) -->
+    <div id="custom-modal" class="hidden fixed inset-0 z-50 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm transition-opacity" aria-hidden="true" onclick="closeCustomModal()"></div>
+            <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+            <div class="inline-block align-middle bg-white rounded-2xl text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border">
+                <div class="bg-white px-6 pt-6 pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div id="modal-icon-bg" class="mx-auto shrink-0 flex items-center justify-center h-12 w-12 rounded-full sm:mx-0 sm:h-10 sm:w-10">
+                            <!-- Dynamic Icon -->
+                            <svg id="modal-icon" class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"></svg>
+                        </div>
+                        <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
+                            <h3 class="text-lg font-title font-bold text-slate-900" id="modal-title">หัวข้อแจ้งเตือน</h3>
+                            <div class="mt-2">
+                                <p class="text-sm text-slate-500 leading-relaxed" id="modal-message">รายละเอียดข้อมูลที่ต้องการแจ้งให้ผู้ใช้ทราบ</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-slate-50 px-6 py-4 flex flex-row-reverse gap-2">
+                    <button type="button" id="modal-confirm-btn" class="w-full sm:w-auto inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2.5 text-sm font-semibold text-white focus:outline-none transition">
+                        ยืนยัน
+                    </button>
+                    <button type="button" id="modal-cancel-btn" onclick="closeCustomModal()" class="w-full sm:w-auto inline-flex justify-center rounded-xl border border-slate-200 px-4 py-2.5 bg-white text-sm font-medium text-slate-700 hover:bg-slate-50 focus:outline-none transition">
+                        ยกเลิก
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Simple Toast Notification Overlay -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-sm w-full"></div>
+
+    <script>
+        const DEFAULT_QUESTIONS = [
+            // --- IMAGE 1 (Q1 to Q16) ---
+            { id: "q1", question: "แนวคิดใดอธิบายสัดส่วนการทำลายเซลล์มะเร็ง (fractional cell kill) ที่เกิดจากยาต้านมะเร็งหลายชนิด?", options: ["ขนาดยารักษาโรค (Therapeutic index)", "สมมติฐานล็อก-คิลล์ (Log-kill hypothesis)", "การหมุนเวียนสารผ่านตับและลำไส้ (Enterohepatic recycling)", "ภาวะดื้อยาเฉียบพลัน (Tachyphylaxis)"], correctAnswerIndex: 1, explanation: "สมมติฐาน Log-kill อธิบายว่ายาต้านมะเร็งในขนาดการรักษาที่คงที่ จะสามารถสังหารจำนวนเปอร์เซ็นต์คงที่ (Fractional) ของเซลล์มะเร็งแทนที่จะเป็นจำนวนหัวคงที่เสมอ", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q2", question: "ยาต้านแอนติเมตาบอไลต์ เช่น Methotrexate ออกฤทธิ์ยับยั้งเซลล์หลักๆ ในวัฏจักรเซลล์ระยะใด?", options: ["ระยะพัก G0 (G0 phase)", "ระยะเติบโต G1 (G1 phase)", "ระยะสังเคราะห์ดีเอ็นเอ S (S phase)", "ระยะแบ่งนิวเคลียส M (M phase)"], correctAnswerIndex: 2, explanation: "Methotrexate ยับยั้งวิถีสังเคราะห์โฟเลตและนิวคลีโอไทด์จำเพาะเจาะจงสูงสุดกับเซลล์ที่กำลังสร้างสาย DNA ในระยะ S (S phase)", category: "แอนติเมตาบอไลต์ (Antimetabolites)" },
+            { id: "q3", question: "ก้อนมะเร็งที่มีอัตราการแบ่งตัวเติบโตสูง (High growth fraction) มักจะไวต่อการรักษารูปแบบใดมากที่สุด?", options: ["ยาเคมีบำบัดจำเพาะระยะวัฏจักรเซลล์ (Cell-cycle active chemotherapy)", "ระบบภูมิคุ้มกันบำบัดทางอ้อม (Passive immunotherapy)", "การบำบัดเสริมด้วยฮอร์โมนทดแทน (Hormone replacement therapy)", "สารบำรุงป้องกันรังสีรักษา (Radioprotective agents)"], correctAnswerIndex: 0, explanation: "เซลล์มะเร็งที่เติบโตแบ่งตัวเร็วมากจะมีสัดส่วนจำนวนเซลล์อยู่ในระยะวัฏจักรมาก จึงไวต่อยาเคมีบำบัดที่ออกฤทธิ์จำเพาะช่วงระยะแบ่งตัว", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q4", question: "เหตุผลหลักในการนำเอายาเคมีบำบัดหลายชนิดมารวมกันในการรักษา (Combination Chemotherapy) คืออะไร?", options: ["เพื่อเพิ่มความเค้นและอาการเป็นพิษร่วมกัน", "เพื่อที่จะได้ลดความถี่ในการเฝ้าระวังผู้ป่วย", "เพื่อหลีกเลี่ยงวัฏจักรการแบ่งตัวของเซลล์", "เพื่อเข้าทำลายเป้าหมายทางชีวเคมีที่แตกต่างกันและลดโอกาสดื้อยา"], correctAnswerIndex: 3, explanation: "การใช้ยาร่วมกันช่วยมุ่งโจมตีวิถีสังเคราะห์คนละเส้นทาง เพื่อลดการขยายสายพันธุ์เซลล์ที่ดื้อยา (Reduce drug resistance)", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q5", question: "การแสดงออกที่เพิ่มขึ้นของ P-glycoprotein มีส่วนทำให้เกิดอาการดื้อยาต้านมะเร็งผ่านกลไกใดเป็นหลัก?", options: ["การเพิ่มความหนาแน่นพันธะเชื่อมดีเอ็นเอ (DNA cross-linking)", "การเร่งปั๊มขับยาออกจากตัวเซลล์มากขึ้น (Increasing drug efflux)", "การบล็อกระบบย่อยสลายเซลล์ตัวเอง (Apoptosis)", "การสกัดกั้นการใช้กรดโฟลิกของเซลล์"], correctAnswerIndex: 1, explanation: "P-glycoprotein ทำหน้าที่เป็น efflux pump คอยเร่งขับยารักษามะเร็งออกจากเซลล์ตัวรับก่อนที่จะเข้าทำลายนิวเคลียส", category: "กลไกการดื้อยาต้านมะเร็ง" },
+            { id: "q6", question: "ความเป็นพิษทางระบบเลือดชนิดใดที่มีส่วนจำกัดขนาดยา (Dose-limiting toxicity) ของยาต้านมะเร็งส่วนใหญ่?", options: ["การกดไขกระดูกสร้างเม็ดเลือดขาวต่ำ (Myelosuppression)", "ภาวะคอพอกเป็นพิษรุนแรง (Hyperthyroidism)", "ความบกพร่องของกระดูกหูชั้นใน (Otosclerosis)", "การเกิดโรคต้อกระจกในลูกตา (Cataract formation)"], correctAnswerIndex: 0, explanation: "การกดการสร้างเม็ดเลือดขาว เม็ดเลือดแดง และเกล็ดเลือดในไขกระดูก (Myelosuppression) เป็นพิษร้ายแรงที่มีผลจำกัดปริมาณความถี่สูงสุดของการให้ยาเคมีบำบัด", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q7", question: "ยาที่ออกฤทธิ์ขัดขวางการแบ่งตัวของเซลล์มะเร็งในช่วง Mitosis (ระยะแบ่งนิวเคลียส) จัดอยู่ในกลุ่มประเภทใด?", options: ["ยาไม่จำเพาะเจาะจงระยะเซลล์ (Cell-cycle nonspecific)", "จำเพาะเจาะจงกับระยะ M (M-phase specific)", "จำเพาะเจาะจงกับระยะ S เท่านั้น (S-phase specific)", "จำเพาะเจาะจงกับระยะเติบโต G0 (G0 selective)"], correctAnswerIndex: 1, explanation: "ยาที่รบกวนแกนหมุนสปินเดิลของเซลล์ในช่วงแบ่งขั้วอย่าง Paclitaxel หรือ Vincristine ถือเป็นยาจำเพาะระยะ M (M-phase specific)", category: "สารกลุ่มไมโครทูบูล" },
+            { id: "q8", question: "กลุ่มอาการเซลล์มะเร็งสลายตัวเฉียบพลัน (Tumor Lysis Syndrome) มักจะเกิดขึ้นง่ายที่สุดหลังจากให้การรักษามะเร็งชนิดใด?", options: ["มะเร็งผิวหนังชนิดคาร์ซิโนมาเบซัล (Basal cell carcinoma)", "เนื้องอกก้อนไขมันทั่วไป (Lipoma)", "เนื้องอกในสมองชนิดเยื่อบุหุ้มสมองอักเสบ (Meningioma)", "มะเร็งต่อมน้ำเหลืองชนิดเบอร์กิตต์ (Burkitt lymphoma)"], correctAnswerIndex: 3, explanation: "Burkitt Lymphoma เป็นมะเร็งเม็ดเลือดชนิดแบ่งตัวอย่างรวดเร็วมาก เมื่อโดนยาเคมีทำลาย เซลล์ปริมาณมหาศาลจะแตกสลายออกสู่กระแสเลือดในคราวเดียว ก่อให้เกิดภาวะฟอสเฟต โพแทสเซียม และกรดฟอสฟอริกพุ่งสูงจนหัวใจวายได้", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q9", question: "ช่องทางการให้ยาช่องทางใดถูกใช้เป็นระบบหลักในการรักษามะเร็งเพื่อหวังผลทางระบบ (Systemic Administration) ส่วนใหญ่?", options: ["ทาผิวหนังเฉพาะที่ (Topical)", "การสูดดมไอระเหย (Inhalational)", "การฉีดเข้าทางหลอดเลือดดำ (Intravenous)", "การอมใต้ลิ้น (Sublingual)"], correctAnswerIndex: 2, explanation: "ยาต้านมะเร็งส่วนใหญ่มักระคายเคืองกระเพาะอาหารและมีผลข้างเคียงเฉพาะที่ จึงนิยมให้ทางหลอดเลือดดำ (Intravenous) เพื่อกระจายยาไปทั่วร่างกายอย่างสมบูรณ์", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q10", question: "ยาชนิดใดช่วยในการป้องกันผลข้างเคียงกระเพาะปัสสาวะอักเสบชนิดมีเลือดออก (Hemorrhagic cystitis) ในผู้ป่วยที่รับยา Cyclophosphamide หรือ Ifosfamide?", options: ["ยาเมสนา (Mesna)", "ยาลิวโคโวริน (Leucovorin)", "ยาเดกซ์ราโซเซน (Dexrazoxane)", "ยาฟิลกราสทิม (Filgrastim)"], correctAnswerIndex: 0, explanation: "Mesna ทำปฏิกิริยาจับกับสาร Acrolein ในปัสสาวะที่เป็นพิษสูง เพื่อปกป้องเยื่อบุกระเพาะปัสสาวะจากการระคายเคืองจนเลือดออก", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q11", question: "ภาวะการดื้อยาต้านมะเร็งกลุ่มทองคำขาว (Platinum compounds) ที่เกิดจากการซ่อมแซม DNA adduct ได้ดีขึ้น แสดงถึงลักษณะแบบใด?", options: ["ดัชนีการรักษาโรคเพิ่มขึ้น", "การเร่งวงรอบเซลล์ให้สั้นลง", "การระคายเคืองหลอดเลือดอย่างเฉียบพลัน", "การเพิ่มขีดความสามารถซ่อมแซมดีเอ็นเอ (Enhanced DNA repair)"], correctAnswerIndex: 3, explanation: "การที่มะเร็งพัฒนาศักยภาพการแกะรอยและเข้าซ่อมแซมจุดบกพร่องบนสาย DNA ที่ถูกยาจับเหนี่ยวรั้งไว้ได้เร็วกว่าปกติ ถือเป็นการเพิ่มขีดจำกัดการซ่อมแซมดีเอ็นเอ (Enhanced DNA repair)", category: "กลไกการดื้อยาต้านมะเร็ง" },
+            { id: "q12", question: "ยาที่ออกฤทธิ์แบบไม่จำเพาะเจาะจงระยะวัฏจักรเซลล์ (Cell-cycle nonspecific drugs) มีคำนิยามหรือลักษณะตรงกับข้อใดมากที่สุด?", options: ["ออกฤทธิ์สกัดทำลายเซลล์เฉพาะในระยะ M เท่านั้น", "ไม่มีผลทำลายเซลล์ปกติที่กำลังพักตัว", "ออกฤทธิ์ได้ดีในหลายระยะวัฏจักรของเซลล์ รวมถึงระยะพักตัว G0", "ไม่ก่อให้เกิดความเสียหายกับโครงสร้างสายพันธุกรรมดีเอ็นเอ"], correctAnswerIndex: 2, explanation: "Cell-cycle nonspecific drugs สามารถออกฤทธิ์ทำลายเซลล์ที่กำลังพัก (G0) หรือเซลล์ที่อยู่นอกระยะจำเพาะได้อย่างมีประสิทธิภาพ", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q13", question: "เหตุใดกระบวนการรักษาด้วยยาเคมีบำบัดส่วนใหญ่จึงจำเป็นต้องจัดรอบแบ่งเป็นวัฏจักร (Chemotherapy cycles)?", options: ["เพื่อส่งเสริมและกระตุ้นให้อาเจียนสม่ำเสมอ", "เพื่อให้เวลาและโอกาสเนื้อเยื่อเซลล์ปกติได้ฟื้นตัวจากพิษสะสม (Allow recovery of normal tissues)", "เพื่อหลีกเลี่ยงโอกาสมะเร็งพัฒนาการดื้อยาทั้งระบบ", "เพื่อสกัดกั้นการร่วงของเส้นผมถาวร"], correctAnswerIndex: 1, explanation: "การให้ยาเป็นรอบ (Cycles) ช่วยทิ้งช่วงว่างให้เซลล์ที่แบ่งตัวเร็วของร่างกายผู้ป่วย เช่น ไขกระดูกและระบบเยื่อบุทางเดินอาหาร ได้เยียวยาและเติบโตขึ้นใหม่หลังถูกทำลาย", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q14", question: "คุณลักษณะของก้อนมะเร็งชนิดใดที่สามารถพยากรณ์การตอบสนองได้ดีเยี่ยมต่อยาเคมีบำบัดชนิดสกัดการแบ่งตัว?", options: ["มะเร็งที่มีอัตราการแบ่งตัวช้าและเงียบสงบ", "มะเร็งที่ซ่อนตัวเงียบสงบในระยะพักตัวนาน", "มะเร็งที่มีอัตราการผลัดเปลี่ยนแบ่งตัวของเซลล์สูงมาก (Rapid cell turnover)", "ก้อนมะเร็งที่มีผังพังผืดหนาแน่นสะสมโดยรอบ"], correctAnswerIndex: 2, explanation: "เซลล์มะเร็งที่มีการเติบโตหมุนเวียนแบ่งตัวอย่างรวดเร็ว (Rapid cell turnover) จะยิ่งมีช่องโหว่ทางพันธุกรรมให้ยาเคมีแทรกแซงขัดขวางได้ง่ายและก้อนยุบตัวได้ไว", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q15", question: "การรั่วซึมของยากลุ่ม Vesicant (ยาระคายเคืองรุนแรง) ออกนอกหลอดเลือดดำสู่เนื้อเยื่อข้างเคียง (Extravasation) อาจส่งผลร้ายแรงอย่างไร?", options: ["เนื้อเยื่อเฉพาะที่อักเสบ เน่าเปื่อย และตายอย่างรุนแรง (Severe local tissue necrosis)", "การเกิดก้อนนิ่วสะสมในไตอย่างเฉียบพลัน", "การเพิ่มขึ้นของค่าโพแทสเซียมในเลือดทันที", "ต่อมไทรอยด์เป็นพิษจากสารเคมี"], correctAnswerIndex: 0, explanation: "ยาเคมีบำบัดกลุ่ม Vesicant เช่น Doxorubicin หากรั่วไหลออกนอกสายสวนจะเหนี่ยวนำให้เกิดปฏิกิริยาเคมีทำลายผิวหนังจนหลุดลอกอักเสบกลายเป็นแผลเน่าเปื่อยรุนแรง", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q16", question: "คำนิยามเกี่ยวกับ 'ความเข้มข้นของขนาดการรักษายาเคมีบำบัด' (Dose intensity) ในข้อใดถูกต้องและแม่นยำสูงสุด?", options: ["การให้ขนาดยาต่ำลงเพื่อให้ผู้ป่วยทนพิษได้ง่ายขึ้น", "ไม่มีความเกี่ยวข้องหรือผลในการรักษามะเร็งให้หายขาด", "การเจือจางขนาดที่ได้รับในแต่ละรอบให้น้อยลง", "การได้รับขนาดยาสูงสุดและตรงเวลาตามขีดจำกัดช่วยเพิ่มโอกาสกำจัดมะเร็งแต่อาจเพิ่มระดับพิษรุนแรงขึ้นตามลำดับ"], correctAnswerIndex: 3, explanation: "Dose intensity หมายถึงปริมาณการได้รับยาสูงสุดต่อหน่วยเวลา การรักษาระดับความเข้มข้นตรงรอบช่วยส่งผลฆ่ามะเร็งได้สูงสุดแต่ต้องรับมือกับภาวะเป็นพิษที่เพิ่มขึ้น", category: "หลักการเคมีบำบัดมะเร็ง" },
+
+            // --- IMAGE 2 (Q17 to Q32) ---
+            { id: "q17", question: "ดัชนีการรักษาโรค (Therapeutic index) ในวิชาเภสัชวิทยาเปรียบเทียบสิ่งใดเพื่อหาจุดปลอดภัย?", options: ["ขนาดของยาที่แก้อาเจียนเปรียบเทียบกับขนาดที่ทำให้อาเจียน", "ขนาดของยาที่ได้ผลการรักษาเปรียบเทียบกับขนาดที่เริ่มก่อพิษรุนแรง (Effective dose vs toxic dose)", "เวลาการกระจายตัวของยากับค่าครึ่งชีวิตของยา", "สัดส่วนขนาดก้อนมะเร็งกับระยะลุกลามของโรค"], correctAnswerIndex: 1, explanation: "Therapeutic Index คือ อัตราส่วนระหว่างขนาดยาที่ทำให้เกิดพิษต่อระบบร่างกาย เปรียบเทียบกับขนาดยาที่ได้ผลสัมฤทธิ์ทางการรักษาสูงสุด", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q18", question: "กระบวนการสร้างและสังเคราะห์ดีเอ็นเอสายใหม่ (DNA Synthesis) เกิดขึ้นจำเพาะที่วัฏจักรเซลล์ช่วงใด?", options: ["ระยะพักเตรียมตัว G0 (G0 phase)", "ระยะฟื้นฟูเจริญเติบโต G1 (G1 phase)", "ระยะจำลองแบบดีเอ็นเอ S (S phase)", "ระยะแบ่งแกนไมโทซิส M (M phase)"], correctAnswerIndex: 2, explanation: "DNA synthesis หรือการถอดรหัสทำสำเนาพิมพ์สองของยีนดีเอ็นเอ เกิดขึ้นในระยะ S (Synthesis Phase)", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q19", question: "กระบวนการช่วยเหลือเยียวยาร่างกายผู้ป่วย (Rescue therapy) หลังจากได้รับยา Methotrexate ขนาดสูงมาก ได้รับการจัดการด้วยยาใด?", options: ["ยาเมสนา (Mesna)", "ยาลิวโคโวริน (Leucovorin)", "ยาแรสบูริเคส (Rasburicase)", "ยาเดกซ์ราโซเซน (Dexrazoxane)"], correctAnswerIndex: 1, explanation: "Leucovorin (Folinic acid) ทำหน้าที่เป็นสารตั้งต้นกลุ่มโฟเลตสำเร็จรูป เข้าไปช่วยชีวิตเซลล์ปกติของร่างกายให้ดำเนินวัฏจักรสังเคราะห์ยีนต่อได้หลังถูกขัดขวางด้วยยามะเร็ง", category: "แอนติเมตาบอไลต์ (Antimetabolites)" },
+            { id: "q20", question: "เนื้องอกที่ต่อต้านยาโดยพัฒนาการสกัดกั้นตัวรับยาไม่ให้ผ่านเข้าเยื่อหุ้มเซลล์ จัดเป็นกลไกการดื้อยารูปแบบใด?", options: ["การลดอัตราการสะสมสารของยาภายในเซลล์ (Decreased intracellular accumulation)", "การส่งเสริมการยุบตัวทำลายตัวเองของเนื้องอก", "การกระตุ้นให้ร่างกายตอบสนองดีต่อรังสีรักษา", "ภาวะการแพ้ยาเคมีเฉียบพลัน"], correctAnswerIndex: 0, explanation: "การลดช่องทางการนำเข้าตัวยา (Influx) หรือดัดแปลงตัวรับผ่านเข้าเยื่อหุ้มเซลล์ ส่งผลให้ระดับตัวยาสะสมภายในนิวเคลียสต่ำจนฆ่าเซลล์ไม่สำเร็จ", category: "กลไกการดื้อยาต้านมะเร็ง" },
+            { id: "q21", question: "การจัดตารางเวลาการให้ยาเคมีบำบัดที่จำเพาะกับระยะ S (S-phase specific drugs) มีวัตถุประสงค์ข้อใดเป็นเป้าหมายหลัก?", options: ["เพื่อลดอาการคลื่นไส้และอาเจียนในระยะสั้น", "เพื่อกระจายการเข้าทำลายเซลล์มะเร็งในช่วงระยะวัฏจักรที่มีความเปราะบางสูงสุด (Target vulnerable phase)", "เพื่อหลีกเลี่ยงภาวะหัวล้านเฉียบพลัน", "เพื่อเพิ่มการสร้างผังพังผืดในก้อนมะเร็ง"], correctAnswerIndex: 1, explanation: "เนื่องจากยาระยะ S จะออกฤทธิ์ขัดขวางเอนไซม์ดีเอ็นเอ การปล่อยตัวยาให้คงระดับสม่ำเสมอในช่วงเวลากลางวัฏจักรจะช่วยสกัดฆ่าเซลล์ที่เพิ่งเริ่มแบ่งตัวได้อย่างทั่วถึง", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q22", question: "เนื้อเยื่อหรือเซลล์ปกติประเภทใดของมนุษย์ที่มีอัตราการผลัดเซลล์สูงมาก ส่งผลให้เกิดพิษแทรกซ้อนรุนแรงหลังรับยาเคมีบำบัด?", options: ["เซลล์พังผืดกล้ามเนื้อหัวใจ", "ไขกระดูกและเนื้อเยื่อสร้างเลือด (Bone marrow)", "เครือข่ายระบบปลายประสาทสมอง", "แก้วตาและเลนส์ม่านตา"], correctAnswerIndex: 1, explanation: "เซลล์ต้นกำเนิดในไขกระดูก (Bone marrow) มีวงรอบการแบ่งตัวเกือบตลอดเวลา ส่งผลให้ได้รับผลกระทบเป็นพิษถูกกดการสร้างเม็ดเลือดขาวและเกล็ดเลือดอย่างเลี่ยงไม่ได้", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q23", question: "การเติบโตขึ้นมาใหม่อย่างรวดเร็วของเซลล์มะเร็งในช่วงระยะเวลาพักว่างระหว่างวัฏจักรเคมีบำบัด มีชื่อเรียกอย่างเป็นทางการว่าอย่างไร?", options: ["การกระตุ้นเสริมฤทธิ์กัน (Potentiation)", "การเยียวยาเซลล์ตัวรับ (Rescue)", "การแพร่พันธุ์ขยายกลับมาเติบโตใหม่ (Repopulation)", "การช่วยฟื้นฟูสภาพเซลล์"], correctAnswerIndex: 2, explanation: "Repopulation อธิบายถึงพฤติกรรมของเซลล์มะเร็งส่วนที่เหลือรอดจากการถูกทำลายรอบแรก และพยายามเร่งแบ่งตัวเพิ่มปริมาณกลับมาในช่วงหยุดพักฟื้นฟูเนื้อเยื่อปกติ", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q24", question: "การพยายามรักษาระดับขนาดของยาเคมีบำบัดและช่วงเวลาการให้ยาให้ครบถ้วนและตรงตามรอบที่กำหนดเพื่อการหวังผลรักษาขาด จะช่วยรักษาสิ่งใด?", options: ["ความพร้อมในการดูดซึมยาของร่างกาย (Bioavailability)", "การป้องกันภาวะดื้อยาข้ามกลุ่ม", "การทำงานทำลายยาที่ตับอย่างเป็นระบบ", "ความเข้มข้นและขนาดยารวมที่มีผลการรักษามะเร็งเด่นชัด (Dose intensity)"], correctAnswerIndex: 3, explanation: "การให้ยาครบขนาดเต็ม (Full doses) และตรงช่วงเวลาที่แพลนไว้โดยไม่มีการเลื่อนรอบออกไปโดยไม่จำเป็น จะช่วยรักษาระดับความสมบูรณ์ในการทำลายล้างมะเร็ง (Dose intensity)", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q25", question: "ยากลุ่มเคมีบำบัดกลุ่มใดจัดเป็นกลุ่มยาก่อพิษระคายเคืองหลอดเลือดเนื้อเยื่อเน่าเปื่อยระดับคลาสสิก (Classic vesicant)?", options: ["ยาดอกโซรูบิซิน (Doxorubicin)", "ยาออนแดนเซทรอน (Ondansetron)", "ยาอัลโลพูรินอล (Allopurinol)", "ยาเพรดนิโซน (Prednisone)"], correctAnswerIndex: 0, explanation: "Doxorubicin เป็นยากลุ่ม Anthracycline ที่มีคุณสมบัติก่อความเสียหายทำลายสลายผิวหนังเซลล์รุนแรงเฉียบพลันหากเกิดการรั่วไหลออกนอกเส้นเลือดดำ", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q26", question: "หลักการที่ดีที่สุดในการออกแบบจับคู่ยารักษามะเร็งหลายสเปกตรัม (Combination chemotherapy) คืออะไร?", options: ["ผสมยาที่มีกลไกออกฤทธิ์ทางชีวเคมีเหมือนกันทุกประการ", "เลือกใช้ยาที่มีกลไกทำลายมะเร็งคนละรูปแบบและไม่มีผลข้างเคียงเป็นพิษซ้ำซ้อนกัน (Nonoverlapping toxicities)", "หลีกเลี่ยงการรวมผลลัพธ์ในการทำงานร่วมกัน", "ลดขนาดยาทั้งสองชนิดลงไปต่ำกว่าระดับมาตรฐานต่ำสุด"], correctAnswerIndex: 1, explanation: "การผสมกลไกและเลี่ยงความเป็นพิษในอวัยวะเดียวกัน (Nonoverlapping toxicities) ช่วยป้องกันไม่ให้คนไข้เกิดความเสียหายรุนแรงในจุดเดียว เช่น เลี่ยงการใช้ยาที่มีพิษต่อไตสองชนิดร่วมกัน", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q27", question: "ยากลุ่มที่ออกฤทธิ์จำเพาะช่วงระยะวัฏจักรเซลล์ (Cell-cycle specific drugs) ทำหน้าที่รักษามะเร็งได้ดีที่สุดต่อกลุ่มก้อนมะเร็งประเภทใด?", options: ["เนื้องอกที่มีหลอดเลือดมาเลี้ยงในสัดส่วนต่ำ", "ก้อนเนื้อมะเร็งที่มีการก่อสร้างพังผืดหนาแน่นสะสม", "ก้อนมะเร็งที่มีสัดส่วนอัตราการเติบโตแบ่งตัวสูงมาก (High growth fraction)", "ก้อนมะเร็งประเภทกระดูกหนาและมีหินปูนเกาะหนาแน่น"], correctAnswerIndex: 2, explanation: "มะเร็งที่มีค่า High growth fraction หมายถึงมะเร็งที่จำนวนเซลล์กำลังเร่งจำลองรหัสยีน จึงตกเป็นเป้าหมายที่ได้ผลดีสูงสุดต่อกลุ่มยาประเภทจำเพาะเจาะจงระยะวัฏจักร", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q28", question: "การให้ยาเคมีบำบัดเสริมหลับส่งท้ายการรักษาหลัก (Adjuvant Chemotherapy) มีเป้าหมายสูงสุดเพื่อสิ่งใด?", options: ["เพื่อระบายน้ำในช่องท้องผู้ป่วยมะเร็งตับระยะลุกลาม", "เพื่อนำมาเป็นยาทดแทนขั้นตอนผ่าตัดหลัก", "เพื่อช่วยขจัดและทำลายมะเร็งขนาดจิ๋วที่แฝงตัวมองไม่เห็นในระดับเซลล์ (Eradicate micrometastatic disease)", "เพื่อทำหน้าที่วินิจฉัยค้นหาตำแหน่งของมะเร็งกระดูก"], correctAnswerIndex: 2, explanation: "Adjuvant chemotherapy ให้หลังจากกระบวนการผ่าตัดเอาก้อนหลักออกไปแล้ว เพื่อหวังผลกำจัดเซลล์มะเร็งเม็ดจิ๋วที่อาจหลงเหลือแฝงเร้นในร่างกายป้องกันไม่ให้โรคกลับมาเป็นซ้ำ", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q29", question: "การให้ยาเคมีบำบัดเพื่อเตรียมความพร้อมล่วงหน้าก่อนรักษาหลัก (Neoadjuvant Chemotherapy) มีเป้าหมายสูงสุดคืออะไร?", options: ["เพื่อลดขนาดของก้อนมะเร็งให้เล็กลงก่อนการผ่าตัด (Shrink tumor before surgery)", "เพื่อช่วยบำบัดฟื้นฟูอาการโลหิตจางรุนแรง", "เพื่อสกัดป้องการอักเสบจากเชื้อราในปอด", "เพื่อเป็นหลักประกันตรวจหาระดับเซลล์ยีนมะเร็ง"], correctAnswerIndex: 0, explanation: "Neoadjuvant Chemotherapy เป็นการบำบัดเบื้องต้นก่อนการผ่าตัดหลัก เพื่อลดขนาดของก้อนให้มีขนาดกะทัดรัด ช่วยให้แพทย์สามารถผ่าตัดแยกชิ้นเนื้อออกมาได้หมดและถนอมอวัยวะปกติโดยรอบได้ดียิ่งขึ้น", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q30", question: "การบำบัดให้ยากลุ่มจำเพาะภูมิภาคต่อตำแหน่งมะเร็งที่ตับโดยตรง สามารถกระทำได้ด้วยวิธีมาตรฐานใดตามแบบแผนทางการแพทย์?", options: ["การฉีดเข้าไปในน้ำไขสันหลังโดยตรง", "การฉีดส่งสารเคมีบำบัดผ่านทางสายยางหลอดเลือดแดงตับโดยตรง (Hepatic arterial infusion)", "การอมพ่นละอองทางจมูกเชิงระบบ", "การสั่งอมน้ำยาอมบ้วนปากบ่อยครั้ง"], correctAnswerIndex: 1, explanation: "Hepatic arterial infusion (HAI) ช่วยส่งต่อยาต้านมะเร็งความเข้มข้นสูงพิเศษตรงเข้าสู่ตับเพื่อหวังผลสลายเนื้องอกได้อย่างตรงจุดและลดปริมาณผลข้างเคียงในอวัยวะอื่นๆ ทั่วร่างกาย", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q31", question: "เหตุใดเซลล์ร่างกายปกติที่อยู่ในสถานะพักตัว จึงรอดพ้นจากอานุภาพการทำลายของยากลุ่มสกัดการแบ่งตัว?", options: ["เนื่องจากเซลล์ปกติขาดโครงสร้างทางนิวเคลียส", "เนื่องจากเซลล์ปกติแฝงตัวอยู่ในระยะพัก G0 นอกเหนือระยะเป้าหมายทำลาย (Are in G0 outside target phase)", "เนื่องจากเซลล์ปกติสะสมตัวรับกลุ่มยีน HER2 มากเกินปกติ", "เนื่องจากเซลล์เหล่านั้นไม่มีกระบวนการจำลองพันธุกรรมเลย"], correctAnswerIndex: 1, explanation: "เซลล์ปกติจำนวนมากที่ไม่ได้อยู่ในวงรอบการเร่งแบ่งตัวจะนอนสงบตัวอยู่ภายนอกในสถานะ G0 จึงหลีกเลี่ยงกระบวนการสกัดกั้นและขัดขวางสายพันธุกรรมของยากลุ่มนี้ได้เป็นอย่างดี", category: "หลักการเคมีบำบัดมะเร็ง" },
+            { id: "q32", question: "การรักษาด้วยยาเคมีบำบัดในรอบถัดไปมักจะต้องถูกระงับเลื่อนกำหนดออกไปทันที หากตรวจพบความผิดปกติของระบบเลือดในลักษณะใด?", options: ["ภาวะปริมาณเม็ดเลือดขาวชนิดนิวโทรฟิลต่ำกว่าเกณฑ์ความปลอดภัยอย่างมาก (Neutropenia)", "ภาวะสายตาผิดปกติจนเกิดสายตายาวขึ้น", "ภาวะการแสดงอาการสะเก็ดเงินลอกทั่วตัว", "ภาวะลำไส้อุดตันและท้องผูกรุนแรงสะสม"], correctAnswerIndex: 0, explanation: "ภาวะนิวโทรฟิลต่ำรุนแรง (Neutropenia) เป็นปัจจัยเสี่ยงสูงสุดที่อาจชักนำให้คนไข้เกิดการติดเชื้อในกระแสเลือดถึงแก่ชีวิต แพทย์จึงจำเป็นต้องชะลอการให้ยารอบถัดไปจนกว่าร่างกายจะฟื้นตัวสร้างภูมิคุ้มกันกลับมาพอเหมาะ", category: "ความเป็นพิษและอาการข้างเคียง" },
+
+            // --- IMAGE 3 (Q33 to Q48) ---
+            { id: "q33", question: "ยาเคมีบำบัด Cyclophosphamide ได้รับกระบวนการเผาผลาญปรับเปลี่ยนโมเลกุลเพื่อให้ฤทธิ์ยาพร้อมทำงาน (Activated) ที่อวัยวะใด?", options: ["ต่อมหมวกไตและไต", "กระบวนการทำลายและดัดแปลงโมเลกุลที่ตับผ่านกลุ่มเอนไซม์ CYP (Liver by CYP enzymes)", "ภายในโพรงไขกระดูกตัวรับ", "ม้ามและระบบต่อมน้ำเหลือง"], correctAnswerIndex: 1, explanation: "Cyclophosphamide เป็น Prodrug (ยาที่ต้องรอการกระตุ้น) โดยจะถูกเผาผลาญเป็นสารออกฤทธิ์ทางชีวภาพโดยระบบเอนไซม์ Cytochrome P450 ภายในเซลล์ตับ", category: "สารกลุ่มแอลคิเลตและกลุ่มแพลทินัม" },
+            { id: "q34", question: "อาการกระเพาะปัสสาวะอักเสบชนิดมีเลือดออก (Hemorrhagic cystitis) จากยาสลายตัว Cyclophosphamide เกิดจากสารสารตัวใดเป็นสำคัญ?", options: ["สารอะโครลีน (Acrolein)", "กรดฟอสฟอริก (Uric acid)", "สารบิลิรูบินสะสม (Bilirubin)", "ผลึกแคลเซียมออกซาเลต (Oxalate)"], correctAnswerIndex: 0, explanation: "Acrolein เป็นผลผลิตพลอยได้จากการทำลายโมเลกุลยาต้านมะเร็ง และถูกขับถ่ายออกทางท่อปัสสาวะ มีฤทธิ์รบกวนและกัดกร่อนเยื่อบุกระเพาะปัสสาวะอย่างรุนแรง", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q35", question: "ยาเมสนา (Mesna) มีกลไกสำคัญในการป้องกันความเป็นพิษและปกป้องเยื่อทางเดินปัสสาวะจากการอักเสบได้อย่างไร?", options: ["ช่วยเร่งขยายขีดความสามารถการซ่อมแซม DNA", "เพิ่มสภาพความเป็นด่างของปัสสาวะ", "เข้าไปทำปฏิกิริยาเคมีจับเหนี่ยวรั้งสารพิษในน้ำปัสสาวะโดยตรง (Binding toxic metabolites)", "ช่วยบล็อกการดูดซึมของสารโฟเลต"], correctAnswerIndex: 2, explanation: "Mesna มีกลุ่มซัลฟ์ไฮดริลที่คอยเข้าจับพันธะกับสารพิษ Acrolein และสารกลุ่มยีนพิษอื่นๆ ในระบบทางเดินปัสสาวะ เพื่อสลายพิษและปกป้องทางเดินปัสสาวะได้อย่างปลอดภัยสูงสุด", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q36", question: "ยาเคมีบำบัดกลุ่มเดียวกัน Ifosfamide มีจุดเด่นของอาการข้างเคียงเป็นพิษที่เป็นเอกลักษณ์และต้องระวังข้อใดเป็นพิเศษ?", options: ["โรคทางเดินปัสสาวะเสื่อมโทรมเฉียบพลัน", "ความเป็นพิษเหนี่ยวนำต่อเซลล์สมองทำให้เกิดอาการเบลอเพ้อลอย (Encephalopathy)", "ตับอ่อนอักเสบรุนแรงสะสม", "ต่อมหมวกไตและภาวะขาดไทรอยด์"], correctAnswerIndex: 1, explanation: "Ifosfamide ก่อให้เกิดสาร Chloracetaldehyde ซึ่งเป็นพิษต่อระบบประสาทส่วนกลาง นำไปสู่อาการเพ้อ คลุ้มคลั่ง ซึมเศร้า หรือหมดสติชั่วครู่ (Encephalopathy)", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q37", question: "ยากลุ่มแอลคิเลตชนิด Busulfan มักมีรายงานความสัมพันธ์และผลข้างเคียงเป็นพิษต่ออวัยวะใดเป็นเอกลักษณ์เด่นชัด?", options: ["ภาวะพังผืดเกาะรัดเนื้อเยื่อปอดเฉียบพลัน (Pulmonary fibrosis)", "โรคเส้นประสาทตาอักเสบเฉียบพลัน", "วิกฤตพายุต่อมไทรอยด์เป็นพิษ", "อาการดีซ่านและท่อน้ำดีอุดตัน"], correctAnswerIndex: 0, explanation: "Busulfan ก่อให้เกิดผลข้างเคียงที่เด่นชัดคือ ภาวะพังผืดสะสมในปอดอย่างรุนแรง (Busulfan lung / Pulmonary fibrosis) จนคนไข้อาจเกิดการไอแห้งและเหนื่อยหอบ", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q38", question: "ยากลุ่มไนโตรโซยูเรีย (Nitrosoureas) มีความโดดเด่นและเป็นประโยชน์ในการรักษามะเร็งในสมองด้วยคุณสมบัติหลักข้อใด?", options: ["ความสามารถในการจับทำลายยีนตัวรับ EGFR", "กระตุ้นการทำงานของเม็ดเลือดขาวสังหารอย่างรวดเร็ว", "ความสามารถในการซึมผ่านด่านกั้นระหว่างกระแสเลือดและสมองได้ดีเยี่ยม (Cross the blood-brain barrier)", "สกัดกั้นการก่อกำเนิดหลอดเลือดใหม่รอบก้อนเนื้อ"], correctAnswerIndex: 2, explanation: "Nitrosoureas (เช่น Carmustine, Lomustine) มีโมเลกุลที่ละลายในไขมันได้ดีสูงมาก จึงสามารถแพร่กระจายผ่านด่านกั้น Blood-Brain Barrier เข้าไปกำจัดเนื้องอกในสมองได้อย่างมีประสิทธิภาพ", category: "สารกลุ่มแอลคิเลตและกลุ่มแพลทินัม" },
+            { id: "q39", question: "ยาเคมีบำบัดกลุ่มแพลทินัม Cisplatin ก่อให้เกิดรายงานเป็นพิษและอาการข้างเคียงคู่หูสำคัญที่ต้องเฝ้าระวังข้อใด?", options: ["พิษรุนแรงต่อไตและประสาทการรับฟังเสียงที่หู (Severe nephrotoxicity and ototoxicity)", "ระบบต่อมหมวกไตถูกกดทำลายสมบูรณ์", "ภาวะเหงือกบวมโตและระคายเคืองช่องปากรุนแรง", "โรคตาพร่ามัวและรูม่านตาขยายโต"], correctAnswerIndex: 0, explanation: "Cisplatin มีความเป็นพิษสะสมที่เด่นชัดสูงสุดต่อเซลล์ท่อไต (Nephrotoxicity) และทำลายเซลล์รับเสียงในหูชั้นใน (Ototoxicity) ทำให้หูดับหรือเกิดเสียงวี้ดในหูถาวรได้", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q40", question: "เมื่อเปรียบเทียบกับ Cisplatin แล้ว ยาในกลุ่มทองคำขาว Carboplatin ก่อให้เกิดอาการข้างเคียงเป็นพิษในระบบเลือดข้อใดรุนแรงกว่าเด่นชัด?", options: ["การร่วงระคายเคืองของเส้นผมรุนแรงขึ้น", "ภาวะกดไขกระดูกสกัดการสร้างเกล็ดเลือดลดต่ำอย่างมาก (Thrombocytopenia)", "ภาวะกล้ามเนื้ออวัยวะหัวใจล้มเหลวรุนแรง", "การเกิดโรคเยื่อบุภายในช่องปากอักเสบรุนแรง"], correctAnswerIndex: 1, explanation: "Carboplatin มีผลข้างเคียงที่เป็น Dose-limiting toxicity หลักแตกต่างจากยารุ่นพี่คือ การกดไขกระดูกโดยเฉพาะการสร้างเกล็ดเลือดต่ำรุนแรง (Myelosuppression / Thrombocytopenia)", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q41", question: "ยา Oxaliplatin (สารแพลทินัมรุ่นที่สาม) มักเหนี่ยวนำให้เกิดผลข้างเคียงและอัมพาตประสาทปลายมือเท้าที่เป็นลักษณะเฉพาะตัวแบบใด?", options: ["อาการกระเพาะปัสสาวะอักเสบอุดตันเฉียบพลัน", "อาการปวดเสียว ชา หรือแสบร้อนปลายประสาทที่ถูกกระตุ้นหรือแย่ลงเมื่อสัมผัสกับความเย็น (Cold-induced neuropathy)", "ผิวหนังไหม้เป็นขุยสีน้ำเงินปนเงินเทา", "ภาวะกรดน้ำปัสสาวะและโรคเกาต์เฉียบพลัน"], correctAnswerIndex: 1, explanation: "Oxaliplatin ก่ออาการชาปลายมือเท้าที่ไวต่ออุณหภูมิต่ำ (Cold-induced acute neuropathy) คนไข้จะมีอาการแสบร้อนหรือสะดุ้งเมื่อจับกระบอกน้ำแข็งหรืออยู่ในห้องแอร์เย็นจัด", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q42", question: "ยากลุ่มแอลคิเลตชนิดเม็ด Temozolomide ถูกนำมาบรรจุใช้รักษาเป็นทางเลือกหลักต่อโรคมะเร็งกลุ่มใด?", options: ["มะเร็งสมองชนิดกลิโอพลาสโตมา (Glioblastoma)", "มะเร็งเม็ดเลือดขาวชนิดเรื้อรัง CML", "โรคเนื้องอกไข่หดเกร็งสะสมในเพศชาย", "โรคกล้ามเนื้ออ่อนแรงรุนแรงเฉียบพลัน"], correctAnswerIndex: 0, explanation: "Temozolomide มีจุดเด่นคือแพร่ผ่านเนื้อเยื่อสมองได้ดี จึงใช้บำบัดรักษาเนื้องอกในสมองระยะร้ายแรงชนิด Glioblastoma multiforme ร่วมกับการฉายแสง", category: "สารกลุ่มแอลคิเลตและกลุ่มแพลทินัม" },
+            { id: "q43", question: "กลไกหลักในการทำลายและกำจัดเซลล์มะเร็งของยากลุ่มสารแอลคิเลต (Alkylating agents) คือกระบวนการใด?", options: ["การบล็อกระบบตัวรับการทำงานของสารฮิสตามีน", "การก่อพันธะข้ามสายพันธุกรรมรบกวนโครงสร้างดีเอ็นเอ (DNA cross-linking)", "การเข้าจับตกตะกอนสารละลายแคลเซียม", "การยับยั้งฮอร์โมนที่ใช้ขยายหลอดเลือดเลี้ยงมะเร็ง"], correctAnswerIndex: 1, explanation: "Alkylating agents จะเข้าไปเติมหมู่แอลคิลในโครงสร้าง DNA โดยเฉพาะตำแหน่ง Guanine ก่อพันธะเชื่อมข้ามสาย (Cross-linking) ทำให้เกลียว DNA แยกจากกันเพื่อถอดรหัสไม่ได้ เซลล์มะเร็งจึงตาย", category: "สารกลุ่มแอลคิเลตและกลุ่มแพลทินัม" },
+            { id: "q44", question: "ผลข้างเคียงระยะยาวที่ร้ายแรงสะสม (Delayed complication) ของยากลุ่มสารแอลคิเลตคือข้อใด?", options: ["ภาวะผลิตฮอร์โมนกระตุ้นน้ำนมไหลมากผิดปกติ", "ภาวะความดันภายในลูกตาสูงขึ้นเฉียบพลัน", "การชักนำเหนี่ยวนำให้เกิดมะเร็งเม็ดเลือดขาวระยะถัดมา (Secondary leukemia)", "การเกิดโรคนิ่วและตะกอนสะสมในถุงน้ำดี"], correctAnswerIndex: 2, explanation: "การปรับเปลี่ยนยีนดีเอ็นเออย่างรุนแรงของกลุ่มยานี้ นำไปสู่ความเสี่ยงในการชักนำการกลายพันธุ์ของเซลล์เม็ดเลือดขาวปกติ จนกลายเป็นมะเร็งเม็ดเลือดขาวทุติยภูมิ (Secondary Leukemia / AML) ในระยะเวลาหลายปีหลังรักษามะเร็งเดิมสำเร็จ", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q45", question: "นอกเหนือจากความเป็นพิษต่อกระเพาะปัสสาวะแล้ว ยาเคมี Cyclophosphamide อาจชักนำให้เกิดความผิดปกติทางระดับเกลือแร่ในเลือดข้อใด?", options: ["กลุ่มอาการหลั่งฮอร์โมนต้านการปัสสาวะมากผิดปกติจนเกิดโซเดียมต่ำ (SIADH and hyponatremia)", "โรคเกาต์และกรดยูริกพุ่งสูงเท่านั้น", "อาการแพ้น้ำนมและสภาวะย่อยสลายน้ำตาลบกพร่อง", "อาการข้างเคียงหัวใจเต้นช้าจัดเป็นจังหวะสะดุด"], correctAnswerIndex: 0, explanation: "Cyclophosphamide อาจเหนี่ยวนำให้เกิดภาวะ SIADH ทำให้ร่างกายสะสมน้ำส่วนเกินและส่งผลให้ระดับโซเดียมในกระแสเลือดเจือจางต่ำลงอย่างอันตราย (Hyponatremia)", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q46", question: "ยาเคมีบำบัด Procarbazine มีปฏิกิริยารบกวนกับอาหารและยาอื่นที่เป็นข้อควรระวังสำคัญ เนื่องจากสามารถยับยั้งเอนไซม์ใด?", options: ["เอนไซม์ลดกรดคาร์บอนิกแอนไฮเดรส", "เอนไซม์ดัดแปลงสารยูริกแซนทีนออกซิเดส", "เอนไซม์ควบคุมสารสื่อประสาทสมองโมโนเอมีนออกซิเดส (Monoamine oxidase - MAO)", "กลุ่มปั๊มปรับสมดุลเกลือแร่โซเดียมโพแทสเซียมเอทีพีเอส"], correctAnswerIndex: 2, explanation: "Procarbazine มีฤทธิ์เป็น Weak MAO Inhibitor จึงต้องสั่งคนไข้หลีกเลี่ยงการทานอาหารที่มีสารไทรามีนสูง (เช่น ชีสแก่, ไวน์แดง, โยเกิร์ต) เพื่อป้องกันวิกฤตความดันโลหิตพุ่งสูงเฉียบพลัน", category: "ความเป็นพิษและอาการข้างเคียง" },
+            { id: "q47", question: "ยากลุ่มสลายดีเอ็นเอ Dacarbazine และ Temozolomide จัดจำแนกกลไกการออกฤทธิ์ทางเภสัชวิทยาอยู่ในกลุ่มย่อยข้อใด?", options: ["สารกลุ่มแพลทินัมดัดแปลงโครงสร้างพันธุกรรม", "สารกลุ่มเพิ่มหมู่เมทิลเลชันและออกฤทธิ์คล้ายแอลคิเลต (Methylating alkylating-like agents)", "สารกลุ่มขัดขวางแกนไมโครทูบูลชนิดทาเซน", "สารจำพวกก่อกวนโครงสร้างเมตาบอลิซึมของเซลล์ตับ"], correctAnswerIndex: 1, explanation: "ยาเหล่านี้ออกฤทธิ์เติมหมู่เมทิล (Methylation) บนดีเอ็นเอ ทำให้เกิดความผิดปกติในวิถีจำลองตัวของเซลล์ จัดเป็นกลุ่ม Methylating agents", category: "สารกลุ่มแอลคิเลตและกลุ่มแพลทินัม" },
+            { id: "q48", question: "ยาเคมีบำบัดชนิด Cisplatin ได้รับการจัดระดับความรุนแรงในวิชาเภสัชวิทยาเกี่ยวกับการเหนี่ยวนำอาการอาเจียนไว้ในระดับใด?", options: ["เหนี่ยวนำระดับต่ำมากและมีความปลอดภัยสูง", "ไม่มีฤทธิ์ส่งผลต่อศูนย์ควบคุมความคลื่นไส้อาเจียนในสมอง", "มีความสามารถกระตุ้นกระบวนการอาเจียนระดับสูงจัดเฉียบพลัน (Highly emetogenic)", "มีฤทธิ์เด่นช่วยระงับและถนอมบำรุงรักษาเซลล์ตับ"], correctAnswerIndex: 2, explanation: "Cisplatin เป็นยาที่มีค่ากระตุ้นการอาเจียน (Emetogenic potential) สูงที่สุด (>90%) คนไข้ทุกรายที่ได้รับยารอบนี้จำเป็นต้องได้รับการฉีดยาแก้อาเจียนกลุ่มแรงเพื่อป้องกันล่วงหน้าเสมอ", category: "ความเป็นพิษและอาการข้างเคียง" }
+        ];
+
+        // --- GLOBAL STATE ---
+        let state = {
+            questions: [],
+            categories: ["ทั้งหมด", "หลักการเคมีบำบัดมะเร็ง", "แอนติเมตาบอไลต์ (Antimetabolites)", "สารกลุ่มแอลคิเลตและกลุ่มแพลทินัม", "ความเป็นพิษและอาการข้างเคียง", "กลไกการดื้อยาต้านมะเร็ง", "สารกลุ่มไมโครทูบูล"],
+            activeTab: "quiz",
+            isAdminLoggedIn: false,
+            
+            quizSettings: {
+                selectedCategory: "ทั้งหมด",
+                mode: "practice",
+                limit: "20"
+            },
+            activeQuiz: {
+                questions: [],
+                currentIndex: 0,
+                selectedAnswers: {},
+                answersLocked: {},
+                startTime: null,
+                timerInterval: null,
+                elapsedSeconds: 0,
+                score: 0
+            }
+        };
+
+        // --- LIFECYCLE & INIT ---
+        window.onload = function() {
+            loadStateFromStorage();
+            initTabs();
+            initQuizSettingsUI();
+            updateCategorySelectors();
+            renderQuestionDbTable();
+            
+            const loggedInSession = sessionStorage.getItem("admin_logged_in");
+            if (loggedInSession === "true") {
+                state.isAdminLoggedIn = true;
+                showAdminMainInterface();
+            }
+        };
+
+        function loadStateFromStorage() {
+            const savedQuestions = localStorage.getItem("cancer_questions_v2");
+            if (savedQuestions) {
+                try {
+                    state.questions = JSON.parse(savedQuestions);
+                } catch(e) {
+                    state.questions = [...DEFAULT_QUESTIONS];
+                }
+            } else {
+                state.questions = [...DEFAULT_QUESTIONS];
+                saveQuestionsToStorage();
+            }
+            deriveCategoriesFromQuestions();
+        }
+
+        function saveQuestionsToStorage() {
+            localStorage.setItem("cancer_questions_v2", JSON.stringify(state.questions));
+        }
+
+        function deriveCategoriesFromQuestions() {
+            const cats = new Set(["ทั้งหมด", "หลักการเคมีบำบัดมะเร็ง", "แอนติเมตาบอไลต์ (Antimetabolites)", "สารกลุ่มแอลคิเลตและกลุ่มแพลทินัม", "ความเป็นพิษและอาการข้างเคียง", "กลไกการดื้อยาต้านมะเร็ง", "สารกลุ่มไมโครทูบูล"]);
+            state.questions.forEach(q => {
+                if (q.category) cats.add(q.category);
+            });
+            state.categories = Array.from(cats);
+        }
+
+        // --- TABS & NAVIGATION ---
+        function initTabs() {
+            switchTab('quiz');
+        }
+
+        function switchTab(tabId) {
+            state.activeTab = tabId;
+            document.querySelectorAll(".tab-content").forEach(el => {
+                el.classList.add("hidden");
+                el.classList.remove("block");
+            });
+            
+            const targetEl = document.getElementById(`tab-${tabId}`);
+            if (targetEl) {
+                targetEl.classList.remove("hidden");
+                targetEl.classList.add("block");
+            }
+
+            document.querySelectorAll(".nav-tab-btn").forEach(btn => {
+                btn.classList.remove("bg-white/10", "text-white");
+                btn.classList.add("text-slate-300", "hover:text-white", "hover:bg-white/5");
+            });
+
+            const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+            if (activeBtn) {
+                activeBtn.classList.add("bg-white/10", "text-white");
+                activeBtn.classList.remove("text-slate-300", "hover:text-white", "hover:bg-white/5");
+            }
+
+            if (tabId === 'admin') {
+                if (state.isAdminLoggedIn) {
+                    showAdminMainInterface();
+                } else {
+                    showAdminLoginCard();
+                }
+            }
+        }
+
+        // --- BACK-OFFICE SECURITY LOGIN SYSTEM ---
+        function attemptAdminLogin() {
+            const uInput = document.getElementById("admin-username-input").value.trim();
+            const pInput = document.getElementById("admin-password-input").value.trim();
+
+            if (uInput === "jumpon" && pInput === "ubch2808") {
+                state.isAdminLoggedIn = true;
+                sessionStorage.setItem("admin_logged_in", "true");
+                showAdminMainInterface();
+                showToast("ยินดีต้อนรับคุณ Jumpon เข้าสู่หลังบ้านกลุ่มงานสำเร็จ");
+                
+                document.getElementById("admin-username-input").value = "";
+                document.getElementById("admin-password-input").value = "";
+            } else {
+                showToast("ข้อมูลผู้ใช้งานหรือรหัสผ่านหลังบ้านไม่ถูกต้อง!", "error");
+            }
+        }
+
+        function showAdminLoginCard() {
+            document.getElementById("admin-login-card").classList.remove("hidden");
+            document.getElementById("admin-main-interface").classList.add("hidden");
+            document.getElementById("admin-badge").classList.add("hidden");
+        }
+
+        function showAdminMainInterface() {
+            document.getElementById("admin-login-card").classList.add("hidden");
+            document.getElementById("admin-main-interface").classList.remove("hidden");
+            document.getElementById("admin-badge").classList.remove("hidden");
+            
+            updateCategorySelectors();
+            renderQuestionDbTable();
+        }
+
+        function adminLogout() {
+            state.isAdminLoggedIn = false;
+            sessionStorage.removeItem("admin_logged_in");
+            showAdminLoginCard();
+            showToast("ออกจากแผงควบคุมระบบเรียบร้อย", "info");
+        }
+
+        // --- TOAST NOTIFICATIONS ---
+        function showToast(message, type = "success") {
+            const container = document.getElementById("toast-container");
+            const toast = document.createElement("div");
+            const bgClass = type === "success" ? "bg-emerald-600" : type === "error" ? "bg-rose-600" : "bg-sky-700";
+            
+            toast.className = `${bgClass} text-white px-4 py-3 rounded-xl shadow-lg flex items-center justify-between text-xs sm:text-sm transition-all duration-300 translate-y-2 opacity-0 shrink-0`;
+            toast.innerHTML = `
+                <span>${message}</span>
+                <button onclick="this.parentElement.remove()" class="ml-3 text-white/70 hover:text-white font-bold">&times;</button>
+            `;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.remove("translate-y-2", "opacity-0");
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.add("translate-y-2", "opacity-0");
+                setTimeout(() => toast.remove(), 300);
+            }, 4000);
+        }
+
+        // --- CUSTOM MODAL ---
+        let modalCallback = null;
+
+        function showCustomModal(title, message, type = "info", confirmText = "ตกลง", showCancel = true, callback = null) {
+            const modal = document.getElementById("custom-modal");
+            document.getElementById("modal-title").innerText = title;
+            document.getElementById("modal-message").innerText = message;
+            
+            const confirmBtn = document.getElementById("modal-confirm-btn");
+            const cancelBtn = document.getElementById("modal-cancel-btn");
+            const iconBg = document.getElementById("modal-icon-bg");
+            const icon = document.getElementById("modal-icon");
+            
+            confirmBtn.innerText = confirmText;
+            modalCallback = callback;
+
+            if (type === "warning") {
+                iconBg.className = "mx-auto shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-amber-100 sm:mx-0 sm:h-10 sm:w-10 text-amber-600";
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />`;
+                confirmBtn.className = "w-full sm:w-auto inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2.5 bg-amber-600 text-sm font-semibold text-white hover:bg-amber-700 focus:outline-none transition";
+            } else if (type === "error") {
+                iconBg.className = "mx-auto shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-rose-100 sm:mx-0 sm:h-10 sm:w-10 text-rose-600";
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />`;
+                confirmBtn.className = "w-full sm:w-auto inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2.5 bg-rose-600 text-sm font-semibold text-white hover:bg-rose-700 focus:outline-none transition";
+            } else {
+                iconBg.className = "mx-auto shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-cyan-100 sm:mx-0 sm:h-10 sm:w-10 text-cyan-600";
+                icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />`;
+                confirmBtn.className = "w-full sm:w-auto inline-flex justify-center rounded-xl border border-transparent shadow-sm px-4 py-2.5 bg-medical-700 text-sm font-semibold text-white hover:bg-medical-800 focus:outline-none transition";
+            }
+
+            if (showCancel) {
+                cancelBtn.classList.remove("hidden");
+            } else {
+                cancelBtn.classList.add("hidden");
+            }
+
+            confirmBtn.onclick = function() {
+                closeCustomModal();
+                if (modalCallback) modalCallback();
+            };
+
+            modal.classList.remove("hidden");
+        }
+
+        function closeCustomModal() {
+            document.getElementById("custom-modal").classList.add("hidden");
+        }
+
+        function initQuizSettingsUI() {
+            document.getElementById("quiz-limit-select").addEventListener("change", (e) => {
+                state.quizSettings.limit = e.target.value;
+            });
+        }
+
+        function setQuizMode(mode) {
+            state.quizSettings.mode = mode;
+            const pracBtn = document.getElementById("mode-btn-practice");
+            const examBtn = document.getElementById("mode-btn-exam");
+            
+            if (mode === "practice") {
+                pracBtn.className = "py-2.5 px-3 rounded-xl border-2 border-medical-600 bg-medical-50 text-medical-900 text-sm font-medium transition duration-200 text-center";
+                examBtn.className = "py-2.5 px-3 rounded-xl border-2 border-slate-200 bg-white text-slate-600 text-sm font-medium transition duration-200 text-center hover:border-slate-300";
+            } else {
+                examBtn.className = "py-2.5 px-3 rounded-xl border-2 border-medical-600 bg-medical-50 text-medical-900 text-sm font-medium transition duration-200 text-center";
+                pracBtn.className = "py-2.5 px-3 rounded-xl border-2 border-slate-200 bg-white text-slate-600 text-sm font-medium transition duration-200 text-center hover:border-slate-300";
+            }
+        }
+
+        function updateCategorySelectors() {
+            const catGrid = document.getElementById("category-list");
+            if (!catGrid) return;
+            catGrid.innerHTML = "";
+
+            state.categories.forEach(cat => {
+                const count = cat === "ทั้งหมด" ? state.questions.length : state.questions.filter(q => q.category === cat).length;
+                if (count === 0 && cat !== "ทั้งหมด") return;
+
+                const isActive = state.quizSettings.selectedCategory === cat ? 'border-medical-600 bg-medical-50/50' : 'border-slate-200 bg-white hover:bg-slate-50';
+                
+                catGrid.innerHTML += `
+                    <button onclick="selectCategory('${cat}')" class="border-2 rounded-xl p-4 text-left transition duration-200 flex justify-between items-center ${isActive}">
+                        <div>
+                            <span class="block font-title font-bold text-slate-900 text-xs sm:text-sm">${cat === "ทั้งหมด" ? "คละโจทย์ทุกหมวดวิชา" : cat}</span>
+                            <span class="text-[11px] text-slate-500 mt-1 block">${cat === "ทั้งหมด" ? "คลังข้อสอบภาพสมบูรณ์และนำเข้า" : "หัวข้อวิชาเฉพาะกลุ่ม"}</span>
+                        </div>
+                        <span class="bg-medical-100 text-medical-800 text-xs font-bold px-2 py-1 rounded-md shrink-0 ml-2">
+                            ${count} ข้อ
+                        </span>
+                    </button>
+                `;
+            });
+
+            const manualCatSelect = document.getElementById("manual-category");
+            const dbFilterSelect = document.getElementById("db-category-filter");
+
+            if (manualCatSelect) {
+                manualCatSelect.innerHTML = "";
+                state.categories.forEach(cat => {
+                    if (cat !== "ทั้งหมด") {
+                        manualCatSelect.innerHTML += `<option value="${cat}">${cat}</option>`;
+                    }
+                });
+            }
+
+            if (dbFilterSelect) {
+                dbFilterSelect.innerHTML = "";
+                state.categories.forEach(cat => {
+                    dbFilterSelect.innerHTML += `<option value="${cat}">${cat === "ทั้งหมด" ? "แสดงทั้งหมด" : cat}</option>`;
+                });
+            }
+        }
+
+        function selectCategory(cat) {
+            state.quizSettings.selectedCategory = cat;
+            updateCategorySelectors();
+        }
+
+        // --- QUIZ ENGINE ---
+        function startQuiz() {
+            let candidates = [...state.questions];
+            if (state.quizSettings.selectedCategory !== "ทั้งหมด") {
+                candidates = candidates.filter(q => q.category === state.quizSettings.selectedCategory);
+            }
+
+            if (candidates.length === 0) {
+                showCustomModal("ไม่มีคำถาม", "ไม่มีข้อสอบในหมวดหมู่นี้ กรุณานำเข้าหรือเพิ่มข้อมูลก่อน", "error", "ปิด", false);
+                return;
+            }
+
+            candidates.sort(() => Math.random() - 0.5);
+
+            let limitNum = candidates.length;
+            if (state.quizSettings.limit !== "all") {
+                limitNum = Math.min(parseInt(state.quizSettings.limit), candidates.length);
+            }
+            state.activeQuiz.questions = candidates.slice(0, limitNum);
+            state.activeQuiz.currentIndex = 0;
+            state.activeQuiz.selectedAnswers = {};
+            state.activeQuiz.answersLocked = {};
+            state.activeQuiz.elapsedSeconds = 0;
+            state.activeQuiz.startTime = new Date();
+
+            document.getElementById("quiz-setup-view").classList.add("hidden");
+            document.getElementById("quiz-active-view").classList.remove("hidden");
+            document.getElementById("quiz-results-view").classList.add("hidden");
+            
+            const badge = document.getElementById("quiz-badge");
+            if (state.quizSettings.mode === "practice") {
+                badge.className = "bg-teal-50 text-teal-700 border border-teal-200 text-xs font-semibold px-3 py-1.5 rounded-full";
+                badge.innerText = "โหมดฝึกฝน (เฉลยข้อต่อข้อ)";
+            } else {
+                badge.className = "bg-indigo-50 text-indigo-700 border border-indigo-200 text-xs font-semibold px-3 py-1.5 rounded-full";
+                badge.innerText = "โหมดสอบจริง (ไม่แสดงเฉลยทันที)";
+            }
+
+            clearInterval(state.activeQuiz.timerInterval);
+            state.activeQuiz.timerInterval = setInterval(() => {
+                state.activeQuiz.elapsedSeconds++;
+                const mins = Math.floor(state.activeQuiz.elapsedSeconds / 60).toString().padStart(2, '0');
+                const secs = (state.activeQuiz.elapsedSeconds % 60).toString().padStart(2, '0');
+                document.getElementById("quiz-timer").innerText = `${mins}:${secs}`;
+            }, 1000);
+
+            renderActiveQuestion();
+            renderQuestionNavGrid();
+        }
+
+        function renderActiveQuestion() {
+            const index = state.activeQuiz.currentIndex;
+            const q = state.activeQuiz.questions[index];
+            
+            document.getElementById("quiz-progress-text").innerText = `ข้อที่ ${index + 1} จาก ${state.activeQuiz.questions.length}`;
+            
+            const progressPct = ((index + 1) / state.activeQuiz.questions.length) * 100;
+            document.getElementById("quiz-progress-bar").style.width = `${progressPct}%`;
+
+            document.getElementById("question-text").innerText = `${index + 1}. ${q.question}`;
+            
+            const optContainer = document.getElementById("options-container");
+            optContainer.innerHTML = "";
+
+            const labels = ["ก.", "ข.", "ค.", "ง."];
+            
+            q.options.forEach((opt, oIdx) => {
+                const isSelected = state.activeQuiz.selectedAnswers[index] === oIdx;
+                const isLocked = state.activeQuiz.answersLocked[index] === true;
+                
+                let optionClass = "border-slate-200 bg-white hover:bg-slate-50";
+                let checkMark = "";
+
+                if (state.quizSettings.mode === "practice" && isLocked) {
+                    if (oIdx === q.correctAnswerIndex) {
+                        optionClass = "border-emerald-500 bg-emerald-50 text-emerald-900";
+                        checkMark = `<span class="bg-emerald-600 text-white rounded-full p-0.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/></svg></span>`;
+                    } else if (isSelected && oIdx !== q.correctAnswerIndex) {
+                        optionClass = "border-rose-400 bg-rose-50 text-rose-900";
+                        checkMark = `<span class="bg-rose-600 text-white rounded-full p-0.5"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M6 18L18 6M6 6l12 12"/></svg></span>`;
+                    } else {
+                        optionClass = "opacity-60 border-slate-100 text-slate-400 bg-slate-50 pointer-events-none";
+                    }
+                } else {
+                    if (isSelected) {
+                        optionClass = "border-medical-600 bg-medical-50/50 text-medical-950 font-medium ring-2 ring-medical-600/10";
+                    }
+                }
+
+                const clickAction = isLocked ? "" : `onclick="selectOption(${oIdx})"`;
+
+                optContainer.innerHTML += `
+                    <button ${clickAction} class="w-full border-2 rounded-xl p-4 text-left transition flex items-center justify-between group ${optionClass}">
+                        <div class="flex items-center gap-3">
+                            <span class="w-7 h-7 flex items-center justify-center rounded-lg bg-slate-100 group-hover:bg-slate-200 text-slate-700 text-xs font-bold transition shrink-0 ${isSelected ? 'bg-medical-100 text-medical-800' : ''}">
+                                ${labels[oIdx]}
+                            </span>
+                            <span class="text-xs sm:text-sm md:text-base leading-relaxed">${opt}</span>
+                        </div>
+                        ${checkMark}
+                    </button>
+                `;
+            });
+
+            const isLast = index === state.activeQuiz.questions.length - 1;
+            const nextBtn = document.getElementById("next-btn");
+            const submitEarlyBtn = document.getElementById("submit-quiz-early");
+
+            if (isLast) {
+                nextBtn.classList.add("hidden");
+                submitEarlyBtn.classList.remove("hidden");
+            } else {
+                nextBtn.classList.remove("hidden");
+                submitEarlyBtn.classList.add("hidden");
+            }
+
+            const explCard = document.getElementById("practice-explanation-card");
+            if (state.quizSettings.mode === "practice" && isLocked) {
+                document.getElementById("practice-explanation-text").innerText = q.explanation || "ไม่มีคำอธิบายประกอบการรักษาเพิ่มเติม";
+                explCard.classList.remove("hidden");
+            } else {
+                explCard.classList.add("hidden");
+            }
+        }
+
+        function selectOption(oIdx) {
+            const index = state.activeQuiz.currentIndex;
+            state.activeQuiz.selectedAnswers[index] = oIdx;
+
+            if (state.quizSettings.mode === "practice") {
+                state.activeQuiz.answersLocked[index] = true;
+            }
+
+            renderActiveQuestion();
+            renderQuestionNavGrid();
+        }
+
+        function renderQuestionNavGrid() {
+            const container = document.getElementById("question-grid");
+            container.innerHTML = "";
+
+            state.activeQuiz.questions.forEach((_, qIdx) => {
+                const isCurrent = state.activeQuiz.currentIndex === qIdx;
+                const isAnswered = state.activeQuiz.selectedAnswers[qIdx] !== undefined;
+                
+                let btnStyle = "bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200";
+                
+                if (isCurrent) {
+                    btnStyle = "bg-medical-600 text-white font-bold ring-4 ring-medical-600/15";
+                } else if (isAnswered) {
+                    if (state.quizSettings.mode === "practice") {
+                        const isCorrect = state.activeQuiz.selectedAnswers[qIdx] === state.activeQuiz.questions[qIdx].correctAnswerIndex;
+                        btnStyle = isCorrect ? "bg-emerald-100 text-emerald-800 border-emerald-300 font-bold" : "bg-rose-100 text-rose-800 border-rose-300 font-bold";
+                    } else {
+                        btnStyle = "bg-indigo-100 text-indigo-800 border-indigo-200 font-bold";
+                    }
+                }
+
+                container.innerHTML += `
+                    <button onclick="goToQuestion(${qIdx})" class="h-10 rounded-lg text-xs transition duration-150 flex items-center justify-center ${btnStyle}">
+                        ${qIdx + 1}
+                    </button>
+                `;
+            });
+        }
+
+        function goToQuestion(qIdx) {
+            state.activeQuiz.currentIndex = qIdx;
+            renderActiveQuestion();
+            renderQuestionNavGrid();
+        }
+
+        function nextQuestion() {
+            const index = state.activeQuiz.currentIndex;
+            if (index < state.activeQuiz.questions.length - 1) {
+                goToQuestion(index + 1);
+            }
+        }
+
+        function terminateQuizPrompt() {
+            showCustomModal(
+                "ออกจากการทำแบบทดสอบ?", 
+                "คุณแน่ใจว่าต้องการออกหรือไม่? คะแนนและความคืบหน้าปัจจุบันจะถูกรีเซ็ตใหม่ทั้งหมด",
+                "warning",
+                "ตกลง, ออกเลย",
+                true,
+                () => {
+                    clearInterval(state.activeQuiz.timerInterval);
+                    document.getElementById("quiz-setup-view").classList.remove("hidden");
+                    document.getElementById("quiz-active-view").classList.add("hidden");
+                    document.getElementById("quiz-results-view").classList.add("hidden");
+                }
+            );
+        }
+
+        function finishQuizPrompt() {
+            const answeredCount = Object.keys(state.activeQuiz.selectedAnswers).length;
+            const totalCount = state.activeQuiz.questions.length;
+
+            if (answeredCount < totalCount) {
+                showCustomModal(
+                    "ทำข้อสอบยังไม่ครบถ้วน",
+                    `คุณเพิ่งทำข้อสอบไปเพียง ${answeredCount} ข้อ จากทั้งหมด ${totalCount} ข้อ ยืนยันที่จะส่งเลยหรือไม่?`,
+                    "warning",
+                    "ยืนยันส่งผลสอบ",
+                    true,
+                    () => { calculateAndShowResults(); }
+                );
+            } else {
+                calculateAndShowResults();
+            }
+        }
+
+        function calculateAndShowResults() {
+            clearInterval(state.activeQuiz.timerInterval);
+            
+            let correct = 0;
+            state.activeQuiz.questions.forEach((q, qIdx) => {
+                if (state.activeQuiz.selectedAnswers[qIdx] === q.correctAnswerIndex) {
+                    correct++;
+                }
+            });
+
+            state.activeQuiz.score = correct;
+            const pct = Math.round((correct / state.activeQuiz.questions.length) * 100);
+
+            document.getElementById("quiz-active-view").classList.add("hidden");
+            document.getElementById("quiz-results-view").classList.remove("hidden");
+
+            document.getElementById("results-score-text").innerText = `${correct}/${state.activeQuiz.questions.length}`;
+            document.getElementById("results-percentage").innerText = `${pct}%`;
+            
+            document.getElementById("results-stat-correct").innerText = `${correct} ข้อ`;
+            document.getElementById("results-stat-wrong").innerText = `${state.activeQuiz.questions.length - correct} ข้อ`;
+            
+            const mins = Math.floor(state.activeQuiz.elapsedSeconds / 60).toString().padStart(2, '0');
+            const secs = (state.activeQuiz.elapsedSeconds % 60).toString().padStart(2, '0');
+            document.getElementById("results-stat-time").innerText = `${mins}:${secs} นาที`;
+            document.getElementById("results-stat-percentile").innerText = `${pct}%`;
+
+            const gradeTitle = document.getElementById("results-grade-title");
+            const gradeDesc = document.getElementById("results-grade-desc");
+
+            if (pct >= 85) {
+                gradeTitle.innerText = "ระดับ: ดีเลิศ (Excellent) 🏆";
+                gradeTitle.className = "text-xl font-title font-bold text-teal-400";
+                gradeDesc.innerText = "ท่านผ่านการสอบประเมินระดับดีเลิศ มีความรู้ลึกซึ้งในการเลือกยาและบำบัดมะเร็งอย่างแม่นยำ";
+            } else if (pct >= 70) {
+                gradeTitle.innerText = "ระดับ: ดีมาก (Very Good) ⭐️";
+                gradeTitle.className = "text-xl font-title font-bold text-emerald-400";
+                gradeDesc.innerText = "มีความรู้ความเข้าใจที่ดีและพร้อมสำหรับการดูแลทางยาบำบัดได้อย่างปลอดภัย";
+            } else if (pct >= 50) {
+                gradeTitle.innerText = "ระดับ: ผ่านเกณฑ์ขั้นต่ำ (Satisfactory) 👍";
+                gradeTitle.className = "text-xl font-title font-bold text-amber-400";
+                gradeDesc.innerText = "ผ่านเกณฑ์ขั้นต่ำ แนะนำให้ทบทวนเฉลยประกอบวิชาการในข้อที่ตอบผิด";
+            } else {
+                gradeTitle.innerText = "ระดับ: ควรปรับปรุง (Review Needed) 📖";
+                gradeTitle.className = "text-xl font-title font-bold text-rose-400";
+                gradeDesc.innerText = "คะแนนเฉลี่ยต่ำกว่าเกณฑ์การประเมินกลุ่มงาน กรุณาศึกษาเฉลยและคู่มือเพิ่มเติมเพื่อทำแบบทดสอบใหม่อีกครั้ง";
+            }
+
+            renderDetailedReview();
+        }
+
+        function renderDetailedReview() {
+            const container = document.getElementById("results-review-container");
+            container.innerHTML = "";
+
+            const optLabels = ["ก.", "ข.", "ค.", "ง."];
+
+            state.activeQuiz.questions.forEach((q, qIdx) => {
+                const userChoice = state.activeQuiz.selectedAnswers[qIdx];
+                const isCorrect = userChoice === q.correctAnswerIndex;
+                const isNoAnswer = userChoice === undefined;
+
+                let cardBorder = isCorrect ? "border-emerald-200 bg-emerald-50/10" : "border-rose-200 bg-rose-50/10";
+                let statusHeader = isCorrect 
+                    ? `<span class="bg-emerald-100 text-emerald-800 text-xs font-bold px-2.5 py-1 rounded-md">ถูกต้อง</span>`
+                    : isNoAnswer 
+                        ? `<span class="bg-slate-100 text-slate-800 text-xs font-bold px-2.5 py-1 rounded-md">ไม่ตอบ</span>`
+                        : `<span class="bg-rose-100 text-rose-800 text-xs font-bold px-2.5 py-1 rounded-md">ตอบผิด</span>`;
+
+                let optionsHTML = "";
+                q.options.forEach((opt, oIdx) => {
+                    let optionStyle = "border-slate-100 bg-white";
+                    let checkBadge = "";
+
+                    if (oIdx === q.correctAnswerIndex) {
+                        optionStyle = "border-emerald-400 bg-emerald-50 text-emerald-950 font-semibold";
+                        checkBadge = `<span class="text-xs text-emerald-700 font-bold ml-2">(คำตอบที่ถูกต้อง)</span>`;
+                    } else if (oIdx === userChoice) {
+                        optionStyle = "border-rose-400 bg-rose-50 text-rose-950 font-semibold";
+                        checkBadge = `<span class="text-xs text-rose-700 font-bold ml-2">(คุณตอบข้อนี้)</span>`;
+                    }
+
+                    optionsHTML += `
+                        <div class="border rounded-xl p-3 text-sm flex items-center justify-between ${optionStyle}">
+                            <div class="flex items-center gap-2">
+                                <span class="bg-slate-100 text-slate-700 font-bold w-6 h-6 rounded-md flex items-center justify-center text-xs shrink-0">${optLabels[oIdx]}</span>
+                                <span>${opt}</span>
+                            </div>
+                            ${checkBadge}
+                        </div>
+                    `;
+                });
+
+                container.innerHTML += `
+                    <div class="border rounded-2xl p-5 md:p-6 shadow-sm space-y-4 ${cardBorder}">
+                        <div class="flex items-center justify-between gap-3 border-b pb-3 border-slate-100">
+                            <span class="text-xs text-slate-500 font-bold tracking-wide">${q.category || "วิชาทั่วไป"}</span>
+                            ${statusHeader}
+                        </div>
+                        <h4 class="font-title font-bold text-slate-900 leading-relaxed text-base">
+                            ข้อที่ ${qIdx + 1}: ${q.question}
+                        </h4>
+                        
+                        <div class="space-y-2">
+                            ${optionsHTML}
+                        </div>
+
+                        <div class="bg-slate-50 border border-slate-200/60 rounded-xl p-4 text-xs sm:text-sm">
+                            <div class="font-title font-bold text-slate-700 flex items-center gap-1.5 mb-1.5">
+                                <svg class="w-4 h-4 text-medical-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                                </svg>
+                                คำอธิบายเชิงเภสัชวิทยาคลินิกและการรักษา:
+                            </div>
+                            <p class="text-slate-600 leading-relaxed">
+                                ${q.explanation || "ไม่มีคำอธิบายเพิ่มเติม"}
+                            </p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function retryActiveQuiz() {
+            startQuiz();
+        }
+
+        function backToQuizSetup() {
+            document.getElementById("quiz-setup-view").classList.remove("hidden");
+            document.getElementById("quiz-active-view").classList.add("hidden");
+            document.getElementById("quiz-results-view").classList.add("hidden");
+            updateCategorySelectors();
+        }
+
+        // --- MANAGE QUESTIONS DATABASE ---
+        function renderQuestionDbTable() {
+            const tbody = document.getElementById("db-questions-tbody");
+            const filterVal = document.getElementById("db-category-filter").value;
+            
+            if (!tbody) return;
+            tbody.innerHTML = "";
+
+            let targetQuestions = [...state.questions];
+            if (filterVal !== "ทั้งหมด") {
+                targetQuestions = targetQuestions.filter(q => q.category === filterVal);
+            }
+
+            if (targetQuestions.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="5" class="px-6 py-8 text-center text-slate-400 text-xs">
+                            ไม่มีคำถามใดๆ บันทึกอยู่ในหมวดหมู่เวลานี้
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            const optLabels = ["ก", "ข", "ค", "ง"];
+
+            targetQuestions.forEach((q, idx) => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50/50 transition">
+                        <td class="px-6 py-4 max-w-xs truncate font-medium text-slate-800" title="${q.question}">
+                            ${q.question}
+                        </td>
+                        <td class="px-6 py-4 text-[10px] font-semibold text-slate-500">
+                            ${q.category || "ไม่มี"}
+                        </td>
+                        <td class="px-6 py-4 text-[10px] text-slate-600">
+                            ${q.options.length} ตัวเลือก
+                        </td>
+                        <td class="px-6 py-4">
+                            <span class="bg-emerald-50 text-emerald-800 text-[10px] font-bold px-2 py-0.5 rounded-md border border-emerald-200">
+                                ข้อ ${optLabels[q.correctAnswerIndex] || q.correctAnswerIndex}
+                            </span>
+                        </td>
+                        <td class="px-6 py-4 text-right">
+                            <button onclick="deleteQuestion('${q.id}')" class="text-rose-500 hover:text-rose-700 font-bold text-[11px] transition">
+                                ลบคำถามออก
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function toggleManualForm() {
+            const form = document.getElementById("manual-form-container");
+            form.classList.toggle("hidden");
+        }
+
+        function saveManualQuestion() {
+            const cat = document.getElementById("manual-category").value;
+            const question = document.getElementById("manual-question").value.trim();
+            const opt0 = document.getElementById("manual-opt0").value.trim();
+            const opt1 = document.getElementById("manual-opt1").value.trim();
+            const opt2 = document.getElementById("manual-opt2").value.trim();
+            const opt3 = document.getElementById("manual-opt3").value.trim();
+            const correctIdx = parseInt(document.getElementById("manual-correct").value);
+            const explanation = document.getElementById("manual-explanation").value.trim();
+
+            if (!question || !opt0 || !opt1 || !opt2 || !opt3) {
+                showCustomModal("ข้อมูลไม่ครบถ้วน", "กรุณาระบุข้อมูลโจทย์คำถามและตัวเลือกทั้งหมดให้ครบถ้วนก่อนเซฟ", "error", "ปิด", false);
+                return;
+            }
+
+            const newQ = {
+                id: "q_" + Date.now(),
+                question: question,
+                options: [opt0, opt1, opt2, opt3],
+                correctAnswerIndex: correctIdx,
+                explanation: explanation,
+                category: cat
+            };
+
+            state.questions.push(newQ);
+            saveQuestionsToStorage();
+            
+            document.getElementById("manual-question").value = "";
+            document.getElementById("manual-opt0").value = "";
+            document.getElementById("manual-opt1").value = "";
+            document.getElementById("manual-opt2").value = "";
+            document.getElementById("manual-opt3").value = "";
+            document.getElementById("manual-explanation").value = "";
+
+            toggleManualForm();
+            renderQuestionDbTable();
+            updateCategorySelectors();
+            showToast("เพิ่มและอัปเดตแบบทดสอบลงอุปกรณ์สำเร็จ");
+        }
+
+        function deleteQuestion(qId) {
+            showCustomModal(
+                "ยืนยันต้องการลบข้อสอบนี้?",
+                "คุณแน่ใจว่าต้องการลบคำถามข้อนี้ออกจากคลังความจำเครื่องอย่างถาวร?",
+                "warning",
+                "ตกลง, ลบออก",
+                true,
+                () => {
+                    state.questions = state.questions.filter(q => q.id !== qId);
+                    saveQuestionsToStorage();
+                    renderQuestionDbTable();
+                    updateCategorySelectors();
+                    showToast("ลบคำถามออกจากคลังสำเร็จ", "error");
+                }
+            );
+        }
+
+        function promptCreateNewCategory() {
+            const modal = document.getElementById("custom-modal");
+            document.getElementById("modal-title").innerText = "สร้างหัวข้อหมวดหมู่ใหม่";
+            document.getElementById("modal-message").innerText = "กรุณาระบุชื่อวิชาหรือหัวข้อบทเรียน:";
+            
+            const msgEl = document.getElementById("modal-message");
+            msgEl.innerHTML = `
+                <div class="space-y-2 mt-2">
+                    <p class="text-xs text-slate-500">ระบุชื่อหัวข้อบทเรียนใหม่:</p>
+                    <input type="text" id="custom-cat-input" placeholder="เช่น เภสัชวิทยาโรคทางเดินอาหาร, โรคหัวใจ..." class="w-full rounded-xl border border-slate-300 p-2.5 text-xs focus:outline-none focus:ring-2 focus:ring-medical-600">
+                </div>
+            `;
+
+            const confirmBtn = document.getElementById("modal-confirm-btn");
+            const cancelBtn = document.getElementById("modal-cancel-btn");
+            cancelBtn.classList.remove("hidden");
+
+            confirmBtn.innerText = "สร้างหมวด";
+            confirmBtn.onclick = function() {
+                const newCat = document.getElementById("custom-cat-input").value.trim();
+                if (newCat) {
+                    if (!state.categories.includes(newCat)) {
+                        state.categories.push(newCat);
+                        saveCategoriesToStorage();
+                        updateCategorySelectors();
+                        showToast(`สร้างหมวดหมู่ ${newCat} สำเร็จ`);
+                    } else {
+                        showToast(`มีหมวดหมู่ ${newCat} ในระบบแล้ว`, "error");
+                    }
+                }
+                closeCustomModal();
+            };
+            modal.classList.remove("hidden");
+        }
+
+        function restoreDefaultQuestionsPrompt() {
+            showCustomModal(
+                "กู้คืนค่าเริ่มต้น?",
+                "การกู้คืนจะรีเซ็ตคลังแบบทดสอบทั้งหมดให้กลับมาเป็นคำถามตารางเฉลยครบทั้ง 48 ข้อที่ถอดมาจากแผ่นรูปภาพของคุณ ยืนยันกระบวนการนี้หรือไม่?",
+                "warning",
+                "ตกลง, รีเซ็ตเลย",
+                true,
+                () => {
+                    state.questions = [...DEFAULT_QUESTIONS];
+                    saveQuestionsToStorage();
+                    updateCategorySelectors();
+                    renderQuestionDbTable();
+                    showToast("ระบบกู้คืนชุดแบบทดสอบต้นฉบับเสร็จสมบูรณ์");
+                }
+            );
+        }
+
+        // --- EXPORT / IMPORT SYSTEM ---
+        function exportJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({
+                questions: state.questions
+            }, null, 2));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", "cancer_mcqs_database.json");
+            dlAnchorElem.click();
+            showToast("ส่งออกข้อมูลเป็นไฟล์เรียบร้อย");
+        }
+
+        function downloadBlankTemplate() {
+            const blankTemplate = {
+                questions: [
+                    {
+                        id: "q_template_1",
+                        question: "เขียนคำถามโจทย์ของท่านตรงนี้",
+                        options: ["ตัวเลือกแรก", "ตัวเลือกที่สอง", "ตัวเลือกที่สาม", "ตัวเลือกที่สี่"],
+                        correctAnswerIndex: 0,
+                        explanation: "บรรยายแนวทางการวิเคราะห์เฉลยข้อนี้ที่ถูกต้องทางวิชาการ",
+                        category: "ระบุชื่อหมวดหมู่ที่นี่"
+                    }
+                ]
+            };
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(blankTemplate, null, 2));
+            const dlAnchorElem = document.createElement('a');
+            dlAnchorElem.setAttribute("href", dataStr);
+            dlAnchorElem.setAttribute("download", "blank_quiz_template.json");
+            dlAnchorElem.click();
+            showToast("ดาวน์โหลดแม่แบบสำหรับนำไปให้ AI แต่งโจทย์ภายนอกเรียบร้อยแล้ว");
+        }
+
+        function triggerImportInput() {
+            document.getElementById("import-json-file").click();
+        }
+
+        function importJSON(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const parsed = JSON.parse(e.target.result);
+                    if (parsed.questions && Array.isArray(parsed.questions)) {
+                        state.questions = parsed.questions;
+                        saveQuestionsToStorage();
+                        deriveCategoriesFromQuestions();
+                        updateCategorySelectors();
+                        renderQuestionDbTable();
+                        showToast(`นำเข้าเสร็จสิ้น! บรรจุคลังแบบทดสอบชุดใหม่รวม ${state.questions.length} ข้อสำเร็จ`);
+                    } else {
+                        showCustomModal("ไฟล์สอดคล้องไม่ถูกต้อง", "ไม่พบโครงสร้างแบบคำถาม (questions) ที่ถูกต้องภายในเอกสาร JSON", "error", "ปิด", false);
+                    }
+                } catch(err) {
+                    showCustomModal("การนำเข้าล้มเหลว", "ไม่สามารถถอดสมการไฟล์ JSON ได้ กรุณาเฝ้าระวังตัวปิดวงเล็บตกหล่น", "error", "ปิด", false);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function setupDropzone() {
+            // No operation since AI Vision and local APIs were simplified to preserve quotas.
+        }
+    </script>
+</body>
+</html>

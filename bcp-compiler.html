@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เครื่องมือสร้างแพ็กเกจ BCP ห้องยา</title>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;600&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Sarabun', sans-serif; background-color: #f8fbff;
+            background-image: radial-gradient(#a2d2ff 1px, transparent 1px);
+            background-size: 20px 20px; display: flex; justify-content: center; align-items: center;
+            min-height: 100vh; margin: 0; color: #4a4e69; padding: 20px;
+        }
+        .card {
+            background: white; padding: 40px; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(162, 210, 255, 0.4); max-width: 800px; width: 100%; border: 3px dashed #bde0fe;
+        }
+        h1 { font-family: 'Mali', cursive; color: #005b9f; margin-top: 0; text-align: center; }
+        .upload-section { background: #fff0f3; padding: 20px; border-radius: 15px; margin-top: 20px; border: 2px solid #ffb3c6; }
+        .file-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed #ffb3c6; }
+        .file-row:last-child { border-bottom: none; }
+        .file-row label { font-weight: bold; color: #d81b60; font-size: 15px; }
+        input[type="file"] { background: white; padding: 5px; border-radius: 8px; border: 1px solid #ccc; width: 250px; }
+        .btn-generate {
+            background: linear-gradient(135deg, #d81b60 0%, #ff8fa3 100%); color: white; border: none; padding: 18px 40px; font-size: 20px;
+            font-family: 'Mali', cursive; font-weight: bold; border-radius: 40px; cursor: pointer; margin-top: 30px; width: 100%; transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(216, 27, 96, 0.4);
+        }
+        .btn-generate:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 20px rgba(216, 27, 96, 0.6); }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h1 style="font-size: 32px;">📦 ระบบจัดการ BCP ห้องยา</h1>
+        
+        <div style="background: #e3f2fd; padding: 30px; border-radius: 15px; border: 2px solid #90caf9; text-align: center; margin-bottom: 40px; box-shadow: 0 8px 20px rgba(144, 202, 249, 0.3);">
+            <h2 style="color: #1565c0; margin-top: 0;">🌐 คลังเก็บไฟล์ระบบ BCP (เวอร์ชันล่าสุด)</h2>
+            <p style="font-size: 16px; color: #333; margin-bottom: 25px;">
+                แอดมินสามารถนำไฟล์ ZIP ที่สร้างเสร็จแล้ว ไปอัปโหลดขึ้น <b>GitHub Pages</b> <br>
+                เพื่อให้ผู้ใช้งานเข้าถึงผ่านลิงก์เว็บ และกด <b>"Install App (PWA)"</b> เก็บไว้ใช้ตอน Offline ได้ทันที!
+            </p>
+            <a href="https://drive.google.com/drive/folders/1vprajnrjHKqSXP_OtobegV48knploGew" target="_blank" class="btn-generate" style="display:inline-block; text-decoration:none; background: linear-gradient(135deg, #1e88e5 0%, #1565c0 100%); width: auto; font-size: 22px; padding: 15px 40px; box-shadow: 0 6px 20px rgba(30, 136, 229, 0.4);">
+                ☁️ เปิด Google Drive / หรือลิงก์ GitHub ของคุณ
+            </a>
+        </div>
+
+        <hr style="border: 1px dashed #bde0fe; margin: 30px 0;">
+
+        <h2 style="text-align: center; color: #d81b60; margin-bottom: 5px;">⚙️ ส่วนของแอดมิน (สำหรับอัปเดตฐานข้อมูล)</h2>
+        <p style="text-align: center; font-size: 15px; color: #4a4e69;">
+            กรุณาแนบไฟล์รูปภาพและฐานข้อมูล Excel <br>
+            ระบบจะทำการ <b>ฝังข้อมูลลงไปเป็นเนื้อเดียวกับไฟล์เว็บ</b> <br>
+            <span style="color:red; font-size: 14px;">(ข้อมูลที่มีค่า TRUE ในคอลัมน์ I, E, F จะถูกกรองทิ้งให้อัตโนมัติ)</span>
+        </p>
+
+        <div class="upload-section">
+            <h3 style="margin-top:0; color:#d81b60; font-family:'Mali', cursive;">📎 ไฟล์ที่ต้องการหลอมรวม</h3>
+            <div class="file-row"><label>1. รูปโลโก้ (favicon_2.png)</label><input type="file" id="f_fav" accept=".png,.jpg,.jpeg"></div>
+            <div class="file-row"><label>2. รูปมาสคอต (ดอกบัว5_2.png)</label><input type="file" id="f_mascot" accept=".png,.jpg,.jpeg"></div>
+            <div class="file-row"><label>3. ฐานข้อมูลยา (list2_2.xls)</label><input type="file" id="f_list2" accept=".xls,.xlsx,.csv"></div>
+            <div class="file-row"><label>4. ฐานข้อมูลวิธีใช้ (use_2.xls)</label><input type="file" id="f_use" accept=".xls,.xlsx,.csv"></div>
+            <div class="file-row"><label>5. ฐานข้อมูลเวลา (time_2.xls)</label><input type="file" id="f_time" accept=".xls,.xlsx,.csv"></div>
+        </div>
+        
+        <button class="btn-generate" onclick="generateZip()" id="btnGen">📦 สร้างไฟล์ ZIP สำเร็จรูป (PWA)</button>
+
+        <div id="downloadArea" style="display:none; text-align:center; margin-top: 25px; padding: 25px; background: #d4edda; border-radius: 15px; border: 2px dashed #28a745;">
+            <h3 style="color:#155724; margin-top:0; font-size: 24px;">✅ สร้างไฟล์สำเร็จแล้ว!</h3>
+            <p style="color:#155724; font-size: 16px; margin-bottom: 20px;">
+                นำไฟล์ ZIP นี้ไปแตกไฟล์ อัปโหลดขึ้น GitHub Pages เพื่ออัปเดตระบบ PWA ได้เลยครับ
+            </p>
+            <a id="manualDownloadBtn" class="btn-generate" style="display:inline-block; text-decoration:none; background: linear-gradient(135deg, #28a745 0%, #20c997 100%); box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4); font-size: 18px; padding: 12px 30px; width: auto;">
+                📥 คลิกลิงก์นี้หากระบบไม่ดาวน์โหลดอัตโนมัติ
+            </a>
+        </div>
+    </div>
+
+    <!-- ซ่อน Source Code ของหน้า BCP ไว้เพื่อดึงไปสร้างเป็นไฟล์ index.html -->
+    <textarea id="bcp-source" style="display:none;">
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ระบบ BCP ห้องยา โรงพยาบาลมะเร็งอุบลราชธานี</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffb3c6">
+    <link rel="apple-touch-icon" href="/*EMBED_LOGO_START*/favicon_2.png/*EMBED_LOGO_END*/">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Mali:wght@400;600&family=Sarabun:wght@300;400;600&display=swap');
+        :root { --cute-pink: #ffb3c6; --cute-pink-dark: #ff8fa3; --cute-blue: #a2d2ff; --cute-blue-dark: #8cb8e6; --cute-mint: #bde0fe; --cute-green: #d8f3dc; --text-main: #4a4e69; --text-light: #9a8c98; --bg-color: #fff0f3; --card-bg: #ffffff; --danger: #ff99c8; --success: #a0c4ff; --warning: #fdffb6; --radius-sm: 12px; --radius-md: 20px; --radius-lg: 30px; --shadow: 0 8px 24px rgba(255, 143, 163, 0.15); }
+        * { box-sizing: border-box; font-family: 'Sarabun', sans-serif; }
+        body { margin: 0; padding: 0; background-color: var(--bg-color); background-image: radial-gradient(var(--cute-pink) 1px, transparent 1px); background-size: 20px 20px; color: var(--text-main); }
+        h1, h2, h3 { font-family: 'Mali', cursive; color: var(--cute-pink-dark); }
+        .navbar { background: linear-gradient(135deg, #ffffff 0%, var(--bg-color) 100%); padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-bottom: 3px dashed var(--cute-pink); position: sticky; top: 0; z-index: 100; }
+        .navbar-brand { display: flex; align-items: center; gap: 20px; }
+        .navbar-brand img.logo { height: 70px; background: white; border-radius: 50%; padding: 5px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 2px solid var(--cute-pink); }
+        .navbar-brand img.mascot { height: 90px; animation: bounce 2s infinite ease-in-out; }
+        @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+        .navbar-brand h2 { margin: 0; font-size: 26px; }
+        .navbar-brand p { margin: 5px 0 0 0; font-size: 14px; color: var(--text-light); font-weight: bold; }
+        .tabs { display: flex; gap: 12px; background: white; padding: 10px; border-radius: var(--radius-lg); box-shadow: var(--shadow); }
+        .tab-btn { background: transparent; border: 2px solid transparent; color: var(--text-main); padding: 10px 20px; cursor: pointer; border-radius: var(--radius-lg); font-size: 15px; font-weight: bold; font-family: 'Mali', cursive; transition: all 0.3s; }
+        .tab-btn:hover { background: var(--bg-color); transform: translateY(-2px); }
+        .tab-btn.active { background: var(--cute-pink); color: white; border-color: var(--cute-pink-dark); box-shadow: 0 4px 10px rgba(255, 179, 198, 0.5); }
+        .tab-btn.doc-tab.active { background: var(--cute-blue); border-color: var(--cute-blue-dark); box-shadow: 0 4px 10px rgba(162, 210, 255, 0.5); }
+        .container { max-width: 1200px; margin: 30px auto; padding: 30px; background: var(--card-bg); border-radius: var(--radius-md); box-shadow: var(--shadow); min-height: 75vh; border: 1px solid rgba(255, 179, 198, 0.3); }
+        .tab-content { display: none; animation: fadeIn 0.4s ease-out; }
+        .tab-content.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; color: var(--text-main); }
+        input, select { width: 100%; padding: 12px 15px; border: 2px solid #f0f0f0; border-radius: var(--radius-sm); font-size: 15px; background-color: #fafafa; transition: all 0.3s; }
+        input:focus { border-color: var(--cute-pink); outline: none; box-shadow: 0 0 0 4px rgba(255, 179, 198, 0.2); background-color: white; }
+        button { padding: 12px 24px; border: none; border-radius: var(--radius-lg); cursor: pointer; font-size: 15px; font-weight: bold; font-family: 'Mali', cursive; transition: all 0.2s; }
+        button:hover { transform: scale(1.05); filter: brightness(1.05); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .btn-primary { background: var(--cute-pink-dark); color: white; } .btn-success { background: var(--success); color: var(--text-main); } .btn-danger { background: var(--danger); color: white; } .btn-warning { background: var(--warning); color: var(--text-main); } .btn-info { background: var(--cute-blue-dark); color: white; }
+        .grid-6-cols { display: grid; grid-template-columns: repeat(6, 1fr); gap: 15px 20px; align-items: end; }
+        .span-1 { grid-column: span 1; } .span-2 { grid-column: span 2; } .span-3 { grid-column: span 3; } .span-4 { grid-column: span 4; } .span-5 { grid-column: span 5; } .span-6 { grid-column: span 6; }
+        table { width: 100%; border-collapse: separate; border-spacing: 0; margin-top: 20px; font-size: 15px; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid #f0f0f0; }
+        th, td { border-bottom: 1px solid #f0f0f0; padding: 15px 12px; text-align: left; }
+        th { background-color: var(--cute-pink); color: white; font-weight: 600; font-family: 'Mali', cursive; }
+        tbody tr:hover { background-color: #fff9fa; }
+        .section-card { background: white; padding: 25px; border-radius: var(--radius-md); margin-bottom: 25px; border: 2px dashed; }
+        .card-doctor { border-color: var(--cute-blue); background-color: #f8fbff; } .card-dispense { border-color: var(--cute-pink); background-color: #fffafb; } .card-patient { background: var(--cute-mint); border: none; }
+        .qr-scanner-area { background: #f8fbff; padding: 30px; border-radius: var(--radius-md); border: 3px dashed var(--cute-blue-dark); text-align: center; margin-bottom: 25px; transition: all 0.3s; }
+        .qr-scanner-area:focus-within { background: #eef5ff; border-style: solid; transform: scale(1.02); }
+        .qr-scanner-area input { font-size: 20px; padding: 15px; text-align: center; border: 3px solid var(--cute-blue); border-radius: var(--radius-lg); font-weight: bold; }
+        .status-badge { display: inline-block; padding: 8px 16px; border-radius: var(--radius-lg); font-size: 13px; font-weight: bold; }
+        .status-ok { background: var(--cute-green); color: #2d6a4f; } .status-none { background: #ffccd5; color: #c9184a; }
+        .footer-credit { text-align: center; margin-top: 50px; padding-top: 25px; border-top: 2px dashed var(--cute-pink); font-size: 14px; color: var(--text-light); line-height: 1.8; font-family: 'Mali', cursive; }
+
+        /* Live Label Preview */
+        .live-label-preview {
+            background: #fff; border: 1px solid #ccc; border-radius: 8px;
+            width: 100%; max-width: 320px; height: 210px; padding: 15px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05); position: relative;
+            font-family: 'Sarabun', sans-serif; margin-top: 10px;
+        }
+        .llp-header { display: flex; justify-content: space-between; border-bottom: 1px dashed #999; margin-bottom: 5px; font-size: 11px; color:#555;}
+        .llp-pt { display: flex; justify-content: space-between; font-size: 13px; font-weight: bold; margin-bottom: 5px; }
+        .llp-drug { font-size: 16px; font-weight: bold; color: #005b9f; margin-bottom: 5px; display: flex; justify-content: space-between; }
+        .llp-sig { font-size: 14px; line-height: 1.4; color: #000; font-weight: bold; }
+        .llp-ind { font-size: 13px; color: #d81b60; margin-top: 5px; }
+        .llp-gen { font-size: 11px; color: #777; position: absolute; bottom: 10px; left: 15px; right: 15px; text-align: left; }
+
+        @media print {
+            .navbar, .container { display: none !important; }
+            body { background-color: #fff; background-image: none; margin: 0; padding: 0; color: #000; font-family: 'Sarabun', sans-serif; }
+            .print-area { display: block !important; position: static; width: 100%; margin: 0; padding: 0; }
+            .drug-label, .receipt-doc, .qr-doc { display: none; }
+            /* สังเกตว่านำคำสั่ง rotate(180deg) ออกแล้ว เพื่อให้พิมพ์แนวตั้งตรงๆ */
+            body.print-label .drug-label { display: block; width: 100mm; height: 70mm; box-sizing: border-box; border: none; margin: 0; page-break-after: always; overflow: hidden; position: relative;}
+            body.print-label .drug-label-content { width: 100%; height: 100%; padding: 8mm 6mm 5mm 6mm; box-sizing: border-box; font-size: 13px; position: relative;}
+            body.print-label .drug-label-content .header-row { font-size: 11px; display: flex; justify-content: space-between; border-bottom: 1px dashed #000; padding-bottom: 3px; margin-bottom: 4px; }
+            body.print-label .drug-label-content .pt-row { font-size: 14px; display: flex; justify-content: space-between; margin-bottom: 4px; }
+            body.print-label .drug-label-content .drug-name { font-weight: bold; font-size: 16px; margin-top: 6px; margin-bottom: 6px; }
+            body.print-label .drug-label-content .sig-row { font-size: 14px; line-height: 1.4; font-weight: bold; }
+            body.print-label .drug-label-content .indication-row { font-size: 13px; margin-top: 6px; color: #333; }
+            body.print-label .drug-label-content .generic-row { font-size: 10px; color: #555; position: absolute; bottom: 5mm; left: 6mm; }
+            body.print-a4 .receipt-doc { display: block; width: 100%; padding: 10mm; font-size: 14px; }
+            body.print-a4 .receipt-doc .receipt-header { display: flex; align-items: center; justify-content: center; gap: 15px; margin-bottom: 15px; }
+            body.print-a4 .receipt-doc .receipt-header img { height: 60px; }
+            body.print-a4 .receipt-doc h2 { margin: 0; text-align: center; }
+            body.print-a4 .receipt-doc table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+            body.print-a4 .receipt-doc th, body.print-a4 .receipt-doc td { border: 1px solid #000; padding: 5px; }
+            body.print-a4 .receipt-doc .total-row { font-weight: bold; text-align: right; }
+            body.print-qr .qr-doc { display: block; width: 100%; padding: 10mm; font-size: 14px; }
+            body.print-qr .qr-doc .header { display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px; }
+            body.print-qr .qr-doc .hospital-info { display: flex; align-items: center; gap: 15px; }
+            body.print-qr .qr-doc .hospital-info img { height: 60px; }
+            body.print-qr .qr-doc .qr-code-box { text-align: center; padding: 10px; border-radius: 8px; }
+            body.print-qr .qr-doc table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+            body.print-qr .qr-doc th, body.print-qr .qr-doc td { border: 1px solid #000; padding: 8px; text-align: left; }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-brand">
+            <img src="/*EMBED_LOGO_START*/favicon_2.png/*EMBED_LOGO_END*/" alt="UBCH Logo" class="logo">
+            <div>
+                <h2>✨ ระบบ BCP ห้องยา ✨</h2>
+                <p>Offline Pharmacy System (Stand-alone) รพ.มะเร็งอุบลราชธานี</p>
+            </div>
+            <img src="/*EMBED_MASCOT_START*/ดอกบัว5_2.png/*EMBED_MASCOT_END*/" alt="Mascot" class="mascot">
+        </div>
+        <div class="tabs">
+            <button class="tab-btn doc-tab" onclick="switchTab('doctor')">🩺 แพทย์สั่งยา</button>
+            <button class="tab-btn active" onclick="switchTab('dispense')">💊 ห้องยาจ่ายยา</button>
+            <button class="tab-btn" onclick="switchTab('history')">📁 ประวัติ</button>
+            <button class="tab-btn" onclick="switchTab('settings')">⚙️ ตั้งค่าระบบ</button>
+        </div>
+    </div>
+
+    <div class="container">
+        <!-- TAB 1: แพทย์สั่งยา -->
+        <div id="doctor" class="tab-content">
+            <div class="section-card card-patient" style="background: var(--cute-mint);">
+                <h3 style="margin-top: 0; color: var(--text-main);">👩‍⚕️ ข้อมูลผู้ป่วย (ส่วนของแพทย์)</h3>
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px;">
+                    <div class="form-group" style="margin: 0;"><label>รหัส HN</label><input type="text" id="docHn" placeholder="ระบุ HN" onkeydown="handleEnterDoc(event, 'docPatientName')" onkeyup="updateLabelPreview('docDrugSearch')"></div>
+                    <div class="form-group" style="margin: 0;"><label>ชื่อ-นามสกุลผู้ป่วย 👤</label><input type="text" id="docPatientName" placeholder="ระบุชื่อผู้ป่วย" onkeydown="handleEnterDoc(event, 'docDrugSearch')" onkeyup="updateLabelPreview('docDrugSearch')"></div>
+                </div>
+            </div>
+            <div class="section-card card-doctor">
+                <h3 style="margin-top: 0; color: var(--cute-blue-dark);">✨ เพิ่มรายการยา <span style="font-size:14px; font-weight:normal; color:var(--text-light);">(พิมพ์บางส่วนแล้วกด Enter ได้เลย)</span></h3>
+                
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 2; min-width: 400px;">
+                        <div class="grid-6-cols">
+                            <div class="form-group span-3"><label>1. ค้นหายา 🔍</label><input type="text" id="docDrugSearch" placeholder="พิมพ์ชื่อยา หรือรหัส..." list="drugList" onchange="selectDrugDoc()" onkeydown="handleEnterDoc(event, 'docDrugUse', true)" onkeyup="updateLabelPreview('docDrugSearch')"></div>
+                            <div class="form-group span-2"><label>2. วิธีใช้ 🥄</label><input type="text" id="docDrugUse" list="useList" onchange="checkAndTranslate('docDrugUse', 'uses')" onkeydown="handleEnterDoc(event, 'docDrugUnit')" onkeyup="updateLabelPreview('docDrugSearch')"></div>
+                            <div class="form-group span-1"><label>3. หน่วย 📦</label><input type="text" id="docDrugUnit" list="unitList" onkeydown="handleEnterDoc(event, 'docDrugDose')" onkeyup="updateLabelPreview('docDrugSearch')"></div>
+                            <div class="form-group span-1"><label>4. จำนวน/ครั้ง</label><input type="text" id="docDrugDose" onkeydown="handleEnterDoc(event, 'docDrugFreq')" onkeyup="updateLabelPreview('docDrugSearch')"></div>
+                            <div class="form-group span-1"><label>5. วันละ(ครั้ง)</label><input type="text" id="docDrugFreq" list="freqList" onkeydown="handleEnterDoc(event, 'docDrugMeal')" onkeyup="updateLabelPreview('docDrugSearch')"></div>
+                            <div class="form-group span-2"><label>6. มื้ออาหาร (ac, pc, wm, -)</label><input type="text" id="docDrugMeal" list="mealList" placeholder="เว้นว่าง = ค่าว่าง" onchange="translateMeal('docDrugMeal')" onkeydown="handleEnterDoc(event, 'docDrugTime')" onkeyup="updateLabelPreview('docDrugSearch')"></div>
+                            <div class="form-group span-2"><label>7. เวลา ⏰</label><input type="text" id="docDrugTime" list="timeList" onchange="checkAndTranslate('docDrugTime', 'times')" onkeydown="handleEnterDoc(event, 'docDrugQty')" onkeyup="updateLabelPreview('docDrugSearch')"></div>
+                            <div class="form-group span-1"><label>8. จำนวนจ่าย 🔢</label><input type="number" id="docDrugQty" value="1" min="1" onkeydown="handleEnterDoc(event, 'docDrugIndication')" onkeyup="updateLabelPreview('docDrugSearch')"></div>
+                            <div class="form-group span-6"><label>9. 💡 เพิ่มเติมสรรพคุณ / หมายเหตุ <span style="color:red; font-weight:normal;">(สามารถพิมพ์ข้อความต่อท้ายลงในช่องนี้ได้เลย)</span></label><input type="text" id="docDrugIndication" style="background-color:#eef5ff; border-color:var(--cute-blue);" onkeydown="handleEnterDoc(event, 'ADD')" onkeyup="updateLabelPreview('docDrugSearch')"></div>
+                        </div>
+                    </div>
+
+                    <!-- Live Label Preview สำหรับฝั่งแพทย์ -->
+                    <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; align-items: center;">
+                        <label style="color: var(--cute-blue-dark);">จำลองหน้าตาฉลากที่จะพิมพ์</label>
+                        <div class="live-label-preview">
+                            <div class="llp-header"><span>วันที่ <span class="pv-date"></span></span><span>ใบสั่งยา BCP</span></div>
+                            <div class="llp-pt"><span>ชื่อ <span id="pv-doc-name" style="color:#005b9f;">-</span></span><span>HN <span id="pv-doc-hn" style="color:#005b9f;">-</span></span></div>
+                            <div class="llp-drug"><span id="pv-doc-drugname">ชื่อยา</span> <span style="font-size:14px; color:#555;">#<span id="pv-doc-qty">0</span> <span id="pv-doc-unit"></span></span></div>
+                            <div class="llp-sig" id="pv-doc-sig">- วิธีใช้ -</div>
+                            <div class="llp-ind" id="pv-doc-ind"></div>
+                            <div class="llp-gen" id="pv-doc-gen"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="text-align: right; margin-top: 20px;"><button class="btn-info" onclick="addDrugToDocCart()">➕ กด Enter เพิ่มลงใบสั่งยา</button></div>
+            </div>
+            <div>
+                <h3>📋 รายการยาในใบสั่ง (เตรียมพิมพ์ QR)</h3>
+                <table id="docCartTable">
+                    <thead><tr><th width="5%" style="text-align: center;">ลำดับ</th><th width="30%">รายการยา</th><th width="10%" style="text-align: center;">จำนวน</th><th width="35%">วิธีใช้และฉลาก</th><th width="15%" style="text-align: right;">ราคารวม (฿)</th><th width="5%" style="text-align: center;">ลบ</th></tr></thead>
+                    <tbody id="docCartBody"></tbody>
+                </table>
+                <div style="text-align: right; margin-top: 15px; font-size: 20px;">
+                    <strong>ยอดรวม: <span id="docGrandTotal" style="color: var(--cute-blue-dark);">0</span> บาท 💸</strong>
+                </div>
+                <div style="margin-top: 30px; text-align: center;">
+                    <button class="btn-info" style="font-size: 18px; padding: 15px 40px;" onclick="printQRPrescription()">🖨️ สร้างใบสั่งยา พร้อม QR Code (A4)</button>
+                    <button class="btn-danger" style="margin-left: 15px; background-color: #ffb3c6; color: #c9184a;" onclick="clearDocCart()">ล้างข้อมูล</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 2: ห้องยาจ่ายยา -->
+        <div id="dispense" class="tab-content active">
+            <div class="qr-scanner-area">
+                <h3 style="margin-top: 0; color: var(--cute-blue-dark); font-size: 24px;">📷 สแกนบาร์โค้ด / QR Code ใบสั่งยา</h3>
+                <p style="font-size: 15px; color: var(--text-main); margin-bottom: 20px;">(เปลี่ยนแป้นพิมพ์เป็น <b>ภาษาอังกฤษ</b> หรือกดปุ่มเปิดกล้องเพื่อสแกน 🎥)</p>
+                <div style="display: flex; gap: 10px; justify-content: center; margin-bottom: 15px; align-items: center;">
+                    <input type="text" id="qrInput" placeholder="✨ คลิกที่นี่ แล้วยิงสแกนบาร์โค้ดเลย ✨" onkeydown="handleQRScan(event)" autofocus style="width: 60%; max-width: 400px; margin: 0;">
+                    <button class="btn-info" onclick="toggleCamera()" style="margin: 0; font-size: 16px; padding: 10px 20px; border: 2px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1);">🎥 เปิด/ปิดกล้อง</button>
+                </div>
+                <div id="qr-reader" style="width: 100%; max-width: 400px; margin: 0 auto; display: none; border: 3px solid var(--cute-blue); border-radius: 8px; overflow: hidden; background: white;"></div>
+            </div>
+            
+            <div class="section-card card-patient">
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 20px;">
+                    <div class="form-group" style="margin: 0;"><label>รหัส HN</label><input type="text" id="hn" placeholder="ระบุ HN" onkeydown="handleEnter(event, 'patientName')" onkeyup="updateLabelPreview('drugSearch')"></div>
+                    <div class="form-group" style="margin: 0;"><label>ชื่อ-นามสกุลผู้ป่วย 👤</label><input type="text" id="patientName" placeholder="ระบุชื่อผู้ป่วย" onkeydown="handleEnter(event, 'drugSearch')" onkeyup="updateLabelPreview('drugSearch')"></div>
+                </div>
+            </div>
+            <div class="section-card card-dispense">
+                <h3 style="margin-top: 0;">🌸 เพิ่มรายการยา <span style="font-size:14px; font-weight:normal; color:var(--text-light);">(พิมพ์บางส่วนแล้วกด Enter ได้เลย)</span></h3>
+                
+                <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                    <div style="flex: 2; min-width: 400px;">
+                        <div class="grid-6-cols">
+                            <div class="form-group span-3"><label>1. ค้นหายา 🔍</label><input type="text" id="drugSearch" placeholder="พิมพ์ชื่อยา หรือรหัส..." list="drugList" onchange="selectDrug()" onkeydown="handleEnter(event, 'drugUse', true)" onkeyup="updateLabelPreview('drugSearch')"></div>
+                            <div class="form-group span-2"><label>2. วิธีใช้ 🥄</label><input type="text" id="drugUse" list="useList" onchange="checkAndTranslate('drugUse', 'uses')" onkeydown="handleEnter(event, 'drugUnit')" onkeyup="updateLabelPreview('drugSearch')"></div>
+                            <div class="form-group span-1"><label>3. หน่วย 📦</label><input type="text" id="drugUnit" list="unitList" onkeydown="handleEnter(event, 'drugDose')" onkeyup="updateLabelPreview('drugSearch')"></div>
+                            <div class="form-group span-1"><label>4. จำนวน/ครั้ง</label><input type="text" id="drugDose" onkeydown="handleEnter(event, 'drugFreq')" onkeyup="updateLabelPreview('drugSearch')"></div>
+                            <div class="form-group span-1"><label>5. วันละ(ครั้ง)</label><input type="text" id="drugFreq" list="freqList" onkeydown="handleEnter(event, 'drugMeal')" onkeyup="updateLabelPreview('drugSearch')"></div>
+                            <div class="form-group span-2"><label>6. มื้ออาหาร (ac, pc, wm, -)</label><input type="text" id="drugMeal" list="mealList" placeholder="เว้นว่าง = ค่าว่าง" onchange="translateMeal('drugMeal')" onkeydown="handleEnter(event, 'drugTime')" onkeyup="updateLabelPreview('drugSearch')"></div>
+                            <div class="form-group span-2"><label>7. เวลา ⏰</label><input type="text" id="drugTime" list="timeList" onchange="checkAndTranslate('drugTime', 'times')" onkeydown="handleEnter(event, 'drugQty')" onkeyup="updateLabelPreview('drugSearch')"></div>
+                            <div class="form-group span-1"><label>8. จำนวน 🔢</label><input type="number" id="drugQty" value="1" min="1" onkeydown="handleEnter(event, 'drugPrice')" onchange="calculateTotal()" onkeyup="updateLabelPreview('drugSearch')"></div>
+                            <div class="form-group span-1"><label>9. ราคา/หน่วย ฿</label><input type="number" id="drugPrice" onkeydown="handleEnter(event, 'drugIndication')" onchange="calculateTotal()"></div>
+                            <div class="form-group span-5"><label>10. 💡 เพิ่มเติมสรรพคุณ / หมายเหตุ <span style="color:red; font-weight:normal;">(สามารถพิมพ์ข้อความต่อท้ายลงในช่องนี้ได้เลย)</span></label><input type="text" id="drugIndication" style="background-color:#fff0f3; border-color:var(--cute-pink);" onkeydown="handleEnter(event, 'ADD')" onkeyup="updateLabelPreview('drugSearch')"></div>
+                        </div>
+                    </div>
+
+                    <!-- Live Label Preview สำหรับฝั่งห้องยา -->
+                    <div style="flex: 1; min-width: 300px; display: flex; flex-direction: column; align-items: center;">
+                        <label style="color: var(--cute-pink-dark);">จำลองหน้าตาฉลากที่จะพิมพ์</label>
+                        <div class="live-label-preview" style="border-color: var(--cute-pink);">
+                            <div class="llp-header"><span>วันที่ <span class="pv-date"></span></span><span>ใบสั่งยา BCP</span></div>
+                            <div class="llp-pt"><span>ชื่อ <span id="pv-pha-name" style="color:#d81b60;">-</span></span><span>HN <span id="pv-pha-hn" style="color:#d81b60;">-</span></span></div>
+                            <div class="llp-drug"><span id="pv-pha-drugname">ชื่อยา</span> <span style="font-size:14px; color:#555;">#<span id="pv-pha-qty">0</span> <span id="pv-pha-unit"></span></span></div>
+                            <div class="llp-sig" id="pv-pha-sig">- วิธีใช้ -</div>
+                            <div class="llp-ind" id="pv-pha-ind"></div>
+                            <div class="llp-gen" id="pv-pha-gen"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="text-align: right; margin-top: 20px;"><button class="btn-primary" onclick="addDrugToCart()">➕ กด Enter บันทึกลงรายการ</button></div>
+            </div>
+            
+            <div>
+                <h3>🛍️ รายการยาที่จัดเตรียม</h3>
+                <table id="cartTable">
+                    <thead><tr><th width="5%" style="text-align: center;">ลำดับ</th><th width="25%">รายการยา</th><th width="10%" style="text-align: center;">จำนวน</th><th width="45%">วิธีใช้และสรรพคุณ</th><th width="10%" style="text-align: right;">ราคารวม</th><th width="5%" style="text-align: center;">ลบ</th></tr></thead>
+                    <tbody id="cartBody"></tbody>
+                </table>
+                <div style="text-align: right; margin-top: 20px; font-size: 22px; background: #fff0f3; padding: 15px; border-radius: var(--radius-sm); display: inline-block; float: right;">
+                    <strong>ยอดรวมทั้งหมด: <span id="grandTotal" style="color: #c9184a;">0</span> บาท 💸</strong>
+                </div>
+                <div style="clear: both;"></div>
+                <div style="margin-top: 30px; display: flex; gap: 15px; align-items: center;">
+                    <button class="btn-warning" onclick="printLabels()" style="flex: 1; font-size: 16px; padding: 15px;">🖨️ พิมพ์ฉลากยา 10x7 cm</button>
+                    <button class="btn-success" onclick="saveAndPrintReceipt()" style="flex: 1; font-size: 16px; padding: 15px;">📄 พิมพ์ใบเสร็จ A4 & บันทึก</button>
+                    <button class="btn-danger" onclick="clearCart()" style="background-color: #ffb3c6; color: #c9184a;">ล้างหน้าจอ 🧹</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: ประวัติ -->
+        <div id="history" class="tab-content">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3>📁 ประวัติการทำรายการ (รอนำเข้า HIS)</h3>
+                <div style="display: flex; gap: 10px;">
+                    <button class="btn-success" onclick="exportCSV()">📥 Export ไฟล์ CSV</button>
+                    <button class="btn-danger" onclick="clearHistory()" style="background-color: #ffb3c6; color: #c9184a;">🗑️ ล้างประวัติ</button>
+                </div>
+            </div>
+            <table>
+                <thead><tr><th>วัน-เวลา</th><th>สถานะ</th><th>HN</th><th>ชื่อผู้ป่วย</th><th style="text-align: center;">รายการ</th><th style="text-align: right;">ยอดรวม (บาท)</th><th style="text-align: center;">จัดการดึงข้อมูลมาแก้ไข</th></tr></thead>
+                <tbody id="historyBody"></tbody>
+            </table>
+        </div>
+
+        <!-- TAB 4: ตั้งค่า -->
+        <div id="settings" class="tab-content">
+            <div class="section-card">
+                <h3>💾 สถานะข้อมูลในเครื่อง (Local Storage)</h3>
+                <ul style="list-style-type: none; padding: 0; font-size: 16px;">
+                    <li style="margin-bottom: 15px; display: flex; align-items: center; gap: 15px;"><span>📦 รายการยา:</span> <span id="status-drugs" class="status-badge status-none">ไม่มีข้อมูล</span></li>
+                    <li style="margin-bottom: 15px; display: flex; align-items: center; gap: 15px;"><span>🥄 วิธีใช้:</span> <span id="status-uses" class="status-badge status-none">ไม่มีข้อมูล</span></li>
+                    <li style="margin-bottom: 15px; display: flex; align-items: center; gap: 15px;"><span>⏰ เวลาใช้ยา:</span> <span id="status-times" class="status-badge status-none">ไม่มีข้อมูล</span></li>
+                </ul>
+            </div>
+            <div class="section-card" style="background-color: #fff9fa; border-color: var(--cute-pink-dark);">
+                <h3>☁️ อัพโหลดไฟล์ข้อมูลเพิ่มเติม (Excel/CSV)</h3>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;">
+                    <div class="form-group" style="background: white; padding: 15px; border-radius: var(--radius-sm); border: 1px solid #f0f0f0;">
+                        <label>1. ไฟล์รายการยา</label>
+                        <input type="file" id="fileDrugs" accept=".xlsx, .xls, .csv" style="margin-bottom: 10px;">
+                        <div style="display: flex; gap: 8px;"><button class="btn-primary" onclick="uploadData('fileDrugs', 'drugs')" style="flex: 1; padding: 8px;">อัพโหลด ⬆️</button><button class="btn-danger" onclick="clearData('drugs')" style="padding: 8px; background-color: #ffb3c6; color: #c9184a;">ลบ 🗑️</button></div>
+                    </div>
+                    <div class="form-group" style="background: white; padding: 15px; border-radius: var(--radius-sm); border: 1px solid #f0f0f0;">
+                        <label>2. ไฟล์วิธีใช้</label>
+                        <input type="file" id="fileUses" accept=".xlsx, .xls, .csv" style="margin-bottom: 10px;">
+                        <div style="display: flex; gap: 8px;"><button class="btn-primary" onclick="uploadData('fileUses', 'uses')" style="flex: 1; padding: 8px;">อัพโหลด ⬆️</button><button class="btn-danger" onclick="clearData('uses')" style="padding: 8px; background-color: #ffb3c6; color: #c9184a;">ลบ 🗑️</button></div>
+                    </div>
+                    <div class="form-group" style="background: white; padding: 15px; border-radius: var(--radius-sm); border: 1px solid #f0f0f0;">
+                        <label>3. ไฟล์เวลา</label>
+                        <input type="file" id="fileTimes" accept=".xlsx, .xls, .csv" style="margin-bottom: 10px;">
+                        <div style="display: flex; gap: 8px;"><button class="btn-primary" onclick="uploadData('fileTimes', 'times')" style="flex: 1; padding: 8px;">อัพโหลด ⬆️</button><button class="btn-danger" onclick="clearData('times')" style="padding: 8px; background-color: #ffb3c6; color: #c9184a;">ลบ 🗑️</button></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-credit">
+            <strong>🌸 ระบบสำรองฉุกเฉิน (BCP) ห้องยา โรงพยาบาลมะเร็งอุบลราชธานี 🌸</strong><br>
+            ออกแบบและพัฒนาโดย: ภก.จุมพล อุทธา <br>
+            <span style="font-size: 12px; opacity: 0.8;">หัวหน้างานคลังยาและเภสัชสารสนเทศ กลุ่มงานเภสัชกรรม</span>
+        </div>
+
+        <datalist id="drugList"></datalist><datalist id="useList"></datalist><datalist id="timeList"></datalist>
+        <datalist id="unitList"><option value="เม็ด"></option><option value="แคปซูล"></option><option value="ซีซี"></option><option value="มล."></option><option value="ช้อนชา"></option><option value="ช้อนโต๊ะ"></option><option value="ซอง"></option><option value="หยด"></option><option value="หลอด"></option><option value="vial"></option></datalist>
+        <datalist id="freqList"><option value="1"></option><option value="2"></option><option value="3"></option><option value="4"></option></datalist>
+        <datalist id="mealList"><option value="-"></option><option value="ก่อนอาหาร"></option><option value="หลังอาหาร"></option><option value="พร้อมอาหาร"></option></datalist>
+    </div>
+
+    <div id="printArea" class="print-area"></div>
+
+    <script>
+        let db = { drugs: [], uses: [], times: [] };
+        let cart = []; let docCart = []; let historyData = [];
+
+        window.onload = function() { loadFromLocalStorage(); updateDashboard(); loadHistory(); updateDatePreview(); document.getElementById('qrInput').focus(); };
+
+        function updateDatePreview() {
+            let d = new Date();
+            let dateStr = d.toLocaleDateString('th-TH', {day:'2-digit', month:'2-digit', year:'numeric'}) + ' ' + d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0') + ' น.';
+            document.querySelectorAll('.pv-date').forEach(el => el.innerText = dateStr);
+        }
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            let btnIndex = ['doctor', 'dispense', 'history', 'settings'].indexOf(tabId);
+            document.querySelectorAll('.tab-btn')[btnIndex].classList.add('active');
+            if(tabId === 'dispense') document.getElementById('qrInput').focus();
+            if(tabId === 'doctor') document.getElementById('docHn').focus();
+        }
+
+        function checkAndTranslate(inputId, listName) {
+            let el = document.getElementById(inputId); let val = el.value.trim().toLowerCase();
+            if(!val) { el.dataset.code = ""; updateLabelPreview(inputId.startsWith('doc') ? 'docDrugSearch' : 'drugSearch'); return; }
+            let match = db[listName].find(item => item.Code && String(item.Code).toLowerCase() === val);
+            if(match) { el.value = match.Name; el.dataset.code = match.Code; } else { el.dataset.code = val; }
+            updateLabelPreview(inputId.startsWith('doc') ? 'docDrugSearch' : 'drugSearch');
+        }
+
+        function translateMeal(inputId) {
+            let el = document.getElementById(inputId); 
+            let val = el.value.trim().toLowerCase();
+            const mealMap = { 'ac': 'ก่อนอาหาร', 'pc': 'หลังอาหาร', 'wm': 'พร้อมอาหาร', '-': '' };
+            if (val === '') { el.dataset.code = ''; } 
+            else if (mealMap[val] !== undefined) { el.value = mealMap[val]; el.dataset.code = val === '-' ? '' : val; } 
+            else { el.dataset.code = val; }
+            updateLabelPreview(inputId.startsWith('doc') ? 'docDrugSearch' : 'drugSearch');
+        }
+
+        function getFirstMatch(search, type) {
+            if(!search) return null;
+            let s = search.toLowerCase();
+            let arr = db[type] || [];
+            let item = arr.find(d => (d.Code && String(d.Code).toLowerCase() === s) || (d.Name && d.Name.toLowerCase() === s));
+            if(!item) item = arr.find(d => (d.Code && String(d.Code).toLowerCase().includes(s)) || (d.Name && d.Name.toLowerCase().includes(s)));
+            return item;
+        }
+
+        function handleEnter(event, nextFieldId, isDrugSearch = false) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); 
+                if (isDrugSearch) {
+                    let search = document.getElementById('drugSearch').value.trim();
+                    let drug = getFirstMatch(search, 'drugs');
+                    if(drug) { document.getElementById('drugSearch').value = drug.Name; selectDrug(); }
+                }
+                else if (event.target.id === 'drugUse') checkAndTranslate('drugUse', 'uses');
+                else if (event.target.id === 'drugMeal') translateMeal('drugMeal');
+                else if (event.target.id === 'drugTime') checkAndTranslate('drugTime', 'times');
+                else updateLabelPreview('drugSearch');
+
+                if (nextFieldId === 'ADD') { addDrugToCart(); } 
+                else { let nextEl = document.getElementById(nextFieldId); if (nextEl) { nextEl.focus(); if(nextEl.type === 'text' || nextEl.type === 'number') nextEl.select(); } }
+            }
+        }
+
+        function handleEnterDoc(event, nextFieldId, isDrugSearch = false) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); 
+                if (isDrugSearch) {
+                    let search = document.getElementById('docDrugSearch').value.trim();
+                    let drug = getFirstMatch(search, 'drugs');
+                    if(drug) { document.getElementById('docDrugSearch').value = drug.Name; selectDrugDoc(); }
+                }
+                else if (event.target.id === 'docDrugUse') checkAndTranslate('docDrugUse', 'uses');
+                else if (event.target.id === 'docDrugMeal') translateMeal('docDrugMeal');
+                else if (event.target.id === 'docDrugTime') checkAndTranslate('docDrugTime', 'times');
+                else updateLabelPreview('docDrugSearch');
+
+                if (nextFieldId === 'ADD') { addDrugToDocCart(); } 
+                else { let nextEl = document.getElementById(nextFieldId); if (nextEl) { nextEl.focus(); if(nextEl.type === 'text' || nextEl.type === 'number') nextEl.select(); } }
+            }
+        }
+
+        function updateLabelPreview(sourceId) {
+            if(!sourceId) return;
+            let isDoc = sourceId.startsWith('doc');
+            let prefix = isDoc ? 'pv-doc' : 'pv-pha';
+            let srcPrefix = isDoc ? 'docDrug' : 'drug';
+            
+            document.getElementById(`${prefix}-hn`).innerText = document.getElementById(isDoc ? 'docHn' : 'hn').value || '-';
+            document.getElementById(`${prefix}-name`).innerText = document.getElementById(isDoc ? 'docPatientName' : 'patientName').value || '-';
+            
+            let searchEl = document.getElementById(`${srcPrefix}Search`);
+            let name = searchEl.value || 'ชื่อยา';
+            let generic = searchEl.dataset.generic || '';
+            let recNote = searchEl.dataset.recnote || '';
+            let qty = document.getElementById(isDoc ? 'docDrugQty' : 'drugQty').value || '0';
+            let unit = document.getElementById(`${srcPrefix}Unit`).value || '';
+            
+            let u = document.getElementById(`${srcPrefix}Use`).value.trim().replace(/ครั้งละ/g, '').trim();
+            let ds = document.getElementById(`${srcPrefix}Dose`).value.trim();
+            let f = document.getElementById(`${srcPrefix}Freq`).value.trim();
+            let m = document.getElementById(`${srcPrefix}Meal`).value.trim();
+            let t = document.getElementById(`${srcPrefix}Time`).value.trim();
+            let extraInd = document.getElementById(`${srcPrefix}Indication`).value.trim();
+
+            let freqText = f ? `วันละ ${f} ครั้ง` : '';
+            let doseText = ds ? `ครั้งละ ${ds} ${unit}` : '';
+            
+            // แยกบรรทัด 1 (วิธีใช้หลัก) และบรรทัด 2 (มื้ออาหารและเวลา)
+            let line1 = `${u} ${doseText} ${freqText}`.replace(/\s+/g, ' ').trim();
+            let line2 = `${m} ${t}`.replace(/\s+/g, ' ').trim();
+
+            let fullInd = recNote + (recNote && extraInd ? ' ' : '') + extraInd;
+
+            document.getElementById(`${prefix}-drugname`).innerText = name;
+            document.getElementById(`${prefix}-qty`).innerText = qty;
+            document.getElementById(`${prefix}-unit`).innerText = unit;
+            
+            if (line1 || line2) {
+                document.getElementById(`${prefix}-sig`).innerHTML = line1 + (line2 ? `<br>${line2}` : '');
+            } else {
+                document.getElementById(`${prefix}-sig`).innerText = '- วิธีใช้ -';
+            }
+            
+            document.getElementById(`${prefix}-ind`).innerText = fullInd;
+            document.getElementById(`${prefix}-gen`).innerText = generic ? `(${generic})` : '';
+        }
+
+        function uploadData(inputId, type) { 
+            const file = document.getElementById(inputId).files[0];
+            if (!file) return alert("กรุณาเลือกไฟล์ก่อนอัพโหลดนะคะ 🌸");
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, {type: 'array'});
+                const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                
+                let rawData = XLSX.utils.sheet_to_json(firstSheet, {header: "A", defval: ""});
+                let jsonData = [];
+                
+                if (rawData.length > 1) {
+                    for(let i = 1; i < rawData.length; i++) {
+                        let row = rawData[i];
+                        
+                        if (type === 'drugs') {
+                            if (String(row['I']).trim().toUpperCase() === 'TRUE') continue;
+                            if(row['A'] || row['B']) {
+                                jsonData.push({
+                                    Code: row['A'] || '', 
+                                    Name: row['B'] || '', 
+                                    ENName: row['C'] || '',
+                                    DrugGenericName: row['O'] || '', 
+                                    THTradeName: row['D'] || '',
+                                    BaseUnit: row['H'] || '', 
+                                    CurrentPrice: row['M'] || row['N'] || 0, 
+                                    RecommendNote: row['V'] || ''
+                                });
+                            }
+                        } 
+                        else if (type === 'uses') {
+                            if (String(row['E']).trim().toUpperCase() === 'TRUE') continue;
+                            if(row['A'] || row['B']) jsonData.push({ Code: row['A'] || '', Name: row['B'] || '' });
+                        } 
+                        else if (type === 'times') {
+                            if (String(row['F']).trim().toUpperCase() === 'TRUE') continue;
+                            if(row['A'] || row['B']) jsonData.push({ Code: row['A'] || '', Name: row['B'] || '' });
+                        }
+                    }
+                }
+
+                try {
+                    localStorage.setItem(`bcp_${type}`, JSON.stringify(jsonData));
+                    alert(`✨ อัพโหลดและคัดกรองสำเร็จเรียบร้อย! นำเข้าทั้งหมด ${jsonData.length} รายการค่ะ ✨`);
+                    loadFromLocalStorage(); updateDashboard();
+                } catch (error) { alert('ข้อผิดพลาด: พื้นที่ความจำ Local Storage ไม่เพียงพอค่ะ'); }
+            };
+            reader.readAsArrayBuffer(file);
+        }
+
+        function clearData(type) { 
+            let names = { 'drugs': 'รายการยา', 'uses': 'วิธีใช้', 'times': 'เวลาใช้ยา' };
+            if(confirm(`คุณต้องการลบข้อมูล "${names[type]}" ออกจากเครื่องใช่หรือไม่คะ? 🥺`)) { localStorage.removeItem(`bcp_${type}`); loadFromLocalStorage(); updateDashboard(); }
+        }
+
+        function loadFromLocalStorage() {
+            const embeddedDrugs = /*EMBED_DRUGS_START*/null/*EMBED_DRUGS_END*/;
+            const embeddedUses = /*EMBED_USES_START*/null/*EMBED_USES_END*/;
+            const embeddedTimes = /*EMBED_TIMES_START*/null/*EMBED_TIMES_END*/;
+
+            if (embeddedDrugs && embeddedDrugs.length > 0 && !localStorage.getItem('bcp_drugs_embedded')) { localStorage.setItem('bcp_drugs', JSON.stringify(embeddedDrugs)); localStorage.setItem('bcp_drugs_embedded', 'true'); }
+            if (embeddedUses && embeddedUses.length > 0 && !localStorage.getItem('bcp_uses_embedded')) { localStorage.setItem('bcp_uses', JSON.stringify(embeddedUses)); localStorage.setItem('bcp_uses_embedded', 'true'); }
+            if (embeddedTimes && embeddedTimes.length > 0 && !localStorage.getItem('bcp_times_embedded')) { localStorage.setItem('bcp_times', JSON.stringify(embeddedTimes)); localStorage.setItem('bcp_times_embedded', 'true'); }
+
+            db.drugs = JSON.parse(localStorage.getItem('bcp_drugs')) || [];
+            db.uses = JSON.parse(localStorage.getItem('bcp_uses')) || [];
+            db.times = JSON.parse(localStorage.getItem('bcp_times')) || [];
+            historyData = JSON.parse(localStorage.getItem('bcp_history')) || [];
+
+            let drugOptions = '';
+            db.drugs.forEach(d => { if(d.Code && d.Name) drugOptions += `<option value="${d.Name}">[${d.Code}] ${d.Name} | ${d.ENName || ''} | ${d.DrugGenericName || ''}</option>`; });
+            let elDrugList = document.getElementById('drugList'); if (elDrugList) elDrugList.innerHTML = drugOptions;
+
+            let useOptions = '';
+            db.uses.forEach(u => { if(u.Code && u.Name) useOptions += `<option value="${u.Name}">[${u.Code}] ${u.Name}</option>`; });
+            let elUseList = document.getElementById('useList'); if (elUseList) elUseList.innerHTML = useOptions;
+
+            let timeOptions = '';
+            db.times.forEach(t => { if(t.Code && t.Name) timeOptions += `<option value="${t.Name}">[${t.Code}] ${t.Name}</option>`; });
+            let elTimeList = document.getElementById('timeList'); if (elTimeList) elTimeList.innerHTML = timeOptions;
+        }
+
+        function updateDashboard() { 
+            const updateStatus = (id, data) => { const el = document.getElementById(id); if (data && data.length > 0) { el.className = 'status-badge status-ok'; el.innerText = `✅ พร้อมใช้งาน (${data.length})`; } else { el.className = 'status-badge status-none'; el.innerText = `❌ ไม่มีข้อมูล`; } };
+            updateStatus('status-drugs', db.drugs); updateStatus('status-uses', db.uses); updateStatus('status-times', db.times);
+        }
+
+        function selectDrugDoc() {
+            let search = document.getElementById('docDrugSearch').value.trim(); if(!search) return;
+            let drug = getFirstMatch(search, 'drugs');
+            if (drug) { 
+                document.getElementById('docDrugSearch').value = drug.Name; 
+                document.getElementById('docDrugSearch').dataset.code = drug.Code; 
+                document.getElementById('docDrugSearch').dataset.generic = drug.DrugGenericName || ''; 
+                document.getElementById('docDrugSearch').dataset.recnote = drug.RecommendNote || ''; 
+                document.getElementById('docDrugUnit').value = drug.BaseUnit || ''; 
+                document.getElementById('docDrugSearch').dataset.price = drug.CurrentPrice || 0;
+            } else { 
+                document.getElementById('docDrugSearch').dataset.code = "MANUAL"; 
+                document.getElementById('docDrugSearch').dataset.generic = ''; 
+                document.getElementById('docDrugSearch').dataset.recnote = ''; 
+                document.getElementById('docDrugSearch').dataset.price = 0;
+            }
+            updateLabelPreview('docDrugSearch');
+        }
+
+        function addDrugToDocCart() {
+            selectDrugDoc();
+            let hn = document.getElementById('docHn').value; let name = document.getElementById('docDrugSearch').value.trim();
+            if(!hn || !name) { alert('คุณหมอคะ กรุณาระบุ HN และชื่อยาก่อนเพิ่มนะคะ 🌸'); return; }
+
+            let code = document.getElementById('docDrugSearch').dataset.code || ""; 
+            let generic = document.getElementById('docDrugSearch').dataset.generic || ""; 
+            let recNote = document.getElementById('docDrugSearch').dataset.recnote || ""; 
+            let qty = parseInt(document.getElementById('docDrugQty').value) || 1;
+            let price = parseFloat(document.getElementById('docDrugSearch').dataset.price) || 0;
+            let total = price * qty;
+
+            let useEl = document.getElementById('docDrugUse'); let useCode = useEl.dataset.code || useEl.value.trim(); let useText = useEl.value.trim();
+            let timeEl = document.getElementById('docDrugTime'); let timeCode = timeEl.dataset.code || timeEl.value.trim(); let timeText = timeEl.value.trim();
+            let mealEl = document.getElementById('docDrugMeal'); let mealCode = mealEl.dataset.code || mealEl.value.trim(); let mealText = mealEl.value.trim();
+            
+            let unit = document.getElementById('docDrugUnit').value.trim(); let dose = document.getElementById('docDrugDose').value.trim(); let freq = document.getElementById('docDrugFreq').value.trim(); let extraIndication = document.getElementById('docDrugIndication').value.trim(); let cleanUse = useText.replace(/ครั้งละ/g, '').trim();
+
+            docCart.push({ code, name, qty, use: useText, useCode, cleanUse, unit, dose, freq, meal: mealText, mealCode, time: timeText, timeCode, indication: extraIndication, generic: generic, recommend: recNote, price: price, total: total }); renderDocCart();
+            
+            const fieldsToClear = ['docDrugSearch', 'docDrugUse', 'docDrugUnit', 'docDrugDose', 'docDrugFreq', 'docDrugMeal', 'docDrugTime', 'docDrugIndication'];
+            fieldsToClear.forEach(id => { let el = document.getElementById(id); el.value = ''; if(el.dataset) { el.dataset.code = ''; el.dataset.generic = ''; el.dataset.recnote = ''; el.dataset.base = ''; } });
+            document.getElementById('docDrugQty').value = '1'; document.getElementById('docDrugSearch').focus();
+            updateLabelPreview('docDrugSearch');
+        }
+
+        function renderDocCart() {
+            const tbody = document.getElementById('docCartBody'); tbody.innerHTML = ''; let grandTotal = 0;
+            docCart.forEach((item, index) => {
+                grandTotal += item.total;
+                let fullInd = item.recommend + (item.recommend && item.indication ? ' ' : '') + item.indication;
+                
+                let freqText = item.freq ? `วันละ ${item.freq} ครั้ง` : '';
+                let doseText = item.dose ? `ครั้งละ ${item.dose} ${item.unit}` : '';
+                let line1 = `${item.cleanUse} ${doseText} ${freqText}`.replace(/\s+/g, ' ').trim();
+                let line2 = `${item.meal} ${item.time}`.replace(/\s+/g, ' ').trim();
+                let sigHtml = line1 + (line2 ? `<br>${line2}` : '');
+
+                tbody.innerHTML += `<tr><td style="text-align: center; border-radius: 8px 0 0 8px;">${index + 1}</td><td><strong style="color:var(--cute-blue-dark);">${item.name}</strong><br><small style="color:var(--text-light);">[รหัส: ${item.code}]</small></td><td style="text-align: center; font-weight:bold; font-size:16px;">${item.qty} ${item.unit}</td><td>${sigHtml}<br><small style="color:#d81b60;">${fullInd}</small></td><td style="text-align: right; font-weight:bold;">฿ ${item.total.toLocaleString()}</td><td style="text-align: center; border-radius: 0 8px 8px 0;"><button class="btn-danger" onclick="removeDocCart(${index})" style="padding: 6px 12px; border-radius:50%;">❌</button></td></tr>`;
+            });
+            document.getElementById('docGrandTotal').innerText = grandTotal.toLocaleString();
+        }
+
+        function removeDocCart(index) { docCart.splice(index, 1); renderDocCart(); }
+        function clearDocCart() { docCart = []; document.getElementById('docHn').value = ''; document.getElementById('docPatientName').value = ''; renderDocCart(); updateLabelPreview('docDrugSearch'); document.getElementById('docHn').focus(); }
+
+        function printQRPrescription() {
+            if(docCart.length === 0) return alert("คุณหมอยังไม่ได้สั่งยาเลยค่ะ 🥺");
+            let hn = document.getElementById('docHn').value; let ptName = document.getElementById('docPatientName').value;
+            let docTotal = document.getElementById('docGrandTotal').innerText.replace(/,/g, '');
+            
+            // ส่งข้อมูลไป QR Code
+            let drugStrs = docCart.map(item => {
+                let u = (item.useCode || '').replace(/[|^]/g, ''); let ds = (item.dose || '').replace(/[|^]/g, ''); let f = (item.freq || '').replace(/[|^]/g, '');
+                let m = (item.mealCode || '').replace(/[|^]/g, ''); let t = (item.timeCode || '').replace(/[|^]/g, ''); let ind = (item.indication || '').replace(/[|^]/g, ''); 
+                return `${item.code}^${item.qty}^${u}^${ds}^${f}^${m}^${t}^${ind}`;
+            });
+            let rawStr = `${hn}|${ptName}|${drugStrs.join('|')}`; let base64Payload = btoa(unescape(encodeURIComponent(rawStr)));
+
+            // บันทึกประวัติ
+            let transaction = { id: Date.now(), type: 'แพทย์สั่งยา', timestamp: new Date().toLocaleString('th-TH'), hn: hn, patientName: ptName, total: docTotal, items: JSON.parse(JSON.stringify(docCart)) }; 
+            historyData.push(transaction); localStorage.setItem('bcp_history', JSON.stringify(historyData)); loadHistory();
+
+            let printArea = document.getElementById('printArea');
+            let itemsHtml = docCart.map((item, idx) => {
+                let freqText = item.freq ? `วันละ ${item.freq} ครั้ง` : '';
+                let doseText = item.dose ? `ครั้งละ ${item.dose} ${item.unit}` : '';
+                let line1 = `${item.cleanUse} ${doseText} ${freqText}`.replace(/\s+/g, ' ').trim();
+                let line2 = `${item.meal} ${item.time}`.replace(/\s+/g, ' ').trim();
+                let sigHtml = line1 + (line2 ? `<br>${line2}` : '');
+                let fullInd = item.recommend + (item.recommend && item.indication ? ' ' : '') + item.indication;
+
+                return `<tr><td style="text-align:center; border:1px solid #000; padding:5px;">${idx + 1}</td><td style="border:1px solid #000; padding:5px;"><strong>${item.name}</strong><br><small>${sigHtml}</small><br><small style="color:#555;">${fullInd}</small></td><td style="text-align:center; border:1px solid #000; padding:5px;">${item.qty} ${item.unit}</td><td style="text-align:right; border:1px solid #000; padding:5px;">${item.price}</td><td style="text-align:right; border:1px solid #000; padding:5px;">${item.total}</td></tr>`;
+            }).join('');
+
+            printArea.innerHTML = `<div class="qr-doc"><div class="header" style="display: flex; justify-content: space-between; border-bottom: 2px solid #000; padding-bottom: 10px; margin-bottom: 15px;"><div class="hospital-info" style="display: flex; align-items: center; gap: 15px;"><img src="/*EMBED_LOGO_START*/favicon_2.png/*EMBED_LOGO_END*/" alt="UBCH Logo" style="height: 60px;"><div><h2 style="margin:0;">ใบสั่งยา (Prescription)</h2><h3 style="margin:5px 0 0 0; color:#555;">โรงพยาบาลมะเร็งอุบลราชธานี</h3><p style="margin:5px 0 0 0;"><strong>HN:</strong> ${hn}    <strong>ชื่อผู้ป่วย:</strong> ${ptName}</p><p style="margin:0;"><strong>วันที่:</strong> ${new Date().toLocaleString('th-TH')}</p></div></div><div class="qr-code-box" style="text-align: center; border: 1px solid #ccc; padding: 10px; border-radius: 8px;"><div id="qrcode" style="display:inline-block;"></div><p style="font-size:10px; margin:5px 0 0 0;">(สำหรับห้องยาสแกน)</p></div></div><table style="width: 100%; border-collapse: collapse; margin-top: 15px;"><thead><tr><th style="border:1px solid #000; padding:8px; text-align: left;" width="10%">ลำดับ</th><th style="border:1px solid #000; padding:8px; text-align: left;" width="50%">รายการยาและวิธีใช้</th><th style="border:1px solid #000; padding:8px; text-align: left;" width="10%">จำนวน</th><th style="border:1px solid #000; padding:8px; text-align: left;" width="15%">ราคา</th><th style="border:1px solid #000; padding:8px; text-align: left;" width="15%">รวม</th></tr></thead><tbody>${itemsHtml}<tr><td colspan="4" style="border:1px solid #000; padding:5px; text-align:right; font-weight:bold;">รวมเงินทั้งสิ้น</td><td style="border:1px solid #000; padding:5px; text-align:right; font-weight:bold;">${docTotal} บาท</td></tr></tbody></table><div style="margin-top: 50px; display: flex; justify-content: space-around;"><div style="text-align: center;"><p>ลงชื่อ ...................................................... แพทย์ผู้สั่งยา</p><p>( ...................................................... )</p></div><div style="text-align: center;"><p>ลงชื่อ ...................................................... เภสัชกรผู้จ่ายยา</p><p>( ...................................................... )</p></div></div></div>`;
+            
+            // Generate QR
+            new QRCode(document.getElementById("qrcode"), { text: base64Payload, width: 250, height: 250, correctLevel : QRCode.CorrectLevel.L });
+            
+            // Fix display bug during print
+            setPrintPageSize('a4'); 
+            document.body.classList.add('print-qr'); 
+            
+            setTimeout(() => { 
+                window.print(); 
+                document.body.classList.remove('print-qr'); 
+                clearDocCart(); 
+                printArea.innerHTML = ''; 
+            }, 500);
+        }
+
+        let html5QrcodeScanner = null;
+        function toggleCamera() {
+            const readerDiv = document.getElementById('qr-reader');
+            if (readerDiv.style.display === 'block') {
+                if (html5QrcodeScanner) { html5QrcodeScanner.stop().then(() => { readerDiv.style.display = 'none'; html5QrcodeScanner.clear(); html5QrcodeScanner = null; }).catch(err => console.log(err)); }
+            } else {
+                readerDiv.style.display = 'block'; html5QrcodeScanner = new Html5Qrcode("qr-reader");
+                const config = { fps: 10, qrbox: { width: 250, height: 250 } };
+                html5QrcodeScanner.start({ facingMode: "environment" }, config, (decodedText) => { html5QrcodeScanner.stop().then(() => { readerDiv.style.display = 'none'; html5QrcodeScanner.clear(); html5QrcodeScanner = null; processQRCodeData(decodedText); }); }, (errorMessage) => {}).catch(err => { alert("ไม่สามารถเปิดกล้องได้ กรุณาตรวจสอบการอนุญาตใช้งานกล้องครับ"); readerDiv.style.display = 'none'; });
+            }
+        }
+
+        function handleQRScan(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); let rawBase64 = event.target.value.trim(); event.target.value = ''; if(!rawBase64) return;
+                processQRCodeData(rawBase64);
+            }
+        }
+
+        function processQRCodeData(dataStr) {
+            try {
+                let decodedStr = dataStr;
+                if (!dataStr.includes('|') && !dataStr.startsWith('{')) { try { decodedStr = decodeURIComponent(escape(atob(dataStr))); } catch(e) {} }
+                let parts = decodedStr.split('|'); document.getElementById('hn').value = parts[0] || ''; document.getElementById('patientName').value = parts[1] || ''; cart = [];
+                let drugData = parts.slice(2);
+                drugData.forEach(dStr => {
+                    if(!dStr) return;
+                    if(dStr.includes('^')) {
+                        let elements = dStr.split('^');
+                        if(elements.length >= 7) {
+                            // New Format
+                            let [c, q, uCode, ds, f, mCode, tCode, ind] = elements;
+                            let useText = uCode; let useMatch = db.uses.find(x => String(x.Code).toLowerCase() === String(uCode).toLowerCase()); if(useMatch) useText = useMatch.Name;
+                            let timeText = tCode; let timeMatch = db.times.find(x => String(x.Code).toLowerCase() === String(tCode).toLowerCase()); if(timeMatch) timeText = timeMatch.Name;
+                            let mealText = mCode; const mealMapReverse = { 'ac': 'ก่อนอาหาร', 'pc': 'หลังอาหาร', 'wm': 'พร้อมอาหาร' }; if (mealMapReverse[String(mCode).toLowerCase()]) mealText = mealMapReverse[String(mCode).toLowerCase()];
+                            processDrugToCart(c, q, useText, ds, f, mealText, timeText, ind);
+                        } else {
+                            processDrugToCart(elements[0], elements[1], '', '', '', '', '', elements[2]||'');
+                        }
+                    }
+                });
+                renderCart(); updateLabelPreview('drugSearch'); alert("✨ ปิ๊ง! สแกนใบสั่งยาสำเร็จ ระบบคำนวณราคาให้เรียบร้อยแล้วค่ะ ✨");
+            } catch(e) { alert("❌ แง๊! รูปแบบ QR ไม่ถูกต้อง หรือลืมเปลี่ยนแป้นพิมพ์เป็นภาษาอังกฤษหรือเปล่าคะ?"); }
+        }
+
+        function processDrugToCart(code, qtyRaw, useRaw, doseRaw, freqRaw, mealRaw, timeRaw, indRaw) {
+            let price = 0; let name = `ไม่พบข้อมูลยาในเครื่อง (รหัส: ${code})`; let baseUnit = ''; let recNote = ''; let generic = '';
+            if(code) { let found = db.drugs.find(d => d.Code == code); if(found) { name = found.Name; price = parseFloat(found.CurrentPrice) || 0; baseUnit = found.BaseUnit || ''; recNote = found.RecommendNote || ''; generic = found.DrugGenericName || '';} }
+            let qty = parseFloat(qtyRaw) || 1; let total = price * qty; let u = useRaw || ''; let cleanUse = u.replace(/ครั้งละ/g, '').trim();
+            cart.push({ code: code || '', name: name, qty: qty, price: price, total: total, use: u, cleanUse: cleanUse, unit: baseUnit, dose: doseRaw || '', freq: freqRaw || '', meal: mealRaw || '', time: timeRaw || '', indication: indRaw || '', recommend: recNote, generic: generic });
+        }
+
+        function selectDrug() {
+            let search = document.getElementById('drugSearch').value.trim(); if(!search) return;
+            let drug = getFirstMatch(search, 'drugs');
+            if (drug) { 
+                document.getElementById('drugSearch').value = drug.Name; 
+                document.getElementById('drugSearch').dataset.code = drug.Code; 
+                document.getElementById('drugSearch').dataset.generic = drug.DrugGenericName || ''; 
+                document.getElementById('drugSearch').dataset.recnote = drug.RecommendNote || ''; 
+                document.getElementById('drugUnit').value = drug.BaseUnit || ''; 
+                document.getElementById('drugPrice').value = parseFloat(drug.CurrentPrice) || 0; 
+            } else { 
+                document.getElementById('drugSearch').dataset.code = "MANUAL"; 
+                document.getElementById('drugSearch').dataset.generic = ''; 
+                document.getElementById('drugSearch').dataset.recnote = ''; 
+                document.getElementById('drugPrice').value = 0; 
+            }
+            calculateTotal(); updateLabelPreview('drugSearch');
+        }
+
+        function calculateTotal() { let price = parseFloat(document.getElementById('drugPrice').value) || 0; let qty = parseInt(document.getElementById('drugQty').value) || 1; document.getElementById('drugTotal').value = price * qty; }
+
+        function addDrugToCart() {
+            selectDrug(); calculateTotal();
+            let hn = document.getElementById('hn').value; if(!hn) { alert('กรุณาระบุ HN ก่อนจัดยานะคะ 🌸'); document.getElementById('hn').focus(); return; }
+            let code = document.getElementById('drugSearch').dataset.code || ""; 
+            let generic = document.getElementById('drugSearch').dataset.generic || ""; 
+            let recNote = document.getElementById('drugSearch').dataset.recnote || ""; 
+            let name = document.getElementById('drugSearch').value.trim(); let qty = parseInt(document.getElementById('drugQty').value) || 1; let price = parseFloat(document.getElementById('drugPrice').value) || 0; let total = parseFloat(document.getElementById('drugTotal').value) || 0; let use = document.getElementById('drugUse').value.trim(); let unit = document.getElementById('drugUnit').value.trim(); let dose = document.getElementById('drugDose').value.trim(); let freq = document.getElementById('drugFreq').value.trim(); let meal = document.getElementById('drugMeal').value.trim(); let time = document.getElementById('drugTime').value.trim(); let extraIndication = document.getElementById('drugIndication').value.trim();
+            if(!name) { document.getElementById('drugSearch').focus(); return; }
+            let cleanUse = use.replace(/ครั้งละ/g, '').trim(); 
+            cart.push({ code, name, qty, price, total, use, cleanUse, unit, dose, freq, meal, time, indication: extraIndication, recommend: recNote, generic: generic }); renderCart();
+            
+            const fieldsToClear = ['drugSearch', 'drugUse', 'drugUnit', 'drugDose', 'drugFreq', 'drugMeal', 'drugTime', 'drugIndication', 'drugPrice', 'drugTotal']; 
+            fieldsToClear.forEach(id => { let el = document.getElementById(id); el.value = ''; if(el.dataset) { el.dataset.code = ''; el.dataset.generic = ''; el.dataset.recnote = ''; el.dataset.base = ''; } }); 
+            document.getElementById('drugQty').value = '1'; document.getElementById('drugSearch').focus();
+            updateLabelPreview('drugSearch');
+        }
+
+        function renderCart() {
+            const tbody = document.getElementById('cartBody'); tbody.innerHTML = ''; let grandTotal = 0;
+            cart.forEach((item, index) => {
+                grandTotal += item.total; 
+                let fullInd = item.recommend + (item.recommend && item.indication ? ' ' : '') + item.indication;
+                
+                let freqText = item.freq ? `วันละ ${item.freq} ครั้ง` : '';
+                let doseText = item.dose ? `ครั้งละ ${item.dose} ${item.unit}` : '';
+                let line1 = `${item.cleanUse} ${doseText} ${freqText}`.replace(/\s+/g, ' ').trim();
+                let line2 = `${item.meal} ${item.time}`.replace(/\s+/g, ' ').trim();
+                let sigHtml = line1 + (line2 ? `<br>${line2}` : '');
+
+                tbody.innerHTML += `<tr><td style="text-align: center; border-radius: 8px 0 0 8px;">${index + 1}</td><td><strong style="color:var(--cute-pink-dark);">${item.name}</strong><br><small style="color:var(--text-light);">[รหัส: ${item.code}]</small></td><td style="text-align: center; font-weight:bold; font-size:16px;">${item.qty} ${item.unit}</td><td>${sigHtml}<br><small style="color:#d81b60;">${fullInd}</small></td><td style="text-align: right; font-weight:bold;">฿ ${item.total.toLocaleString()}</td><td style="text-align: center; border-radius: 0 8px 8px 0;"><button class="btn-danger" onclick="removeCart(${index})" style="padding: 6px 12px; border-radius:50%;">❌</button></td></tr>`;
+            });
+            document.getElementById('grandTotal').innerText = grandTotal.toLocaleString();
+        }
+
+        function removeCart(index) { cart.splice(index, 1); renderCart(); document.getElementById('drugSearch').focus(); }
+        function clearCart() { cart = []; document.getElementById('hn').value = ''; document.getElementById('patientName').value = ''; renderCart(); updateLabelPreview('drugSearch'); document.getElementById('qrInput').focus(); }
+
+        function setPrintPageSize(type) { let style = document.getElementById('dynamic-print-style'); if (!style) { style = document.createElement('style'); style.id = 'dynamic-print-style'; document.head.appendChild(style); } if (type === 'sticker') { style.innerHTML = `@page { size: 100mm 70mm; margin: 0; }`; } else { style.innerHTML = `@page { size: A4 portrait; margin: 10mm; }`; } }
+
+        function printLabels() {
+            if(cart.length === 0) return alert("ไม่มีรายการยาให้พิมพ์ค่ะ 🥺"); let hn = document.getElementById('hn').value; let ptName = document.getElementById('patientName').value; let d = new Date(); let dateStr = d.toLocaleDateString('th-TH', {day:'2-digit', month:'2-digit', year:'numeric'}) + ' ' + d.getHours().toString().padStart(2, '0') + ':' + d.getMinutes().toString().padStart(2, '0') + ' น.';
+            let printArea = document.getElementById('printArea'); printArea.innerHTML = '';
+            cart.forEach((item, index) => {
+                let fullInd = item.recommend + (item.recommend && item.indication ? ' ' : '') + item.indication;
+                let genText = item.generic ? `(${item.generic})` : '';
+                
+                let freqText = item.freq ? `วันละ ${item.freq} ครั้ง` : '';
+                let doseText = item.dose ? `ครั้งละ ${item.dose} ${item.unit}` : '';
+                let line1 = `${item.cleanUse} ${doseText} ${freqText}`.replace(/\s+/g, ' ').trim();
+                let line2 = `${item.meal} ${item.time}`.replace(/\s+/g, ' ').trim();
+
+                printArea.innerHTML += `<div class="drug-label"><div class="drug-label-content"><div class="header-row"><span>วันที่ ${dateStr}</span><span>ใบสั่งยา BCP / ลำดับ ${index + 1}/${cart.length}</span></div><div class="pt-row"><span>ชื่อ <strong>${ptName}</strong></span><span>HN <strong>${hn}</strong></span></div><div class="drug-name">${item.name} <span style="float:right; font-weight:normal; font-size:14px;">#${item.qty} ${item.unit}</span></div><div class="sig-row">${line1}<br>${line2}</div><div class="indication-row">${fullInd}</div><div class="generic-row">${genText}</div></div></div>`;
+            });
+            setPrintPageSize('sticker'); document.body.classList.add('print-label'); window.print(); document.body.classList.remove('print-label'); printArea.innerHTML = '';
+        }
+
+        function saveAndPrintReceipt() {
+            if(cart.length === 0) return alert("ไม่มีรายการยาให้พิมพ์ค่ะ 🥺"); let hn = document.getElementById('hn').value; let ptName = document.getElementById('patientName').value; let date = new Date(); let grandTotal = document.getElementById('grandTotal').innerText;
+            let transaction = { id: Date.now(), type: 'ห้องยาจ่ายยา', timestamp: date.toLocaleString('th-TH'), hn: hn, patientName: ptName, total: grandTotal.replace(/,/g, ''), items: JSON.parse(JSON.stringify(cart)) }; historyData.push(transaction); localStorage.setItem('bcp_history', JSON.stringify(historyData)); loadHistory();
+            let printArea = document.getElementById('printArea');
+            let itemsHtml = cart.map((item, idx) => { 
+                let fullInd = item.recommend + (item.recommend && item.indication ? ' ' : '') + item.indication;
+                let freqText = item.freq ? `วันละ ${item.freq} ครั้ง` : '';
+                let doseText = item.dose ? `ครั้งละ ${item.dose} ${item.unit}` : '';
+                let line1 = `${item.cleanUse} ${doseText} ${freqText}`.replace(/\s+/g, ' ').trim();
+                let line2 = `${item.meal} ${item.time}`.replace(/\s+/g, ' ').trim();
+                let sigHtml = line1 + (line2 ? `<br>${line2}` : '');
+
+                return `<tr><td style="text-align:center; border:1px solid #000; padding:5px;">${idx + 1}</td><td style="border:1px solid #000; padding:5px;"><strong>${item.name}</strong> <br><small>${sigHtml}</small><br><small style="color:#555;">${fullInd}</small></td><td style="text-align:center; border:1px solid #000; padding:5px;">${item.qty} ${item.unit}</td><td style="text-align:right; border:1px solid #000; padding:5px;">${item.price}</td><td style="text-align:right; border:1px solid #000; padding:5px;">${item.total}</td></tr>`; 
+            }).join('');
+            printArea.innerHTML = `<div class="receipt-doc"><div class="receipt-header"><img src="/*EMBED_LOGO_START*/favicon_2.png/*EMBED_LOGO_END*/" alt="UBCH Logo"><div><h2 style="margin:0;">ใบสรุปการจ่ายยา / ใบเสร็จ (BCP)</h2><h3 style="margin:5px 0 0 0; text-align:center; color:#333;">โรงพยาบาลมะเร็งอุบลราชธานี</h3></div></div><p><strong>วันที่:</strong> ${date.toLocaleString('th-TH')}</p><p><strong>HN:</strong> ${hn}      <strong>ชื่อผู้ป่วย:</strong> ${ptName}</p><table style="width:100%; border-collapse:collapse;"><thead><tr><th style="border:1px solid #000; padding:5px;" width="5%">ลำดับ</th><th style="border:1px solid #000; padding:5px;" width="50%">รายการยาและวิธีใช้</th><th style="border:1px solid #000; padding:5px;" width="15%">จำนวนจ่าย</th><th style="border:1px solid #000; padding:5px;" width="15%">ราคา/หน่วย</th><th style="border:1px solid #000; padding:5px;" width="15%">รวม</th></tr></thead><tbody>${itemsHtml}<tr><td colspan="4" class="total-row" style="border:1px solid #000; padding:5px; text-align:right; font-weight:bold;">ยอดรวมทั้งสิ้น</td><td class="total-row" style="border:1px solid #000; padding:5px; text-align:right; font-weight:bold;">${grandTotal} บาท</td></tr></tbody></table><div style="margin-top: 50px; display: flex; justify-content: space-around;"><div style="text-align: center;"><p>ลงชื่อ ...................................................... แพทย์ผู้สั่งยา</p><p>( ...................................................... )</p></div><div style="text-align: center;"><p>ลงชื่อ ...................................................... เภสัชกรผู้จ่ายยา</p><p>( ...................................................... )</p></div></div></div>`;
+            setPrintPageSize('a4'); document.body.classList.add('print-a4'); setTimeout(() => { window.print(); document.body.classList.remove('print-a4'); printArea.innerHTML = ''; clearCart(); }, 500);
+        }
+
+        function loadHistory() { 
+            const tbody = document.getElementById('historyBody'); tbody.innerHTML = ''; 
+            historyData.forEach((h, index) => { 
+                tbody.innerHTML += `<tr><td style="border-radius: 8px 0 0 8px;">${h.timestamp}</td><td><span class="status-badge ${h.type === 'แพทย์สั่งยา' ? 'status-ok' : 'status-none'}" style="background-color:${h.type === 'แพทย์สั่งยา' ? '#bde0fe' : '#ffb3c6'}; color:${h.type === 'แพทย์สั่งยา' ? '#005b9f' : '#c9184a'};">${h.type}</span></td><td>${h.hn}</td><td>${h.patientName}</td><td style="text-align: center;">${h.items.length}</td><td style="text-align: right; font-weight:bold;">฿ ${parseFloat(h.total).toLocaleString()}</td><td style="text-align: center; border-radius: 0 8px 8px 0;"><div style="display:flex; gap:5px; justify-content:center;"><button class="btn-info" onclick="editHistory(${index}, 'doc')" style="padding: 5px 10px; font-size:12px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">🩺 แพทย์</button><button class="btn-warning" onclick="editHistory(${index}, 'pha')" style="padding: 5px 10px; font-size:12px; background: #ffe066; color: #d4a300; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">💊 ห้องยา</button></div></td></tr>`; 
+            }); 
+        }
+
+        function editHistory(index, target) {
+            let h = historyData[index];
+            if(target === 'doc') {
+                document.getElementById('docHn').value = h.hn; 
+                document.getElementById('docPatientName').value = h.patientName;
+                docCart = JSON.parse(JSON.stringify(h.items)); 
+                renderDocCart();
+                updateLabelPreview('docDrugSearch'); 
+                switchTab('doctor');
+            } else {
+                document.getElementById('hn').value = h.hn; 
+                document.getElementById('patientName').value = h.patientName;
+                cart = JSON.parse(JSON.stringify(h.items)); 
+                renderCart(); 
+                calculateTotal();
+                updateLabelPreview('drugSearch'); 
+                switchTab('dispense');
+            }
+        }
+
+        function clearHistory() { if(confirm("แน่ใจหรือไม่ว่าต้องการลบประวัติทั้งหมด? (ระวังข้อมูลหายนะ 🥺)")) { historyData = []; localStorage.removeItem('bcp_history'); loadHistory(); } }
+        
+        function exportCSV() {
+            if(historyData.length === 0) return alert("ยังไม่มีข้อมูลให้ Export เลยค่ะ 🌸"); 
+            let csvContent = "\uFEFFTransaction ID,ประเภท,วันเวลา,HN,ชื่อผู้ป่วย,รหัสยา,ชื่อยา,จำนวน,ฉลากเต็ม,ราคา,ราคารวม\n";
+            historyData.forEach(tx => { 
+                tx.items.forEach(item => { 
+                    let fullInd = item.recommend + (item.recommend && item.indication ? ' ' : '') + item.indication;
+                    let sig = `"${item.cleanUse} ครั้งละ ${item.dose} ${item.unit} วันละ ${item.freq} ครั้ง ${item.meal} ${item.time} ${fullInd}"`.replace(/\s+/g, ' ').trim(); 
+                    csvContent += `${tx.id},${tx.type},${tx.timestamp},${tx.hn},"${tx.patientName || ''}",${item.code},"${item.name || ''}",${item.qty},${sig},${item.price||0},${item.total||0}\n`; 
+                }); 
+            });
+            const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' }); const link = document.createElement("a"); link.setAttribute("href", URL.createObjectURL(blob)); link.setAttribute("download", `Pharmacy_BCP_Export_${new Date().getTime()}.csv`); document.body.appendChild(link); link.click(); document.body.removeChild(link);
+        }
+
+        // --- PWA Service Worker Registration ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                .then((registration) => { console.log('ServiceWorker registration successful with scope: ', registration.scope); })
+                .catch((err) => { console.log('ServiceWorker registration failed: ', err); });
+            });
+        }
+    </script>
+</body>
+</html>
+</textarea>
+
+    <script>
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                if (!file) { resolve(null); return; }
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        function parseExcel(file, type) {
+            return new Promise((resolve, reject) => {
+                if (!file) { resolve(null); return; }
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, {type: 'array'});
+                    const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+                    let rawData = XLSX.utils.sheet_to_json(firstSheet, {header: "A", defval: ""});
+                    let jsonData = [];
+                    if (rawData.length > 1) {
+                        const headers = rawData[0];
+                        for(let i = 1; i < rawData.length; i++) {
+                            let row = rawData[i];
+                            let obj = {};
+                            for(let key in headers) obj[headers[key]] = row[key];
+                            
+                            if (type === 'drugs' && String(row['I']).trim().toUpperCase() !== 'TRUE') {
+                                if(obj.Code || obj.Name) jsonData.push({Code: obj.Code||'', Name: obj.Name||'', ENName: obj.ENName||'', DrugGenericName: obj.DrugGenericName||'', THTradeName: obj.THTradeName||'', BaseUnit: obj.BaseUnit||'', CurrentPrice: obj.CurrentPrice||0, RecommendNote: obj.RecommendNote||''});
+                            } else if (type === 'uses' && String(row['E']).trim().toUpperCase() !== 'TRUE') {
+                                if(obj.Code || obj.Name) jsonData.push({ Code: obj.Code||'', Name: obj.Name||'' });
+                            } else if (type === 'times' && String(row['F']).trim().toUpperCase() !== 'TRUE') {
+                                if(obj.Code || obj.Name) jsonData.push({ Code: obj.Code||'', Name: obj.Name||'' });
+                            }
+                        }
+                    }
+                    resolve(jsonData);
+                };
+                reader.onerror = function(error) { reject(error); };
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        async function generateZip() {
+            const btn = document.getElementById('btnGen');
+            
+            btn.innerHTML = "กำลังแปลงข้อมูลและแพ็ก ZIP... ⏳";
+            btn.disabled = true;
+
+            try {
+                var zip = new JSZip();
+                
+                // 1. อ่านรูปภาพและแปลงเป็น Base64
+                let fileFav = document.getElementById('f_fav').files[0];
+                let logoData = await fileToBase64(fileFav) || "favicon_2.png";
+                
+                let fileMascot = document.getElementById('f_mascot').files[0];
+                let mascotData = await fileToBase64(fileMascot) || "ดอกบัว5_2.png";
+                
+                // 2. อ่าน Excel และแปลงเป็น JSON Array พร้อมกรอง TRUE ทิ้ง
+                let drugs = await parseExcel(document.getElementById('f_list2').files[0], 'drugs');
+                let uses = await parseExcel(document.getElementById('f_use').files[0], 'uses');
+                let times = await parseExcel(document.getElementById('f_time').files[0], 'times');
+
+                // 3. นำข้อมูลทั้งหมดไปฝังใน Template HTML
+                let template = document.getElementById('bcp-source').value;
+                template = template.replace(/\/\*EMBED_LOGO_START\*\/.*?\/\*EMBED_LOGO_END\*\//g, logoData);
+                template = template.replace(/\/\*EMBED_MASCOT_START\*\/.*?\/\*EMBED_MASCOT_END\*\//g, mascotData);
+                template = template.replace(/\/\*EMBED_DRUGS_START\*\/null\/\*EMBED_DRUGS_END\*\//g, JSON.stringify(drugs));
+                template = template.replace(/\/\*EMBED_USES_START\*\/null\/\*EMBED_USES_END\*\//g, JSON.stringify(uses));
+                template = template.replace(/\/\*EMBED_TIMES_START\*\/null\/\*EMBED_TIMES_END\*\//g, JSON.stringify(times));
+                
+                // --- PWA: สร้างไฟล์ index.html ---
+                zip.file("index.html", template);
+                
+                // --- PWA: สร้างไฟล์ Service Worker (sw.js) ฉบับคลีนที่สุด ป้องกันไวรัสบล็อก ---
+                const swCode = `const CACHE_NAME = 'bcp-cache-v1';
+const urlsToCache = ['./', './index.html', './manifest.json'];
+self.addEventListener('install', event => { event.waitUntil(caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))); });
+self.addEventListener('fetch', event => { event.respondWith(caches.match(event.request).then(response => response || fetch(event.request))); });`;
+                zip.file("sw.js", swCode);
+
+                // --- PWA: สร้างไฟล์ manifest.json อัตโนมัติ ---
+                const manifestCode = `{
+  "name": "ระบบ BCP ห้องยา รพ.มะเร็งอุบลฯ",
+  "short_name": "BCP ห้องยา",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fff0f3",
+  "theme_color": "#ffb3c6",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}`;
+                zip.file("manifest.json", manifestCode);
+
+                // --- PWA: ดึงรููปโลโก้มาสร้างเป็นไอคอนแอป (Icons) ---
+                if (logoData.includes("base64,")) {
+                    let base64ImageOnly = logoData.split(',')[1];
+                    zip.file("icon-192.png", base64ImageOnly, {base64: true});
+                    zip.file("icon-512.png", base64ImageOnly, {base64: true});
+                }
+
+                const manualText = `คู่มือการนำระบบ BCP ขึ้น GitHub Pages (PWA)
+========================================================================
+
+ไฟล์ในโฟลเดอร์นี้ถูกตั้งค่าให้รองรับการทำ PWA (Offline App) เรียบร้อยแล้ว
+คุณจะได้แอปที่มีข้อมูลยาและรูปภาพพร้อมใช้งานทั้งหมด
+
+📂 วิธีอัปโหลดขึ้น GitHub:
+------------------------------------------------------------------------
+1. สร้าง Repository ใหม่ใน GitHub (ตั้งชื่อเช่น bcp-pharmacy)
+2. อัปโหลดไฟล์ทั้งหมดในโฟลเดอร์นี้ (index.html, sw.js, manifest.json, icon-*.png) ขึ้นไป
+3. ไปที่แท็บ Settings > Pages เลือกกิ่ง (Branch) เป็น main หรือ master แล้วกด Save
+4. รอสักครู่ GitHub จะสร้างลิงก์ให้ เช่น https://[ชื่อคุณ].github.io/bcp-pharmacy/
+
+👨‍⚕️ วิธีให้พยาบาล/ห้องยา ติดตั้งระบบ (ทำครั้งเดียวตอนมีอินเทอร์เน็ต):
+------------------------------------------------------------------------
+1. เข้าไปที่ลิงก์ GitHub Pages ของคุณด้วย Google Chrome หรือ Edge
+2. ที่แถบ URL ด้านบนขวา จะมีปุ่มหน้าจอคอมพิวเตอร์ หรือกดจุด 3 จุด แล้วเลือก "Install App (ติดตั้งแอป)"
+3. ระบบ BCP จะกลายเป็นแอปพลิเคชันอยู่บนหน้า Desktop ทันที!
+4. เมื่อเกิดเหตุฉุกเฉิน (ไม่มีเน็ต) สามารถดับเบิ้ลคลิกแอปนี้จากหน้าจอ แล้วใช้งานได้ 100%
+
+========================================================================
+🌸 ออกแบบและพัฒนาโดย: ภก.จุมพล อุทธา 🌸`;
+                zip.file("คู่มือการติดตั้ง_PWA.txt", manualText);
+                
+                // 4. สั่งสร้างไฟล์ ZIP เป็น Blob URL
+                const zipContent = await zip.generateAsync({type:"blob"});
+                const zipUrl = URL.createObjectURL(zipContent);
+                
+                const dlLink = document.getElementById('manualDownloadBtn');
+                dlLink.href = zipUrl;
+                dlLink.download = "Pharmacy_BCP_Offline_Ready.zip";
+                document.getElementById('downloadArea').style.display = 'block';
+                
+                try {
+                    const hiddenLink = document.createElement("a");
+                    hiddenLink.href = zipUrl;
+                    hiddenLink.download = "Pharmacy_BCP_Offline_Ready.zip";
+                    document.body.appendChild(hiddenLink);
+                    hiddenLink.click();
+                    document.body.removeChild(hiddenLink);
+                } catch(e) {}
+                
+                btn.innerHTML = "✅ สร้างไฟล์สำเร็จแล้ว!";
+                setTimeout(() => { btn.innerHTML = "📦 สร้างและฝังข้อมูลลงระบบ BCP (PWA) อีกครั้ง"; btn.disabled = false; }, 3000);
+
+            } catch (err) {
+                console.error(err);
+                alert("เกิดข้อผิดพลาดในการสร้างไฟล์ ZIP");
+                btn.innerHTML = "📦 สร้างไฟล์ ZIP สำเร็จรูป (PWA)";
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>

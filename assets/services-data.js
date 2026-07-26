@@ -42,5 +42,8 @@ const SERVICES = [
   {title:'แบบเสนอยืมยานอกโรงพยาบาล',desc:'ขออนุมัติยืมยาจากหน่วยงานภายนอก',cat:'inventory',icon:'fa-hand-holding-hand',tone:'blue',url:'https://goo.gl/forms/PUZ9gpRm1w',tags:'ยืมยา'},
   {title:'แบบยืมยาเป็นทางการ',desc:'สำหรับเจ้าหน้าที่คลังดำเนินการ',cat:'inventory',icon:'fa-file-contract',tone:'green',url:'https://goo.gl/forms/3FbNuGiODC',tags:'ยืมยา เอกสาร'},
   {title:'ระบบตรวจตราความปลอดภัย',desc:'ตรวจประเมินและรายงานอัคคีภัย',cat:'inventory',icon:'fa-fire-extinguisher',tone:'red',url:'https://jumpon097.github.io/FireUBCH/',tags:'อัคคีภัย'},
+  {title:'แบบทดสอบเภสัชวิทยามะเร็ง',desc:'ทบทวนความรู้และทำแบบทดสอบทางเภสัชวิทยา',cat:'tool',icon:'fa-graduation-cap',tone:'violet',url:'pharmacology-quiz.html',tags:'quiz เภสัชวิทยา มะเร็ง วิชาการ'},
+  {title:'OncoHeme Quiz Lab',desc:'ฝึกโจทย์มะเร็งและโลหิตวิทยา พร้อมวัดผล',cat:'tool',icon:'fa-vial-virus',tone:'red',url:'oncoheme-quiz.html',tags:'quiz oncology hematology oncoheme'},
+  {title:'เครื่องมือสร้างแพ็กเกจ BCP',desc:'จัดเตรียมแพ็กเกจระบบห้องยาสำหรับใช้งานออฟไลน์',cat:'inventory',icon:'fa-box-archive',tone:'amber',url:'bcp-compiler.html',tags:'BCP compiler offline package'},
   {title:'ระบบ BCP ระบบยา',desc:'ติดตั้งล่วงหน้าเพื่อใช้งานเมื่อ Offline',cat:'inventory',icon:'fa-shield-halved',tone:'amber',url:'https://jumpon097.github.io/pharubchbcp/',tags:'BCP offline'}
 ];
